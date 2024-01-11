@@ -1,0 +1,59 @@
+ <!DOCTYPE html>
+ <html lang="it">
+ <head>
+    <script src="./cookies.js"></script>
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Dove</title>
+ 
+     <link rel="stylesheet" href="style.css">
+     <script src="./themeandmenu.js"></script>
+ </head>
+ <body onload="checktheme()">
+     <div class="main">
+ 
+ 
+         <div class="leftside">
+             <nav id="hamburgermenu">
+                <img src="Icone/icons8-menu-384.png" onmouseover="menu()" alt="">
+             </nav>
+             
+            <div id="navigationmenu" onmouseleave="menu()">
+                <a href="./index.html">HOME</a>
+                <a href="./filosofia.html">FILOSOFIA</a>
+                <a href="./dove.html">DOVE</a>
+                <a href="./pizze.html">PIZZE</a>
+                <a href="./contatti.html">CONTATTI</a>
+                <p onclick="closemenu()">X</p>
+            </div>
+ 
+             <div id="logosection">
+                 <img id="logoid" src="logos/300ppi/finaleTavola disegno 1 copia 3.png" alt="" style="display: none;">
+                 <div id="textunderlogo">
+                     <h1>Dove ci puoi trovare?</h1>
+                     <p>Aperto dalle 12 alle 14.30 e dalle 19.30 alle 22.30
+                        Chiusura settimanale la domenica a mezzogiorno </p>
+                     <p style="text-align: center; justify-content: center;">Via Giovanni Battista Morgagni 37</p>
+                 </div>
+             </div>
+ 
+             <div id="bottomleft">
+                 <div id="themetoolpit" style="background-color: #efecdb;" onclick="changetheme('theme1')"></div>
+                 <div id="themetoolpit" style="background-color: #44171c;" onclick="changetheme('theme2')"></div>
+                 <!-- <div id="themetoolpit" style="background-color: #fff;" onclick="changetheme()"></div>
+                 <div id="themetoolpit" style="background-color: #000;" onclick="changetheme()"></div> -->
+             </div>
+         </div>
+ 
+         <div class="rightside">
+             <div class="imgwrappdove" style="background-image: url(''); flex-direction: column;">
+                <div id="imglocation"></div>
+                <div class="googlemaps">
+                    <div style="width: 100%"><iframe width="100%" height="600" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=Pizzeria%20Geppo%20di%20Geppo%201981%20srl,%20Via%20Giovanni%20Battista%20Morgagni,%20Milano,%20MI+(Geppo)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"><a href="https://www.maps.ie/distance-area-calculator.html">measure distance on map</a></iframe></div>
+                 </div>
+             </div>
+         </div>
+     </div>
+ </body>
+ </html>

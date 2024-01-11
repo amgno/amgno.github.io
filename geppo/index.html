@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <script src="./cookies.js"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="./themeandmenu.js"></script>
+</head>
+<body>
+    <div class="main">
+
+
+        <div class="leftside">
+            <nav id="hamburgermenu">
+                <img src="./Icone/icons8-menu-384.png" onmouseover="menu()" alt="">
+            </nav>
+            
+            <div id="navigationmenu" onmouseleave="menu()">
+                <a href="./index.html">HOME</a>
+                <a href="./filosofia.html">FILOSOFIA</a>
+                <a href="./dove.html">DOVE</a>
+                <a href="./pizze.html">PIZZE</a>
+                <a href="./contatti.html">CONTATTI</a>
+                <p onclick="closemenu()">X</p>
+            </div>
+
+            <div id="logosection">
+                <img id="logoid" src="./logos/300ppi/finaleTavola disegno 1 copia 3.png" alt="">
+                <div id="textunderlogo">
+                    <h2>DAL 1981 A MILANO</h2>
+                    <h1 style="margin-top: -1vh;">Pizza semplice e buona</h1>
+                </div>
+            </div>
+
+            <div id="bottomleft">
+                <div id="themetoolpit" style="background-color: #efecdb;" onclick="changetheme('theme1')"></div>
+                <div id="themetoolpit" style="background-color: #44171c;" onclick="changetheme('theme2')"></div>
+                <!-- <div id="themetoolpit" style="background-color: #fff;" onclick="changetheme()"></div>
+                <div id="themetoolpit" style="background-color: #000;" onclick="changetheme()"></div> -->
+            </div>
+        </div>
+
+        <div class="rightside">
+            <div class="imgwrapp">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

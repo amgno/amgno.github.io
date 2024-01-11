@@ -1,0 +1,63 @@
+ <!DOCTYPE html>
+ <html lang="it">
+ <head>
+    <script src="./cookies.js"></script>
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Pizze</title>
+ 
+     <link rel="stylesheet" href="style.css">
+     <script src="./themeandmenu.js"></script>
+ </head>
+ <body>
+     <div class="main">
+ 
+ 
+         <div class="leftside">
+             <nav id="hamburgermenu">
+                <img src="Icone/icons8-menu-384.png" onmouseover="menu()" alt="">
+             </nav>
+             
+            <div id="navigationmenu" onmouseleave="menu()">
+                <a href="./index.html">HOME</a>
+                <a href="./filosofia.html">FILOSOFIA</a>
+                <a href="./dove.html">DOVE</a>
+                <a href="./pizze.html">PIZZE</a>
+                <a href="./contatti.html">CONTATTI</a>
+                <p onclick="closemenu()">X</p>
+            </div>
+ 
+             <div id="logosection">
+                 <img id="logoid" src="logos/300ppi/finaleTavola disegno 1 copia 3.png" alt="" style="display: none;">
+                 <div id="textunderlogo">
+                     <h1>Le nostre pizze</h1>
+                     <p>La ricetta per le nostre pizze è molto semplice e rimasta invariata da oltre 40 anni mentre le farciture e i nomi delle pizze sono spesso un omaggio ai nostri clienti più fedeli che le hanno ideate</p>
+                     <button onclick="location.href='http://www.pizzageppo.it/menu/'">IL MENU</button>
+                </div>
+             </div>
+ 
+             <div id="bottomleft">
+                 <div id="themetoolpit" style="background-color: #efecdb;" onclick="changetheme('theme1')"></div>
+                 <div id="themetoolpit" style="background-color: #44171c;" onclick="changetheme('theme2')"></div>
+                 <!-- <div id="themetoolpit" style="background-color: #fff;" onclick="changetheme()"></div>
+                 <div id="themetoolpit" style="background-color: #000;" onclick="changetheme()"></div> -->
+             </div>
+         </div>
+ 
+         <div class="rightside">
+             <div class="imgwrapppizze" style="background-image: url('');">
+                <div id="parteup">
+                    <div id="pizza1" style="background-image: url(./optimized\ imgs/pizza1.jpg);"></div>
+                    <div id="pizza2" style="background-image: url(./optimized\ imgs/pizza2.jpg);"></div>
+                </div>
+
+                <div id="partebot">
+                    <div id="pizza3" style="background-image: url(./optimized\ imgs/pizzza3.jpg);"></div>
+                    <div id="pizza4" style="background-image: url(./optimized\ imgs/pizza4.jpg);"></div>
+                </div>
+             </div>
+         </div>
+     </div>
+ </body>
+ </html>
