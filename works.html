@@ -55,6 +55,20 @@
 
 
 <style>
+    ::selection {
+        background-color: rgba(219, 141, 52, 0.5);
+        /* RGBA with 50% opacity */
+        color: #fff;
+        /* New text color */
+    }
+
+
+    h1{
+        font-size: 10vh;
+        padding-left: 2rem;
+        line-height: 0.1vh;
+    }
+
     h1,
     h2,
     h3,
@@ -91,7 +105,8 @@
     nav {
         display: flex;
         width: 100%;
-        border-bottom: 1px solid var(--bordcolor)
+        border-bottom: 1px solid var(--bordcolor);
+        height: 5.8rem; /*Idk abt this*/
     }
 
     #nav-logo-section {
@@ -136,7 +151,7 @@
         width: 100%;
         height: 100%;
         grid-template-columns: 2fr 1fr;
-        grid-template-rows: 2fr 1fr;
+        grid-template-rows: 3.5fr 1fr;
         position: absolute;
         left: 0px;
         top: 0px;
@@ -206,8 +221,7 @@
         display: flex;
         justify-content: flex-start;
         align-items: center;
-        padding-left: 4rem;
-        font-size: 7rem;
+        height: 10px;
     }
 
     .article-description-section {
@@ -216,9 +230,10 @@
         align-items: center;
         padding-left: 7rem;
         padding-right: 7rem;
-        font-size: 1.5rem;
+        font-size: 1rem;
         padding-top: 2rem;
         padding-bottom: 2rem;
+        font-family: 'Courier New', Courier, monospace;
     }
 
     .article-image-section {
@@ -229,15 +244,16 @@
         overflow: hidden;
     }
 
-    .article-image-section > img {
+    .article-image-section>img {
         max-width: 100%;
         transition: 400ms ease;
     }
-    .article-image-section > img:hover {
+
+    .article-image-section>img:hover {
         filter: brightness(60%) blur(3px);
     }
 
-    .article-image-section > p {
+    .article-image-section>p {
         pointer-events: none;
         opacity: 0%;
         z-index: 1;
@@ -248,10 +264,9 @@
         font-size: 3rem;
     }
 
-    .article-image-section > img:hover + .hovertext {
+    .article-image-section>img:hover+.hovertext {
         opacity: 100%;
     }
-
 </style>
 
 
@@ -275,7 +290,7 @@
             <a href="">S3</a>
         </div>
         <div id="nav-contact-section" class="nav-section">
-            <a href="">Back</a>
+            <a href="../">Back</a>
         </div>
     </nav>
 
@@ -287,8 +302,8 @@
         <!--Primo-->
         <article data-index="0" data-status="active">
             <div class="article-image-section article-section">
-                <img
-                    src="images/testimg.jpg" alt=""><p class="hovertext">OPEN ME</p>
+                <img src="images/testimg.jpg" alt="">
+                <p class="hovertext">OPEN ME</p>
             </div>
 
             <div class="article-description-section article-section">
@@ -304,7 +319,7 @@
                 dolor posuere in. Sed non interdum nisl, Aenean rhoncus ligula vel nisl pharetra, id interdum magna
                 pretium. Vivamus nisi magna, pellentesque non lacus sit amet, euismod malesuada lectus.
             </div>
-            <div class="article-title-section article-section">Should be a title</div>
+            <div class="article-title-section article-section"><h1>Should be a title</h1></div>
             <div class="article-nav-section article-section">
                 <div class="article-nav nav-left" onclick="handleLeftClick()">A</div>
                 <div class="article-nav right" onclick="handleRightClick()">B</div>
@@ -315,8 +330,8 @@
         <!--Primo-->
         <article data-index="1" data-status="inactive">
             <div class="article-image-section article-section">
-                <img
-                    src="images/testimg2.jpg" alt=""><p class="hovertext">OPEN ME</p>
+                <img src="images/testimg2.jpg" alt="">
+                <p class="hovertext">OPEN ME</p>
             </div>
 
             <div class="article-description-section article-section">
@@ -332,7 +347,7 @@
                 dolor posuere in. Sed non interdum nisl, Aenean rhoncus ligula vel nisl pharetra, id interdum magna
                 pretium. Vivamus nisi magna, pellentesque non lacus sit amet, euismod malesuada lectus.
             </div>
-            <div class="article-title-section article-section">Should be a title</div>
+            <div class="article-title-section article-section"><h1>Should be a title</h1></div>
             <div class="article-nav-section article-section">
                 <div class="article-nav nav-left" onclick="handleLeftClick()">A</div>
                 <div class="article-nav right" onclick="handleRightClick()">B</div>
