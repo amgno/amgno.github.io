@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+    <head>
+        <title>My first game!</title>
+        <script src="lib/phaser.min.js"></script> <!--L'ordine è importante, va prima inizializzato phaser e poi la nostra versione custom-->
+        <script src="lib/poliphaser.js"></script>
+
+        <!--Scene vanno messe prima del main-->
+        <script src="src/scenes/menu.js" type="module"></script>
+        <script src="src/scenes/storia.js" type="module"></script>
+        <script src="src/scenes/scene1.js" type="module"></script>
+        <script src="src/scenes/scene2.js" type="module"></script>
+        <script src="src/scenes/scene3.js" type="module"></script>
+
+        <script src="src/player.js"></script>
+        <script src="src/platform.js"></script>
+        <script src="src/mushroom.js"></script>
+        <script src="src/rain.js"></script>
+        <script src="src/egg.js"></script>
+        <script defer src="src/main.js"></script> <!--defer fa si che si carichi solo dopo che ha caricato tutto il resto-->
+        
+    </head>
+    <body>
+        <div id="game_area" style="text-align: center;"></div>
+   
+        <!-- PROVA -->
+    </body>
+</html>
