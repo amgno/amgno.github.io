@@ -1,0 +1,264 @@
+<script>
+
+    let activeIndex = 0;
+
+    const slides = document.getElementsByTagName("article");
+
+    const handleLeftClick = () => {
+        const nextIndex = activeIndex - 1 >= 0 ? activeIndex - 1 : slides.length - 1;
+
+        const currentSlide = document.querySelector(`[data-index="${activeIndex}"]`),
+            nextSlide = document.querySelector(`[data-index="${nextIndex}"]`);
+
+        currentSlide.dataset.status = "after";
+
+        nextSlide.dataset.status = "becoming-active-from-before";
+
+        setTimeout(() => {
+            nextSlide.dataset.status = "active";
+            activeIndex = nextIndex;
+        });
+    }
+
+    const handleRightClick = () => {
+        const nextIndex = activeIndex + 1 <= slides.length - 1 ? activeIndex + 1 : 0;
+
+        const currentSlide = document.querySelector(`[data-index="${activeIndex}"]`),
+            nextSlide = document.querySelector(`[data-index="${nextIndex}"]`);
+
+        currentSlide.dataset.status = "before";
+
+        nextSlide.dataset.status = "becoming-active-from-after";
+
+        setTimeout(() => {
+            nextSlide.dataset.status = "active";
+            activeIndex = nextIndex;
+        });
+    }
+
+    /* -- Mobile Nav Toggle -- */
+
+    const nav = document.querySelector("nav");
+
+    const handleNavToggle = () => {
+        nav.dataset.transitionable = "true";
+
+        nav.dataset.toggled = nav.dataset.toggled === "true" ? "false" : "true";
+    }
+
+    window.matchMedia("(max-width: 800px)").onchange = e => {
+        nav.dataset.transitionable = "false";
+
+        nav.dataset.toggled = "false";
+    };
+</script>
+
+
+<style>
+    h1,
+    h2,
+    h3,
+    a,
+    p,
+    span {
+        font-weight: 400;
+        color: #333;
+        font-family: "Rubik", sans-serif;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    :root {
+        --bgcolor: #f5f5e1;
+        --bordcolor: #92929246;
+    }
+
+    body {
+        background-color: var(--bgcolor);
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        margin: 0px;
+        overflow: hidden;
+    }
+
+    nav {
+        display: flex;
+        width: 100%;
+        border-bottom: 1px solid var(--bordcolor)
+    }
+
+    #nav-logo-section {
+        font-size: 4rem;
+        justify-content: flex-start;
+    }
+
+    #nav-link-section {
+        gap: 6rem;
+    }
+
+    #nav-social-section {
+        gap: 3rem;
+    }
+
+    #nav-logo-section,
+    #nav-link-section {
+        flex-basis: calc(100% / 3);
+    }
+
+    #nav-social-section,
+    #nav-contact-section {
+        flex-grow: 1;
+    }
+
+    nav>.nav-section {
+        padding: 3rem 2rem;
+        display: flex;
+        gap: 1rem;
+        border-left: 1px solid var(--bordcolor);
+        align-items: center;
+        justify-content: center;
+    }
+
+    main {
+        flex-grow: 1;
+        position: relative;
+    }
+
+    main>article {
+        display: grid;
+        width: 100%;
+        height: 100%;
+        grid-template-columns: 2fr 1fr;
+        grid-template-rows: 2fr 1fr;
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        transition: transform 400ms ease;
+    }
+
+    main>article>.article-section {
+        height: 100%;
+    }
+
+    main>article>.article-description-section,
+    main>article>.article-nav-section {
+        border-left: 1px solid var(--bordcolor);
+    }
+
+    main>article>.article-title-section,
+    main>article>.article-nav-section {
+        border-top: 1px solid var(--bordcolor);
+    }
+
+    .article-nav-section {
+        display: flex;
+    }
+
+    .article-nav {
+        display: flex;
+        width: 50%;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .nav-left {
+        border-right: 1px solid var(--bordcolor);
+    }
+
+
+
+    main>article[data-status="inactive"] {
+        transform: translateX(-100%);
+        transition: none;
+    }
+
+    main>article[data-status="active"] {
+        transform: translateX(0%);
+    }
+
+    main>article[data-status="before"] {
+        transform: translateX(-100%);
+    }
+
+    main>article[data-status="after"] {
+        transform: translateX(100%);
+    }
+
+    main>article[data-status="becoming-active-from-before"] {
+        transform: translateX(-100%);
+        transition: none;
+    }
+
+    main>article[data-status="becoming-active-from-after"] {
+        transform: translateX(100%);
+        transition: none;
+    }
+</style>
+
+
+<body>
+
+
+    <nav>
+        <div id="nav-logo-section" class="nav-section">
+            <a href="#">
+                PORTFOLIO
+            </a>
+        </div>
+        <div id="nav-link-section" class="nav-section">
+            <a href="">ABOUT</a>
+            <a href="">WORK</a>
+
+        </div>
+        <div id="nav-social-section" class="nav-section">
+            <a href="">S1</a>
+            <a href="">S2</a>
+            <a href="">S3</a>
+        </div>
+        <div id="nav-contact-section" class="nav-section">
+            <a href="">S3</a>
+        </div>
+    </nav>
+
+
+    <main>
+
+
+
+        <!--Primo-->
+        <article data-index="0" data-status="active">
+            <div class="article-image-section article-section"><img
+                    src="https://www.viewhotels.jp/ryogoku/wp-content/uploads/sites/9/2020/03/test-img.jpg" alt="">
+            </div>
+            <div class="article-description-section article-section">TEST</div>
+            <div class="article-title-section article-section">TEST</div>
+            <div class="article-nav-section article-section">
+                <div class="article-nav nav-left" onclick="handleLeftClick()">A</div>
+                <div class="article-nav right" onclick="handleRightClick()">B</div>
+            </div>
+        </article>
+
+        <!--Secondo-->
+        <article data-index="1" data-status="inactive">
+            <div class="article-image-section article-section"><img
+                    src="https://www.viewhotels.jp/ryogoku/wp-content/uploads/sites/9/2020/03/test-img.jpg" alt="">
+            </div>
+            <div class="article-description-section article-section">TEST</div>
+            <div class="article-title-section article-section">TEST</div>
+            <div class="article-nav-section article-section">
+                <div class="article-nav nav-left" onclick="handleLeftClick()">A</div>
+                <div class="article-nav right" onclick="handleRightClick()">B</div>
+            </div>
+        </article>
+
+    </main>
+
+
+</body>
