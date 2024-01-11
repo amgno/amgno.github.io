@@ -200,6 +200,58 @@
         transform: translateX(100%);
         transition: none;
     }
+
+
+    .article-title-section {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        padding-left: 4rem;
+        font-size: 7rem;
+    }
+
+    .article-description-section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-left: 7rem;
+        padding-right: 7rem;
+        font-size: 1.5rem;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+    }
+
+    .article-image-section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: 400ms ease;
+        overflow: hidden;
+    }
+
+    .article-image-section > img {
+        max-width: 100%;
+        transition: 400ms ease;
+    }
+    .article-image-section > img:hover {
+        filter: brightness(60%) blur(3px);
+    }
+
+    .article-image-section > p {
+        pointer-events: none;
+        opacity: 0%;
+        z-index: 1;
+        display: flex;
+        position: absolute;
+        color: rgb(233, 233, 233);
+        transition: 400ms ease;
+        font-size: 3rem;
+    }
+
+    .article-image-section > img:hover + .hovertext {
+        opacity: 100%;
+    }
+
 </style>
 
 
@@ -214,7 +266,7 @@
         </div>
         <div id="nav-link-section" class="nav-section">
             <a href="">ABOUT</a>
-            <a href="">WORK</a>
+            <a href="">CONTACT</a>
 
         </div>
         <div id="nav-social-section" class="nav-section">
@@ -223,7 +275,7 @@
             <a href="">S3</a>
         </div>
         <div id="nav-contact-section" class="nav-section">
-            <a href="">S3</a>
+            <a href="">Back</a>
         </div>
     </nav>
 
@@ -234,24 +286,53 @@
 
         <!--Primo-->
         <article data-index="0" data-status="active">
-            <div class="article-image-section article-section"><img
-                    src="https://www.viewhotels.jp/ryogoku/wp-content/uploads/sites/9/2020/03/test-img.jpg" alt="">
+            <div class="article-image-section article-section">
+                <img
+                    src="images/testimg.jpg" alt=""><p class="hovertext">OPEN ME</p>
             </div>
-            <div class="article-description-section article-section">TEST</div>
-            <div class="article-title-section article-section">TEST</div>
+
+            <div class="article-description-section article-section">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vestibulum ex quam, vitae fermentum
+                dolor posuere in. Sed non interdum nisl, sed laoreet nisi. Suspendisse euismod eget turpis non
+                hendrerit. Praesent in diam id ex consequat placerat. Sed venenatis eros quis semper placerat. Vivamus
+                pharetra turpis et tincidunt rhoncus. Aenean rhoncus ligula vel nisl pharetra, id interdum magna
+                pretium. Vivamus nisi magna, pellentesque non lacus sit amet, euismod malesuada lectus.
+
+
+                <br><br>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vestibulum ex quam, vitae fermentum
+                dolor posuere in. Sed non interdum nisl, Aenean rhoncus ligula vel nisl pharetra, id interdum magna
+                pretium. Vivamus nisi magna, pellentesque non lacus sit amet, euismod malesuada lectus.
+            </div>
+            <div class="article-title-section article-section">Should be a title</div>
             <div class="article-nav-section article-section">
                 <div class="article-nav nav-left" onclick="handleLeftClick()">A</div>
                 <div class="article-nav right" onclick="handleRightClick()">B</div>
             </div>
         </article>
 
-        <!--Secondo-->
+
+        <!--Primo-->
         <article data-index="1" data-status="inactive">
-            <div class="article-image-section article-section"><img
-                    src="https://www.viewhotels.jp/ryogoku/wp-content/uploads/sites/9/2020/03/test-img.jpg" alt="">
+            <div class="article-image-section article-section">
+                <img
+                    src="images/testimg2.jpg" alt=""><p class="hovertext">OPEN ME</p>
             </div>
-            <div class="article-description-section article-section">TEST</div>
-            <div class="article-title-section article-section">TEST</div>
+
+            <div class="article-description-section article-section">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vestibulum ex quam, vitae fermentum
+                dolor posuere in. Sed non interdum nisl, sed laoreet nisi. Suspendisse euismod eget turpis non
+                hendrerit. Praesent in diam id ex consequat placerat. Sed venenatis eros quis semper placerat. Vivamus
+                pharetra turpis et tincidunt rhoncus. Aenean rhoncus ligula vel nisl pharetra, id interdum magna
+                pretium. Vivamus nisi magna, pellentesque non lacus sit amet, euismod malesuada lectus.
+
+
+                <br><br>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vestibulum ex quam, vitae fermentum
+                dolor posuere in. Sed non interdum nisl, Aenean rhoncus ligula vel nisl pharetra, id interdum magna
+                pretium. Vivamus nisi magna, pellentesque non lacus sit amet, euismod malesuada lectus.
+            </div>
+            <div class="article-title-section article-section">Should be a title</div>
             <div class="article-nav-section article-section">
                 <div class="article-nav nav-left" onclick="handleLeftClick()">A</div>
                 <div class="article-nav right" onclick="handleRightClick()">B</div>
