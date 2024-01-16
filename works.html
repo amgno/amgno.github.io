@@ -255,8 +255,18 @@
         object-fit: contain;
     }
 
+
     .article-image-section>img:hover {
         filter: brightness(60%) blur(3px);
+    }
+
+    .article-image-section>iframe:hover {
+        filter: brightness(60%) blur(3px);
+        transition: 400ms ease;
+    }
+
+    .article-image-section>iframe:hover+.hovertext {
+        opacity: 100%;
     }
 
     .article-image-section>p {
@@ -466,8 +476,11 @@
         <article data-index="1" data-status="inactive">
 
 
-            <div class="article-image-section article-section" style="background-color: black;" onclick="window.open('./works/olinvideo.mp4', '_blank')" >
-                <img src="works/olinvideo.mp4" alt="">
+            <div class="article-image-section article-section" style="background-color: black;">
+                    <iframe width="1920" height="1080" 
+                        src="https://www.youtube.com/embed/sukNDF-ula4?autoplay=1&controls=0&mute=1" frameborder="0"
+                        allow="autoplay; encrypted-media" allowfullscreen>
+                    </iframe>
                 <p class="hovertext">OPEN ME</p>
             </div>
 
