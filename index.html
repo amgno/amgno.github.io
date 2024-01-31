@@ -1,128 +1,93 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<meta charset="utf-8" />
+<meta name="color-scheme" content="dark light" />
+<meta name="robots" content="noindex" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" type="image/x-icon" href="/images/bee.ico">
+<title>A Magno (@mgno)</title>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Under Construction</title>
-     <link rel="icon" type="image/x-icon" href="/images/flag.ico">
-    <style>
-        ::selection {
-            background-color: rgba(219, 141, 52, 0.5);
-            /* RGBA with 50% opacity */
-            color: #fff;
-            /* New text color */
-        }
+<style>
+  :root {
+    --color-background: #111;
+    --color-text-subtle: #999;
+    --color-text: #eee;
+    --font-family: -apple-system, Helvetica, sans-serif;
+    --font-size: 18px;
+    --font-weight: 400;
+    --space-1: 0.75rem;
+    --space-2: 1rem;
+    --space-3: 4rem;
+  }
 
-        body {
-            overflow: hidden;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            background-color: #f5f5e1;
-            /* Vanilla background color */
-            font-family: 'Courier New', monospace;
-        }
+  @media (prefers-color-scheme: light) {
+    :root {
+      --color-background: #eee;
+      --color-text-subtle: #666;
+      --color-text: #111;
+    }
+  }
 
-        .previous-works-item a {
-            text-decoration: none;
-            color: #e37a2b;
-            /* Link color */
-            font-weight: bold;
-            border-bottom: 2px solid #e37a2b;
-            /* Border color on hover */
-            transition: border-bottom 0.3s ease;
-        }
+  html {
+    background-color: var(--color-background);
+    font-family: var(--font-family);
+    font-size: var(--font-size);
+  }
 
-        .previous-works-item a:hover {
-            border-bottom: 2px solid #8a4b1b;
-            color: #8a4b1b;
-            /* Adjusted border color on hover */
-        }
+  body {
+    align-items: center;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    min-height: 100vh;
+    padding: var(--space-3) var(--space-2);
+    width: 100vw;
+  }
 
-        .construction-message {
+  nav {
+    display: flex;
+    flex-direction: column;
+  }
 
-            text-align: justify;
-            /*max-width: 30%;*/
-            max-width: 38vh;
-            line-height: 1.5;
-            color: #333;
-            /* Text color */
-        }
+  a {
+    color: var(--color-text-subtle);
+    padding: var(--space-1);
+    position: relative;
+    text-decoration: none;
+    text-align: center;
+    transition: color 0.2s;
+  }
 
-        .previous-works {
+  a:hover {
+    color: var(--color-background);
+  }
 
-            margin-left: 2vh;
-            margin-right: 2vh;
-            list-style-type: none;
-            padding: 0;
-            text-align: justify;
-        }
+  a::before {
+    background-color: var(--color-text);
+    content: ' ';
+    inset: var(--space-1);
+    opacity: 0.05;
+    position: absolute;
+    transform: scale(0.95) translateY(0.3em);
+    transition: all 0.2s;
+    z-index: -1;
+  }
 
-        .previous-works-item {
-            margin-bottom: 10px;
-        }
+  a:hover::before {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 
-        .bottom-right-text {
-            text-align: right;
-            position: fixed;
-            bottom: 10px;
-            right: 10px;
-            color: #0303036e;
-            /* Text color */
-        }
+  @media (min-width: 600px) {
+    nav {
+      flex-direction: row;
+    }
+  }
+</style>
 
-        .vline {
-            background: #92929246;
-            width: 1px;
-            min-height: 100vh;
-            display: flex;
-            margin-left: 1vh;
-            margin-right: 1vh;
-        }
-
-        .hline {
-            align-items: center;
-            justify-content: center;
-            background: #92929246;
-            width: 600%;
-            min-height: 1px;
-            height: 1px;
-            display: flex;
-            margin-left: -200%;
-            /* Set a negative margin to the left */
-            margin-right: -200%;
-            /* Set a negative margin to the right */
-        }
-    </style>
-</head>
-
-<body>
-    <div class="vline"></div>
-    <div class="construction-message">
-        <div class="hline"></div>
-        <p>Thanks for stopping by. Just wanted to give you a heads up that this corner of the internet is a bit of a
-            construction zone at the moment.</p>
-        <p>Now, while things are coming together, feel free to explore a few links to some of my previous works.
-        </p>
-        <div class="hline"></div>
-    </div>
-    <div class="vline"></div>
-
-    <ul class="previous-works">
-        <li class="previous-works-item"><a href="/LCG-Game/">Platform Game</a></li>
-        <li class="previous-works-item"><a href="./geppo/">Geppo's Website</a></li>
-        <li class="previous-works-item"><a href="./works.html">Portfolio</a></li>
-
-    </ul>
-    <div class="vline"></div>
-
-    <div class="bottom-right-text">
-        Alessandro Magnocavallo <br>
-        Student @ Design della Comunicazione - Politecnico
-    </div>
-</body>
-
-</html>
+<nav>
+  <a href="https://github.com/amgno">GitHub</a>
+  <a href="https://instagram.com/a.gnoma">Instagram</a>
+  
+  <a href="./works.html">Portfolio</a>
+</nav>
