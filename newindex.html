@@ -11,6 +11,15 @@
     <title>WIP</title>
 </head>
 <style>
+    @font-face {
+        font-family: SuisseMedium;
+        src: url(./font/Suisse/SuisseIntl-Light.otf);
+    } 
+
+    * {
+        font-family: SuisseMedium;
+    }
+
     body {
         margin: 0;
         /* Nasconde l'overflow orizzontale */
@@ -23,11 +32,13 @@
 
     #navbar {
         /* border: 1px solid red; */
+        padding-top: 0.2rem;
         display: flex;
         flex-direction: row;
         z-index: 1;
         position: absolute;
         width: 100vw;
+        font-size: small;
     }
 
     #navbar>div {
@@ -39,7 +50,7 @@
         justify-content: ;
         display: flex;
         flex-basis: 25%;
-        padding-left: 1rem;
+        padding-left: 0.2rem;
     }
 
     #nav2 {
@@ -59,7 +70,7 @@
         flex-basis: 20%;
         justify-content: right;
         display: flex;
-        padding-right: 1rem;
+        padding-right: 0.2rem;
     }
 
     main {
