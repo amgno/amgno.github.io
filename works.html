@@ -90,10 +90,17 @@
     }
 
     :root {
-        --bgcolor: #f5f5e1;
+        --bgcolor: #eee;
         --bordcolor: #92929246;
-        --black: #333;
+        --black: #111;
     }
+
+    @media (prefers-color-scheme: dark) {
+    :root {
+      --bgcolor: #111;
+      --black: #eee;
+    }
+  }
 
     body {
         background-color: var(--bgcolor);
@@ -531,25 +538,25 @@
 
     </style>
 
-    <script>
+    <!-- <script>
         function changetheme(selected) {
-            if(selected === 1){
-            document.documentElement.style.setProperty('--black', '#f5f5e1'); // Change to a valid color value
-            document.documentElement.style.setProperty('--bgcolor', '#000001');
-            // document.getElementById('darkbutton').style.textDecoration = "underline";
-            // document.getElementById('whitebutton').style.textDecoration = "none";
-            document.getElementById('darkbutton').style.border = "1px solid var(--black)"
-            document.getElementById('whitebutton').style.border = ""
+            if (selected === 1) {
+                document.documentElement.style.setProperty('--black', '#f5f5e1'); // Change to a valid color value
+                document.documentElement.style.setProperty('--bgcolor', '#000001');
+                // document.getElementById('darkbutton').style.textDecoration = "underline";
+                // document.getElementById('whitebutton').style.textDecoration = "none";
+                document.getElementById('darkbutton').style.border = "1px solid var(--black)"
+                document.getElementById('whitebutton').style.border = ""
 
-        } else {
+            } else {
 
-            document.documentElement.style.setProperty('--black', '#333'); // Change to a valid color value
-            document.documentElement.style.setProperty('--bgcolor', '#f5f5e1');
-            // document.getElementById('darkbutton').style.textDecoration = "none";
-            // document.getElementById('whitebutton').style.textDecoration = "underline";
-            document.getElementById('whitebutton').style.border = "1px solid var(--black)"
-            document.getElementById('darkbutton').style.border = ""
-        }
+                document.documentElement.style.setProperty('--black', '#333'); // Change to a valid color value
+                document.documentElement.style.setProperty('--bgcolor', '#f5f5e1');
+                // document.getElementById('darkbutton').style.textDecoration = "none";
+                // document.getElementById('whitebutton').style.textDecoration = "underline";
+                document.getElementById('whitebutton').style.border = "1px solid var(--black)"
+                document.getElementById('darkbutton').style.border = ""
+            }
         }
 
     </script>
@@ -562,7 +569,7 @@
     ">
         <a onclick="changetheme(1)" id="darkbutton" style="cursor: pointer; padding: 1px;">Dark</a>
         <a onclick="changetheme(2)" id="whitebutton" style="cursor: pointer; padding: 1px;">Light</a>
-    </theme>
+    </theme> -->
 
 
 </body>
