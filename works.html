@@ -115,27 +115,29 @@
         display: flex;
         width: 100%;
         border-bottom: 1px solid var(--bordcolor);
-        height: 5.8rem;
+        height: 13vh;
         /*Idk abt this*/
+        font-size: 1.2vw;
     }
 
     #nav-logo-section {
-        font-size: 4rem;
         justify-content: flex-start;
+        font-size: 5vw;
     }
 
     #nav-link-section {
-        gap: 6rem;
+        gap: 6ch;
     }
 
     #nav-social-section {
-        gap: 3rem;
+        gap: 3ch;
     }
 
     #nav-logo-section,
     #nav-link-section {
-        flex-basis: calc(100% / 3);
+        flex-basis: calc(100%/3);
     }
+
 
     #nav-social-section,
     #nav-contact-section {
@@ -143,9 +145,9 @@
     }
 
     nav>.nav-section {
-        padding: 3rem 2rem;
+        padding: 1ch 0.5ch;
         display: flex;
-        gap: 1rem;
+        gap: 1ch;
         border-left: 1px solid var(--bordcolor);
         align-items: center;
         justify-content: center;
@@ -289,7 +291,7 @@
     }
 
     :-webkit-any(article, aside, nav, section) h1 {
-        font-size: 4em;
+        font-size: 3vw;
         margin-block-start: 0.67em;
         margin-block-end: 0.67em;
         margin-inline-start: 0px;
@@ -304,12 +306,9 @@
 
     /*TEST*/
     @media(max-width: 1200px) {
-        #nav-mobile-section {
-            flex-basis: calc(100% * 0.75);
-        }
 
         #nav-logo-section {
-            flex-basis: calc(100% * 0.25);
+            flex-basis: calc(100%/3);
         }
 
         #nav-link-section {
@@ -376,8 +375,14 @@
     }
 
     @media(max-width: 800px) {
+        #nav-logo-section {
+            font-size: 5vw;
+        }
+
+
         nav {
             height: 10vh;
+            font-size: 3vw;
         }
 
 
@@ -409,11 +414,16 @@
 
         main>article>.article-description-section {
             order: 2;
+            padding: 1vh;
 
         }
 
         main>article>.article-nav-section {
             order: 3;
+        }
+
+        .article-image-section {
+            background-color: #000000;
         }
 
         #nav-social-section {
