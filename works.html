@@ -324,7 +324,7 @@
 
         main>article {
             grid-template-columns: 2fr 1fr;
-            grid-template-rows: 1.5fr 1fr;
+            grid-template-rows: 70vh 20vh;
             height: max(900px, 100%);
         }
 
@@ -332,10 +332,6 @@
             font-size: 0.8rem;
         }
 
-        main>article>.article-title-section,
-        main>article>.article-nav-section {
-            height: 50%;
-        }
 
         .article-description-section {
             padding: 4ch;
@@ -380,13 +376,21 @@
     }
 
     @media(max-width: 800px) {
+        nav {
+            height: 10vh;
+        }
 
+
+
+        main>article>.article-nav-section{
+            height: 100%;
+            justify-content: center;
+        }
 
 
         main>article {
 
-            border: 1px solid red;
-            grid-template-rows: 1fr 0.1fr 1fr 1.5fr;
+            grid-template-rows: 40vh 10vh 30vh 10vh;
             grid-template-columns: none;
         }
 
