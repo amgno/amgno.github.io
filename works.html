@@ -257,6 +257,21 @@
         align-items: center;
         transition: 400ms ease;
         overflow: hidden;
+        position: relative;
+        background-color: #000000;
+    }
+
+    .article-image-section>a {
+        position: absolute;
+        border-top: 1px solid var(--bordcolor);
+        border-left: 1px solid var(--bordcolor);
+        padding: 1vw;
+        bottom: 0px;
+        right: 0px;
+        background-color: var(--bgcolor);
+        color: var(--black);
+        text-decoration: none;
+        cursor: pointer;
     }
 
     .article-image-section>img {
@@ -266,7 +281,7 @@
     }
 
 
-    .article-image-section>img:hover {
+/*     .article-image-section>img:hover {
         filter: brightness(60%) blur(3px);
     }
 
@@ -277,7 +292,7 @@
 
     .article-image-section>iframe:hover+.hovertext {
         opacity: 100%;
-    }
+    } */
 
     .article-image-section>p {
         pointer-events: none;
@@ -387,7 +402,7 @@
 
 
 
-        main>article>.article-nav-section{
+        main>article>.article-nav-section {
             height: 100%;
             justify-content: center;
         }
@@ -521,8 +536,8 @@
         <!--Primo-->
         <article data-index="0" data-status="active">
             <div class="article-image-section article-section">
-                <img src="images/OLINSKI thumb22.png" alt="" onclick="window.open('./works/OLINSKI.pdf', '_blank')">
-                <p class="hovertext">OPEN ME</p>
+                <img src="images/OLINSKI thumb22.png">
+                <a href="./works/OLINSKI.pdf" target="_blank">OPEN</a>
             </div>
 
             <div class="article-description-section article-section">
@@ -563,11 +578,12 @@
 
 
             <div class="article-image-section article-section" style="background-color: black;">
+
                 <iframe width="1920" height="1080"
                     src="https://www.youtube.com/embed/sukNDF-ula4?autoplay=1&controls=0&mute=1" frameborder="0"
                     allow="autoplay; encrypted-media" allowfullscreen>
                 </iframe>
-                <p class="hovertext">OPEN ME</p>
+                <a href="https://www.youtube.com/embed/sukNDF-ula4?autoplay=1&controls=0&mute=0" target="_blank">OPEN</a>
             </div>
 
             <div class="article-description-section article-section">
