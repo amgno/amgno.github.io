@@ -96,11 +96,11 @@
     }
 
     @media (prefers-color-scheme: dark) {
-    :root {
-      --bgcolor: #111;
-      --black: #eee;
+        :root {
+            --bgcolor: #111;
+            --black: #eee;
+        }
     }
-  }
 
     body {
         background-color: var(--bgcolor);
@@ -318,16 +318,34 @@
         }
 
         main {
-            overflow-y: auto;
+            overflow-y: hidden;
+            overflow-x: hidden;
         }
 
         main>article {
-            grid-template-columns: none;
-            grid-template-rows: 1.5fr repeat(3, 0.75fr) 0.25fr;
+            grid-template-columns: 2fr 1fr;
+            grid-template-rows: 1.5fr 1fr;
             height: max(900px, 100%);
         }
 
-        main>article>.article-title-section>h2 {
+        .article-description-section {
+            font-size: 0.8rem;
+        }
+
+        main>article>.article-title-section,
+        main>article>.article-nav-section {
+            height: 50%;
+        }
+
+        .article-description-section {
+            padding: 4ch;
+        }
+
+        /* grid-template-columns: 2fr 1fr;
+        grid-template-rows: 3.5fr 1fr; */
+
+
+        /*         main>article>.article-title-section>h2 {
             font-size: 3rem;
             line-height: 2.6rem;
         }
@@ -358,17 +376,56 @@
         main>article>.article-nav-section {
             border-bottom: 1px solid var(--bordcolor);
             order: 4;
-        }
+        } */
     }
 
     @media(max-width: 800px) {
 
+
+
         main>article {
-            grid-template-rows: 1fr repeat(4, 0.5fr);
-            height: max(700px, 100%);
+
+            border: 1px solid red;
+            grid-template-rows: 1fr 0.1fr 1fr 1.5fr;
+            grid-template-columns: none;
         }
 
+
         main>article>.article-title-section {
+            order: 1;
+            border-bottom: 1px solid var(--bordcolor);
+            height: 100%;
+            font-size: 1ch;
+            margin-block-start: 0;
+            margin-block-end: 0;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+            font-weight: 400;
+        }
+
+        main>article>.article-description-section {
+            order: 2;
+
+        }
+
+        main>article>.article-nav-section {
+            order: 3;
+        }
+
+        #nav-social-section {
+            display: none;
+        }
+
+        #nav-link-section {
+            flex-basis: calc(100% / 3);
+            flex-direction: column;
+            gap: 1ch;
+        }
+
+
+
+
+        /*         main>article>.article-title-section {
             padding: 2rem;
         }
 
@@ -388,7 +445,9 @@
 
         main>article>.article-description-section>p {
             font-size: 1rem;
-        }
+        } */
+
+
     }
 </style>
 
@@ -477,14 +536,6 @@
                 </div>
             </div>
         </article>
-
-
-
-
-
-
-
-
 
 
 
