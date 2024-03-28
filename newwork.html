@@ -1,0 +1,211 @@
+<style>
+    /* DEFAULTS */
+    :root {
+        --bgcolor: #eee;
+        --bordcolor: #92929246;
+        --black: #111;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --bgcolor: #111;
+            --black: #eee;
+        }
+    }
+
+    body {
+        background-color: var(--bgcolor);
+        margin: 0px;
+
+    }
+
+
+    /* SNAP CONTAINER TEST */
+
+    /* Container that holds all your sections */
+    .snap-container {
+        height: 100vh;
+        /* Full height of the viewport */
+        overflow-y: scroll;
+        /* Allows vertical scrolling */
+        scroll-snap-type: y mandatory;
+        /* Enables vertical scroll snapping */
+    }
+
+    /* Each section */
+    main {
+        scroll-snap-align: start;
+        /* Aligns the start edge of the section with the container's scroll snap boundary */
+        /* Your existing styles for main */
+    }
+
+
+    /* NAVBAR */
+    .navbar {
+        top: 1vh;
+        height: 4vh;
+        display: grid;
+        width: 100vw;
+        /* border: 1px solid red; */
+        grid-template-rows: 5vh;
+        /* grid-template-columns: 20vw 10vw 60vw 9vw; */
+        grid-template-columns: repeat(8, minmax(0, 1fr));
+        padding: 2vh;
+        position: fixed;
+        font-size: 11px;
+        text-transform: uppercase;
+        font-family: modern-era-mono, monospace;
+        z-index: 10;
+        color: white;
+        mix-blend-mode: difference;
+    }
+
+    .navbar a {
+        text-decoration: underline;
+        cursor: pointer;
+        color: var(--black);
+        color: white;
+        mix-blend-mode: difference;
+    }
+
+
+    .navbar>div {}
+
+    .navbar>#nav0 {
+        grid-column: 1;
+    }
+
+    .navbar>#nav1 {
+        grid-column: 2;
+    }
+
+    .navbar>#nav2 {
+        grid-column: 5;
+    }
+
+    .navbar>#nav3 {
+        grid-column: 6;
+    }
+
+    .navbar>#nav4 {
+        grid-column: 8;
+    }
+
+
+
+    /* Main pages */
+    main {
+        height: 100vh;
+        width: 100vw;
+        /* border: 1px solid black; */
+        position: relative;
+        display: flex;
+    }
+
+
+    #logo {
+        position: absolute;
+        /* border: 1px solid orange; */
+        pointer-events: none;
+
+
+        width: 60vw;
+        height: auto;
+        right: 0vw;
+        bottom: 1vh;
+    }
+
+    main>#aboutme {
+        color: var(--black);
+        /* border: 1px solid salmon; */
+        position: absolute;
+        top: 7vh;
+        left: 5vw;
+        width: 45vw;
+        font-size: 4vh;
+        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+
+    /* terza pagina */
+    #gallerymain {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .gallery {
+        position: absolute;
+        top: 10vh;
+
+        column-count: 3;
+        column-gap: 5px;
+        row-gap: 10px;
+        width: 98vw;
+        padding-left: 1vw;
+        padding-right: 1vw;
+    }
+
+    .gallery img {
+        width: 100%;
+        height: auto;
+        margin-top: 6px;
+        cursor: pointer;
+    }
+
+</style>
+
+
+<head>
+
+</head>
+
+
+<body>
+    <nav class="navbar">
+        <div id="nav0">LOGO</div>
+        <div id="nav1">ALESSANDRO MAGNOCAVALLO <br> <a href="mailto:ale@magno.me">ale@magno.me</a></div>
+        <div id="nav2">STUDENT <br>WEB DESIGNER <br>GRAPHIC DESIGNER</div>
+        <div id="nav3">SOCIALS <br>LI IG</div>
+        <div id="nav4">WRK</div>
+    </nav>
+
+
+
+    <div class="snap-container">
+        <!-- First page -->
+        <main id="Firstpage">
+            <img src="images/logo.svg" id="logo">
+        </main>
+
+
+        <!-- Second page -->
+        <main id="Secondpage">
+            <p id="aboutme">Nullam, sed volutpat est semper varius urna commodo. Lacinia consequat sagittis platea
+                rutrum
+                magnis lobortis
+                nascetur? Penatibus leo neque curabitur nostra molestie mollis rhoncus per? Donec dui montes fusce
+                ridiculus
+                vulputate. Commodo hendrerit metus diam magna maecenas vitae magna nec. Arcu commodo vitae nostra
+                convallis
+                pellentesque habitasse felis habitant interdum rutrum scelerisque. Vel leo nisi parturient convallis
+                sagittis interdum convallis himenaeos donec nullam? Nascetur.</p>
+        </main>
+
+
+        <!-- terza pagina // works -->
+        <main id="Thirdpage" id="gallerymain">
+            <div class="gallery">
+                <img src="geppo/optimized imgs/Gass.jpg" alt="">
+                <img src="geppo/optimized imgs/interno1.jpg" alt="">
+                <img src="geppo/optimized imgs/interno2.jpg" alt="">
+                <img src="geppo/optimized imgs/Melanzana.jpg" alt="">
+                <img src="geppo/optimized imgs/pizza1.jpg" alt="">
+                <img src="geppo/optimized imgs/pizza2.jpg" alt="">
+                <img src="geppo/optimized imgs/pizzza3.jpg" alt="">
+            </div>
+        </main>
+    </div>
+
+
+</body>
