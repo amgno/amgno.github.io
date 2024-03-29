@@ -136,7 +136,6 @@
         /* All this just so that it expand based on the gallery items */
         display: flex;
         flex-wrap: wrap;
-        border: 1px solid gold;
         overflow-x: auto;
     }
 
@@ -195,14 +194,20 @@
     /* The Close Button */
     .close {
         color: #aaa;
-        position: fixed;
-        bottom: 1vh;
-        height: 4vh;
-        display: grid;
-        width: 100vw;
-        grid-template-columns: repeat(8, minmax(0, 1fr));
-        padding: 2vh;
+        grid-column: 1;
+        grid-row: 2;
+        /* position: fixed; */
+        /* bottom: 1vh;
+        height: 4vh; */
+        /* display: grid; */
+        /* width: 100vw; */
+        /* grid-template-columns: repeat(8, minmax(0, 1fr)); */
+        /* padding: 2vh; */
         font-family: monospace;
+        display: flex;
+        align-items: flex-end;
+        /* transform: rotate(+90deg); */
+
     }
 
     .close:hover,
@@ -212,52 +217,81 @@
         cursor: pointer;
     }
 
+    .modal-content {
+        height: 30vh;
+        display: grid;
+        width: 100vw;
+        /* border: 1px solid red; */
+        grid-template-rows: repeat(2, minmax(0, 1fr));
+        /* grid-template-columns: 20vw 10vw 60vw 9vw; */
+        grid-template-columns: repeat(8, minmax(0, 1fr));
+        padding: 2vh;
+        font-size: 11px;
+        font-family: modern-era-mono, monospace;
+        z-index: 1001;
+        color: white;
+        /* mix-blend-mode: difference; */
+        position: fixed;
+        bottom: 20vh;
+    }
 
     #modal-title {
-        
         font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-        top: 50vh;
-        left: 30vw;
         font-size: 90px;
-        position: fixed;
-
         color: white;
         mix-blend-mode: difference;
+        grid-column: 2;
     }
 
     #modal-desc {
         color: var(--black);
         font-size: 11px;
         font-family: monospace;
-        height: 30vh;
-        width: 10vw;
-        left: 30vw;
-        position: fixed;
-        top: 65vh;
+        grid-column: 2;
     }
 
     #modal-info {
-        position: fixed;
         color: var(--black);
         font-size: 11px;
         font-family: monospace;
-        height: 30vh;
-        width: 10vw;
-
-        top: 65vh;
-        right: 30vw;
+        grid-column: 4;
     }
 
+
+
+
+
     .modal-imggallery {
-        display:flex;
-        flex-direction: row;
+        grid-row: 2;
+        grid-column: 2;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory;
+        display: flex;
+        flex-wrap: nowrap;
+        height: auto;
+        width: 100%;
+    }
+
+    .imgcontainer {
+        display: grid;
+        grid-template-rows: 10vh 80vh 10vh;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        flex: 0 0 auto;
+        overflow-y: hidden;
     }
 
     .modal img {
-        height: 75vh;
-        width: auto;
-        padding: 8vh;
+        scroll-snap-align: start;
+        height: auto;
+        width: 100%;
+        margin-right: 20vw;
+        object-fit: contain;
     }
+
+    .modal-imggallery::-webkit-scrollbar {
+    display: none;
+}
 </style>
 
 
@@ -316,13 +350,26 @@
     <!-- modal test, for descripted work -->
 
     <div id="myModal" class="modal">
-        <div class="modal-content">
-            <span class="close">CLOSE</span>
+        <div class="imgcontainer">
+
+
             <div class="modal-imggallery">
-                <img src="geppo/optimized imgs/pizzza3.jpg" alt="Gallery Image" class="modal-image">
-                <img src="geppo/optimized imgs/pizza1.jpg" alt="" class="modal-image">
+                <img src="geppo/optimized imgs/pizzza3.jpg" alt="Gallery Image">
+                <img src="geppo/optimized imgs/pizza1.jpg" alt="">
                 <img src="geppo/optimized imgs/interno2.jpg" alt="">
+                <img src="geppo/optimized imgs/Gass.jpg" alt="">
+                <img src="geppo/optimized imgs/interno1.jpg" alt="">
+                <img src="geppo/optimized imgs/interno2.jpg" alt="">
+                <img src="geppo/optimized imgs/Melanzana.jpg" alt="">
+                <img src="geppo/optimized imgs/pizza1.jpg" alt="">
+                <img src="geppo/optimized imgs/pizza2.jpg" alt="">
             </div>
+        </div>
+
+
+        <div class="modal-content">
+
+            <span class="close" onclick="closemodal()">CLOSE</span>
             <titolo id="modal-title">/01</titolo>
 
             <!-- You can add more content here if needed -->
@@ -344,3 +391,11 @@
     </div>
 
 </body>
+
+
+<script>
+    function closemodal(){
+        var btn = document.getElementById('myModal');
+        btn.style.display = "none";
+    }
+</script>
