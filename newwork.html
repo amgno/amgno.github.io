@@ -11,6 +11,7 @@
             --bgcolor: #111;
             --black: #eee;
         }
+
         #logo {
             filter: invert(100%);
         }
@@ -58,7 +59,7 @@
         font-size: 11px;
         text-transform: uppercase;
         font-family: modern-era-mono, monospace;
-        z-index: 10;
+        z-index: 1001;
         color: white;
         mix-blend-mode: difference;
     }
@@ -131,6 +132,15 @@
 
 
     /* terza pagina */
+    #Thirdpage {
+        /* All this just so that it expand based on the gallery items */
+        display: flex;
+        flex-wrap: wrap;
+        border: 1px solid gold;
+        overflow-x: auto;
+    }
+
+
     #gallerymain {
         display: flex;
         align-items: center;
@@ -157,6 +167,97 @@
         filter: grayscale(100%);
     }
 
+    /* modal test */
+
+    /* The Modal (background) */
+    .modal {
+        display: block;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100vw;
+        height: 100vh;
+        overflow: auto;
+        background-color: var(--bgcolor);
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Modal Content */
+    /* .modal-content {
+        position: relative;
+        background-color: aqua;
+        width: 70vw;
+        overflow-y: auto;
+    } */
+
+    /* The Close Button */
+    .close {
+        color: #aaa;
+        position: fixed;
+        bottom: 1vh;
+        height: 4vh;
+        display: grid;
+        width: 100vw;
+        grid-template-columns: repeat(8, minmax(0, 1fr));
+        padding: 2vh;
+        font-family: monospace;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+
+    #modal-title {
+        
+        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        top: 50vh;
+        left: 30vw;
+        font-size: 90px;
+        position: fixed;
+
+        color: white;
+        mix-blend-mode: difference;
+    }
+
+    #modal-desc {
+        color: var(--black);
+        font-size: 11px;
+        font-family: monospace;
+        height: 30vh;
+        width: 10vw;
+        left: 30vw;
+        position: fixed;
+        top: 65vh;
+    }
+
+    #modal-info {
+        position: fixed;
+        color: var(--black);
+        font-size: 11px;
+        font-family: monospace;
+        height: 30vh;
+        width: 10vw;
+
+        top: 65vh;
+        right: 30vw;
+    }
+
+    .modal-imggallery {
+        display:flex;
+        flex-direction: row;
+    }
+
+    .modal img {
+        height: 75vh;
+        width: auto;
+        padding: 8vh;
+    }
 </style>
 
 
@@ -209,7 +310,37 @@
                 <img src="geppo/optimized imgs/pizzza3.jpg" alt="">
             </div>
         </main>
-    </div>
 
+
+    </div>
+    <!-- modal test, for descripted work -->
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">CLOSE</span>
+            <div class="modal-imggallery">
+                <img src="geppo/optimized imgs/pizzza3.jpg" alt="Gallery Image" class="modal-image">
+                <img src="geppo/optimized imgs/pizza1.jpg" alt="" class="modal-image">
+                <img src="geppo/optimized imgs/interno2.jpg" alt="">
+            </div>
+            <titolo id="modal-title">/01</titolo>
+
+            <!-- You can add more content here if needed -->
+            <p id="modal-desc">
+                <b>Project name</b>
+                <br><br><br>
+                Quick little description
+                <br><br><br>
+                Project Type:
+            </p>
+            <p id="modal-info">
+                Date made:
+                <br>
+                XXX
+                <br><br><br>
+                Tools used:
+            </p>
+        </div>
+    </div>
 
 </body>
