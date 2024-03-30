@@ -1,3 +1,4 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.7.570/pdf.min.js"></script>
 <style>
     /* DEFAULTS */
     :root {
@@ -385,28 +386,23 @@
 
         <!-- Second page -->
         <main id="Secondpage">
-            <p id="aboutme">Nullam, sed volutpat est semper varius urna commodo. Lacinia consequat sagittis platea
-                rutrum
-                magnis lobortis
-                nascetur? Penatibus leo neque curabitur nostra molestie mollis rhoncus per? Donec dui montes fusce
-                ridiculus
-                vulputate. Commodo hendrerit metus diam magna maecenas vitae magna nec. Arcu commodo vitae nostra
-                convallis
-                pellentesque habitasse felis habitant interdum rutrum scelerisque. Vel leo nisi parturient convallis
-                sagittis interdum convallis himenaeos donec nullam? Nascetur.</p>
+            <p id="aboutme">
+                My name is Alessandro Magnocavallo. I am currently
+                advancing my academic pursuit in Communication Design at Politecnico di Milano.
+                With a foundational interest in the realms of web and graphic design, my academic and project-based
+                experiences have been dedicated to the exploration and mastery of visual communication. My approach is
+                methodical, yet creative, aiming to merge aesthetic appeal with functional design to create intuitive
+                and engaging digital experiences.
+            </p>
         </main>
 
 
         <!-- terza pagina // works -->
         <main id="Thirdpage" id="gallerymain">
             <div class="gallery">
-                <img src="geppo/optimized imgs/Gass.jpg" alt="" onclick="populateModal(projects[0])">
-                <img src="geppo/optimized imgs/interno1.jpg" alt="">
-                <img src="geppo/optimized imgs/interno2.jpg" alt="">
-                <img src="geppo/optimized imgs/Melanzana.jpg" alt="">
-                <img src="geppo/optimized imgs/pizza1.jpg" alt="">
-                <img src="geppo/optimized imgs/pizza2.jpg" alt="">
-                <img src="geppo/optimized imgs/pizzza3.jpg" alt="">
+                <img src="works/01 - Olin/thumb.png" alt="" onclick="populateModal(projects[0])">
+                <img src="works/02 - Typographic/thumb.png" alt="" onclick="populateModal(projects[1])">
+                <img src="works/03 - Geppo Website/thumb.png" alt="" onclick="populateModal(projects[2])">
             </div>
         </main>
 
@@ -472,7 +468,7 @@
         setTimeout(() => {
             modal.style.display = 'none';
             modal.style.animation = 'fadeInModal 0.2s forwards';
-        }, 200); 
+        }, 200);
     }
 
 
@@ -481,13 +477,36 @@
     const projects = [
         {
             number: "//01",
+            name: "Olin Ski",
+            description: "woow so cool man keep it up",
+            ptype: "dsadsadasd",
+            tools: "dsadad",
+            date: "sdsadjasd",
+
+            images: [],
+            pdf: "./works/01 - Olin/document.pdf",
+        },
+        {
+            number: "//02",
             name: "Project One",
             description: "This is the description for Project One.",
             ptype: "testptype",
             tools: "testtools",
             date: "000001",
 
-            images: ["./images/testimg.jpg", "./images/testimg2.jpg"],
+            images: [],
+            pdf: "./works/02 - Typographic/document.pdf",
+        },
+        {
+            number: "//03",
+            name: "Geppo's website",
+            description: "This is the description for Project One.",
+            ptype: "Website",
+            tools: "vscode",
+            date: "000001",
+
+            images: ['./works/03 - Geppo Website/images/img1.png', './works/03 - Geppo Website/images/img2.png', './works/03 - Geppo Website/images/img3.png'],
+            pdf: "",
         },
     ];
 
@@ -530,7 +549,41 @@
             // Append the new img element to the container, not a string
             imageContainer.appendChild(img);
         });
+
+        displayPdfAsImages(project.pdf);
+
     }
+
+
+
+    async function displayPdfAsImages(pdfUrl) {
+        const loadingTask = pdfjsLib.getDocument(pdfUrl);
+        const pdf = await loadingTask.promise;
+        const container = document.getElementById('modal-imggid'); // Your gallery container
+
+        for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
+            const page = await pdf.getPage(pageNumber);
+
+            // Create a canvas to render the page
+            const canvas = document.createElement('canvas');
+            const viewport = page.getViewport({ scale: 1 });
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            // Render PDF page into canvas context
+            const renderContext = {
+                canvasContext: canvas.getContext('2d'),
+                viewport: viewport
+            };
+            await page.render(renderContext).promise;
+
+            // Convert canvas to an image and append to the gallery
+            const img = document.createElement('img');
+            img.src = canvas.toDataURL();
+            container.appendChild(img);
+        }
+    }
+
 
 
 
