@@ -170,7 +170,7 @@
 
     /* The Modal (background) */
     .modal {
-        display: block;
+        display: none;
         position: fixed;
         z-index: 1000;
         left: 0;
@@ -290,8 +290,8 @@
     }
 
     .modal-imggallery::-webkit-scrollbar {
-    display: none;
-}
+        display: none;
+    }
 </style>
 
 
@@ -301,6 +301,7 @@
 
 
 <body>
+
     <nav class="navbar">
         <div id="nav0">LOGO</div>
         <div id="nav1">ALESSANDRO MAGNOCAVALLO <br> <a href="mailto:ale@magno.me">ale@magno.me</a></div>
@@ -335,7 +336,7 @@
         <!-- terza pagina // works -->
         <main id="Thirdpage" id="gallerymain">
             <div class="gallery">
-                <img src="geppo/optimized imgs/Gass.jpg" alt="">
+                <img src="geppo/optimized imgs/Gass.jpg" alt="" onclick="populateModal(projects[0])">
                 <img src="geppo/optimized imgs/interno1.jpg" alt="">
                 <img src="geppo/optimized imgs/interno2.jpg" alt="">
                 <img src="geppo/optimized imgs/Melanzana.jpg" alt="">
@@ -353,16 +354,9 @@
         <div class="imgcontainer">
 
 
-            <div class="modal-imggallery">
-                <img src="geppo/optimized imgs/pizzza3.jpg" alt="Gallery Image">
-                <img src="geppo/optimized imgs/pizza1.jpg" alt="">
-                <img src="geppo/optimized imgs/interno2.jpg" alt="">
-                <img src="geppo/optimized imgs/Gass.jpg" alt="">
-                <img src="geppo/optimized imgs/interno1.jpg" alt="">
-                <img src="geppo/optimized imgs/interno2.jpg" alt="">
-                <img src="geppo/optimized imgs/Melanzana.jpg" alt="">
-                <img src="geppo/optimized imgs/pizza1.jpg" alt="">
-                <img src="geppo/optimized imgs/pizza2.jpg" alt="">
+            <div class="modal-imggallery" id="modal-imggid">
+                <img src="" alt="Gallery Image">
+                <img src="" alt="">
             </div>
         </div>
 
@@ -370,22 +364,23 @@
         <div class="modal-content">
 
             <span class="close" onclick="closemodal()">CLOSE</span>
-            <titolo id="modal-title">/01</titolo>
+            <titolo id="modal-title">//01</titolo>
 
             <!-- You can add more content here if needed -->
             <p id="modal-desc">
-                <b>Project name</b>
+                <b id="modal-v-title">Project name</b>
                 <br><br><br>
-                Quick little description
+                <span id="modal-v-desc">Quick little description</span>
                 <br><br><br>
-                Project Type:
+                Project Type: <br> <span id="modal-v-ptype"></span>
             </p>
             <p id="modal-info">
                 Date made:
                 <br>
-                XXX
+                <span id="modal-v-date"></span>
                 <br><br><br>
-                Tools used:
+                Tools used: <br>
+                <span id="modal-v-tools"></span>
             </p>
         </div>
     </div>
@@ -394,8 +389,73 @@
 
 
 <script>
-    function closemodal(){
+
+    window.onload = function () {
+        // Hide the preloader
+        console.log("loaded");
+    };
+
+
+
+    function closemodal() {
         var btn = document.getElementById('myModal');
         btn.style.display = "none";
+        document.body.style.overflow = '';
     }
+
+
+
+    // hype shit ykyk
+    const projects = [
+        {
+            number: "//01",
+            name: "Project One",
+            description: "This is the description for Project One.",
+            ptype: "testptype",
+            tools: "testtools",
+            date: "000001",
+
+            images: ["./images/testimg.jpg", "./images/testimg2.jpg"],
+        },
+    ];
+
+
+
+    function populateModal(project) {
+        document.body.style.overflow = 'hidden';
+        var btn = document.getElementById('myModal');
+        btn.style.display = "block";
+        const number = document.getElementById('modal-title');
+        const title = document.getElementById('modal-v-title');
+        const desc = document.getElementById('modal-v-desc');
+        const ptype = document.getElementById('modal-v-ptype');
+        const tools = document.getElementById('modal-v-tools');
+        const date = document.getElementById('modal-v-date');
+        const imageContainer = document.getElementById('modal-imggid'); // Make sure this ID matches your HTML
+
+        // Clear previous images
+        imageContainer.innerHTML = '';
+
+        // Setting project information
+        number.textContent = project.number;
+        title.textContent = project.name;
+        desc.textContent = project.description; // Ensure you have this element in your HTML
+        ptype.textContent = project.ptype;
+        tools.textContent = project.tools;
+        date.textContent = project.date;
+
+        // Iterate over each image URL in the project and create an <img> element
+        project.images.forEach((imageUrl) => {
+            const img = document.createElement('img');
+            img.src = imageUrl;
+            // Optionally add a class for styling. Ensure the class name matches your CSS.
+            // img.classList.add('modal-imggallery');
+
+            // Append the new img element to the container, not a string
+            imageContainer.appendChild(img);
+        });
+    }
+
+
+
 </script>
