@@ -292,6 +292,16 @@
         object-fit: contain;
     }
 
+
+    .modal iframe {
+        scroll-snap-align: start;
+        margin-right: 20vw;
+
+        width: 90% !important; /* Ensures iframe takes full width of its container */
+        min-width: 90% !important;
+
+    }
+
     .modal-imggallery::-webkit-scrollbar {
         display: none;
     }
@@ -486,7 +496,7 @@
 
             images: [],
             pdf: "./works/01 - Olin/document.pdf",
-            video: "",
+            video: "https://www.youtube.com/embed/sukNDF-ula4?si=ZjqOtKqEEsrfjEBv&amp;controls=0?",
         },
         {
             number: "//02",
@@ -543,6 +553,17 @@
         setTimeout(() => {
             imageContainer.scrollLeft = 0; // Reset the horizontal scroll position
         }, 500); // Adjust delay as necessary
+
+
+        if (project.video && project.video.trim() !== "") {
+            const iframe = document.createElement('iframe');
+            iframe.setAttribute('src', project.video);
+            iframe.setAttribute('frameborder', '0');
+            iframe.setAttribute('allowfullscreen', '');
+            iframe.setAttribute('allow', 'autoplay');
+            imageContainer.appendChild(iframe);
+        }
+
 
         // Setting project information
         number.textContent = project.number;
