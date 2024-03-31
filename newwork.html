@@ -1,5 +1,22 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.7.570/pdf.min.js"></script>
 <style>
+    @font-face {
+        font-family: 'sfmono';
+        src: url('/font/Sfmono/SF-Mono-Regular.otf') format('opentype');
+        font-weight: normal;
+        /* Or 400 */
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'sfmono';
+        src: url('/font/Sfmono/SF-Mono-Light.otf') format('opentype');
+        font-weight: 300;
+        /* Light */
+        font-style: normal;
+    }
+
+
     /* DEFAULTS */
     :root {
         --bgcolor: #eee;
@@ -59,7 +76,7 @@
         position: fixed;
         font-size: 11px;
         text-transform: uppercase;
-        font-family: modern-era-mono, monospace;
+        font-family: 'sfmono', monospace;
         z-index: 1001;
         color: white;
         mix-blend-mode: difference;
@@ -154,7 +171,7 @@
         column-count: 3;
         column-gap: 5px;
         row-gap: 10px;
-        width: 98vw;
+        width: 100vw;
         padding-left: 1vw;
         padding-right: 1vw;
     }
@@ -204,7 +221,7 @@
         /* width: 100vw; */
         /* grid-template-columns: repeat(8, minmax(0, 1fr)); */
         /* padding: 2vh; */
-        font-family: monospace;
+        font-family: 'sfmono', monospace;
         display: block;
         /* transform: rotate(+90deg); */
         margin-block-start: 1em;
@@ -230,7 +247,7 @@
         grid-template-columns: repeat(8, minmax(0, 1fr));
         padding: 2vh;
         font-size: 11px;
-        font-family: modern-era-mono, monospace;
+        font-family: 'sfmono', monospace;
         z-index: 1001;
         color: white;
         /* mix-blend-mode: difference; */
@@ -249,14 +266,14 @@
     #modal-desc {
         color: var(--black);
         font-size: 11px;
-        font-family: monospace;
+        font-family: 'sfmono', monospace;
         grid-column: 2;
     }
 
     #modal-info {
         color: var(--black);
         font-size: 11px;
-        font-family: monospace;
+        font-family: 'sfmono', monospace;
         grid-column: 4;
     }
 
@@ -398,12 +415,19 @@
         <!-- Second page -->
         <main id="Secondpage">
             <p id="aboutme">
+                <br>
+                <br>
+                <br>
                 My name is Alessandro Magnocavallo. I am currently
                 advancing my academic pursuit in Communication Design at Politecnico di Milano.
                 With a foundational interest in the realms of web and graphic design, my academic and project-based
                 experiences have been dedicated to the exploration and mastery of visual communication. My approach is
                 methodical, yet creative, aiming to merge aesthetic appeal with functional design to create intuitive
                 and engaging digital experiences.
+                <br>
+                <br>
+                <scrolldown style="font-family:'sfmono', monospace; font-weight: 300;
+                font-size: 20px;">Scroll down to see some of my works</scrolldown>
             </p>
         </main>
 
@@ -425,11 +449,13 @@
     <div id="myModal" class="modal">
         <div class="imgcontainer">
 
-
+            
             <div class="modal-imggallery" id="modal-imggid">
                 <img src="" alt="Gallery Image">
                 <img src="" alt="">
             </div>
+
+        
         </div>
 
 
@@ -539,13 +565,13 @@
 
 
     function populateModal(project) {
-        
+
         // try {
         //     stylemodal(project);
         // } catch (error) {
         //     console.log("No color selected");
         // };
-        
+
         document.body.style.overflow = 'hidden';
         var btn = document.getElementById('myModal');
         btn.style.display = "block";
@@ -616,7 +642,7 @@
             return luminance < 150 ? true : false;
         }
 
-        if (isColorDark(project.bgcolor)){
+        if (isColorDark(project.bgcolor)) {
             const root = document.documentElement;
             root.style.setProperty('--black', 'white');
         }
