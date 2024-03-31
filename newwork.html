@@ -297,7 +297,8 @@
         scroll-snap-align: start;
         margin-right: 20vw;
 
-        width: 90% !important; /* Ensures iframe takes full width of its container */
+        width: 90% !important;
+        /* Ensures iframe takes full width of its container */
         min-width: 90% !important;
 
     }
@@ -497,6 +498,7 @@
             images: [],
             pdf: "./works/01 - Olin/document.pdf",
             video: "https://www.youtube.com/embed/sukNDF-ula4?si=ZjqOtKqEEsrfjEBv&amp;controls=0?",
+            bgcolor: "#911011",
         },
         {
             number: "//02",
@@ -519,6 +521,7 @@
 
             images: ['./works/03 - Geppo Website/images/img1.png', './works/03 - Geppo Website/images/img2.png', './works/03 - Geppo Website/images/img3.png'],
             pdf: "",
+            bgcolor: "#360b01",
         },
         {
             number: "//04",
@@ -536,6 +539,13 @@
 
 
     function populateModal(project) {
+        
+        // try {
+        //     stylemodal(project);
+        // } catch (error) {
+        //     console.log("No color selected");
+        // };
+        
         document.body.style.overflow = 'hidden';
         var btn = document.getElementById('myModal');
         btn.style.display = "block";
@@ -583,10 +593,35 @@
             // Append the new img element to the container, not a string
             imageContainer.appendChild(img);
         });
-
         displayPdfAsImages(project.pdf);
-
     }
+
+
+    function stylemodal(project) {
+        const modal = document.getElementById('myModal');
+        modal.style.backgroundColor = project.bgcolor;
+        console.log(project.bgcolor);
+
+        function isColorDark(colorHex) {
+            // Convert hex to RGB
+            const r = parseInt(colorHex.substr(1, 2), 16);
+            const g = parseInt(colorHex.substr(3, 2), 16);
+            const b = parseInt(colorHex.substr(5, 2), 16);
+
+            // Calculate luminance
+            const luminance = 0.299 * r + 0.587 * g + 0.114 * b;
+
+            // Luminance threshold: common value is 150, adjust based on needs
+            // return luminance < 150 ? 1 : 0;
+            return luminance < 150 ? true : false;
+        }
+
+        if (isColorDark(project.bgcolor)){
+            const root = document.documentElement;
+            root.style.setProperty('--black', 'white');
+        }
+    }
+
 
 
 
