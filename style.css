@@ -368,6 +368,10 @@ main>#aboutme {
         bottom: 15vh;
     }
 
+    .navbar{
+        font-size: 9px;
+    }
+
     .navbar>#nav0 {
         display: "";
     }
@@ -402,10 +406,24 @@ main>#aboutme {
     .modal-content {
         bottom: 10vh;
         grid-template-columns: repeat(4, minmax(0, 1fr));
+        font-size: 9px;
+    }
+
+    #modal-info{
+        font-size: 9px;
+    }
+
+    #modal-v-date{
+        font-size: 9px;
+    }
+
+    #modal-v-tools {
+        font-size: 9px;
     }
 
     #modal-desc {
         grid-column-end: 3;
+        font-size: 9px;
     }
 
     .close {
@@ -419,6 +437,7 @@ main>#aboutme {
 
     .worksection>subtitlegallery{
         font-size: 12px;
+        white-space: pre;
     }
 
 
