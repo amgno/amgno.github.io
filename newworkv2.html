@@ -1,0 +1,362 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.7.570/pdf.min.js"></script>
+<link rel="stylesheet" href="style.css">
+
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+
+<body>
+
+    <nav class="navbar">
+        <div id="nav0">LOGO</div>
+        <div id="nav1">ALESSANDRO MAGNOCAVALLO <br> <a href="mailto:ale@magno.me">ale@magno.me</a></div>
+        <div id="nav2">STUDENT <br>WEB DESIGNER <br>GRAPHIC DESIGNER</div>
+        <div id="nav3">SOCIALS <br>LI IG</div>
+        <div id="nav4">WRK</div>
+    </nav>
+
+
+
+    <div class="snap-container">
+        <!-- First page -->
+        <main id="Firstpage">
+            <img src="images/logo.svg" id="logo">
+        </main>
+
+
+        <!-- Second page -->
+        <main id="Secondpage">
+            <p id="aboutme">
+                <br>
+                <br>
+                <br>
+                My name is Alessandro Magnocavallo. I am currently
+                advancing my academic pursuit in Communication Design at Politecnico di Milano.
+                With a foundational interest in the realms of web and graphic design, my academic and project-based
+                experiences have been dedicated to the exploration and mastery of visual communication. My approach is
+                methodical, yet creative, aiming to merge aesthetic appeal with functional design to create intuitive
+                and engaging digital experiences.
+                <br>
+                <br>
+                <scrolldown style="font-family:'sfmono', monospace; font-weight: 300;
+                font-size: 20px;">Scroll down to see some of my works</scrolldown>
+            </p>
+        </main>
+
+
+        <!-- terza pagina // works -->
+        <main id="Thirdpage" id="gallerymain">
+            <div class="gallery">
+                <div class="worksection" onclick="populateModal(projects[0])">
+                    <titlegallery>OLIN SKI</titlegallery>
+                    <subtitlegallery>Brand Video & Brand Book</subtitlegallery>
+                </div>
+
+                <div class="worksection" onclick="populateModal(projects[1])">
+                    <titlegallery>Typographic</titlegallery>
+                    <subtitlegallery>booklet</subtitlegallery>
+                </div>
+
+                <div class="worksection" onclick="populateModal(projects[2])">
+                    <titlegallery>GEPPO's WEBSITE</titlegallery>
+                    <subtitlegallery>Website</subtitlegallery>
+                </div>
+
+                <div class="worksection" onclick="populateModal(projects[3])">
+                    <titlegallery>JACK E IL FAGIOLO CLIMATICO</titlegallery>
+                    <subtitlegallery>Platform game</subtitlegallery>
+                </div>
+            </div>
+        </main>
+
+
+    </div>
+    <!-- modal test, for descripted work -->
+
+    <div id="myModal" class="modal">
+        <div class="imgcontainer">
+
+            
+            <div class="modal-imggallery" id="modal-imggid">
+                <img src="" alt="Gallery Image">
+                <img src="" alt="">
+            </div>
+
+        
+        </div>
+
+
+        <div class="modal-content">
+
+            <span class="close" onclick="closemodal()">CLOSE</span>
+            <titolo id="modal-title">//01</titolo>
+
+            <!-- You can add more content here if needed -->
+            <p id="modal-desc">
+                <b id="modal-v-title">Project name</b>
+                <br><br><br>
+                <span id="modal-v-desc">Quick little description</span>
+                <br><br><br>
+                Project Type: <br> <span id="modal-v-ptype"></span>
+            </p>
+            <p id="modal-info">
+                Date made:
+                <br>
+                <span id="modal-v-date"></span>
+                <br><br><br>
+                Tools used: <br>
+                <span id="modal-v-tools"></span>
+            </p>
+        </div>
+    </div>
+
+</body>
+
+
+<script>
+
+    window.onload = function () {
+        // Hide the preloader
+        console.log("loaded");
+    };
+
+
+
+    function closemodal() {
+        // var btn = document.getElementById('myModal');
+        // btn.style.display = "none";
+        document.body.style.overflow = '';
+
+
+        var modal = document.getElementById('myModal');
+        modal.style.animation = 'fadeOutModal 0.2s forwards';
+        setTimeout(() => {
+            modal.style.display = 'none';
+            modal.style.animation = 'fadeInModal 0.2s forwards';
+        }, 200);
+    }
+
+
+
+    // hype shit ykyk
+    const projects = [
+        {
+            number: "//01",
+            name: "Olin Ski",
+            description: "woow so cool man keep it up",
+            ptype: "dsadsadasd",
+            tools: "dsadad",
+            date: "sdsadjasd",
+
+            images: [],
+            pdf: "./works/01 - Olin/document.pdf",
+            video: "https://www.youtube.com/embed/sukNDF-ula4?si=ZjqOtKqEEsrfjEBv&amp;controls=0?",
+            bgcolor: "#911011",
+        },
+        {
+            number: "//02",
+            name: "Project One",
+            description: "This is the description for Project One.",
+            ptype: "testptype",
+            tools: "testtools",
+            date: "000001",
+
+            images: [],
+            pdf: "./works/02 - Typographic/document.pdf",
+        },
+        {
+            number: "//03",
+            name: "Geppo's website",
+            description: "This is the description for Project One.",
+            ptype: "Website",
+            tools: "vscode",
+            date: "000001",
+
+            images: ['./works/03 - Geppo Website/images/img1.png', './works/03 - Geppo Website/images/img2.png', './works/03 - Geppo Website/images/img3.png'],
+            pdf: "",
+            bgcolor: "#360b01",
+        },
+        {
+            number: "//04",
+            name: "Platform Game",
+            description: "This is the description for Project One.",
+            ptype: "Videogame",
+            tools: "vscode - Poliphaser",
+            date: "000001",
+
+            images: ['./works/04 - Platform game/images/img1.png', './works/04 - Platform game/images/img2.png', './works/04 - Platform game/images/img3.png'],
+            pdf: "",
+        },
+    ];
+
+
+
+    function populateModal(project) {
+
+        // try {
+        //     stylemodal(project);
+        // } catch (error) {
+        //     console.log("No color selected");
+        // };
+
+        document.body.style.overflow = 'hidden';
+        var btn = document.getElementById('myModal');
+        btn.style.display = "block";
+        const number = document.getElementById('modal-title');
+        const title = document.getElementById('modal-v-title');
+        const desc = document.getElementById('modal-v-desc');
+        const ptype = document.getElementById('modal-v-ptype');
+        const tools = document.getElementById('modal-v-tools');
+        const date = document.getElementById('modal-v-date');
+        const imageContainer = document.getElementById('modal-imggid'); // Make sure this ID matches your HTML
+
+        // Clear previous images
+        imageContainer.innerHTML = '';
+        imageContainer.scrollLeft = 0;
+        setTimeout(() => {
+            imageContainer.scrollLeft = 0; // Reset the horizontal scroll position
+        }, 500); // Adjust delay as necessary
+
+
+        if (project.video && project.video.trim() !== "") {
+            const iframe = document.createElement('iframe');
+            iframe.setAttribute('src', project.video);
+            iframe.setAttribute('frameborder', '0');
+            iframe.setAttribute('allowfullscreen', '');
+            iframe.setAttribute('allow', 'autoplay');
+            imageContainer.appendChild(iframe);
+        }
+
+
+        // Setting project information
+        number.textContent = project.number;
+        title.textContent = project.name;
+        desc.textContent = project.description; // Ensure you have this element in your HTML
+        ptype.textContent = project.ptype;
+        tools.textContent = project.tools;
+        date.textContent = project.date;
+
+        // Iterate over each image URL in the project and create an <img> element
+        project.images.forEach((imageUrl) => {
+            const img = document.createElement('img');
+            img.src = imageUrl;
+            // Optionally add a class for styling. Ensure the class name matches your CSS.
+            // img.classList.add('modal-imggallery');
+
+            // Append the new img element to the container, not a string
+            imageContainer.appendChild(img);
+        });
+        displayPdfAsImages(project.pdf);
+    }
+
+
+    function stylemodal(project) {
+        const modal = document.getElementById('myModal');
+        modal.style.backgroundColor = project.bgcolor;
+        console.log(project.bgcolor);
+
+        function isColorDark(colorHex) {
+            // Convert hex to RGB
+            const r = parseInt(colorHex.substr(1, 2), 16);
+            const g = parseInt(colorHex.substr(3, 2), 16);
+            const b = parseInt(colorHex.substr(5, 2), 16);
+
+            // Calculate luminance
+            const luminance = 0.299 * r + 0.587 * g + 0.114 * b;
+
+            // Luminance threshold: common value is 150, adjust based on needs
+            // return luminance < 150 ? 1 : 0;
+            return luminance < 150 ? true : false;
+        }
+
+        if (isColorDark(project.bgcolor)) {
+            const root = document.documentElement;
+            root.style.setProperty('--black', 'white');
+        }
+    }
+
+
+
+
+    async function displayPdfAsImages(pdfUrl) {
+        const loadingTask = pdfjsLib.getDocument(pdfUrl);
+        const pdf = await loadingTask.promise;
+        const container = document.getElementById('modal-imggid'); // Your gallery container
+
+        for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
+            const page = await pdf.getPage(pageNumber);
+
+            // Create a canvas to render the page
+            const canvas = document.createElement('canvas');
+            const viewport = page.getViewport({ scale: 1 });
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            // Render PDF page into canvas context
+            const renderContext = {
+                canvasContext: canvas.getContext('2d'),
+                viewport: viewport
+            };
+            await page.render(renderContext).promise;
+
+            // Convert canvas to an image and append to the gallery
+            const img = document.createElement('img');
+            img.src = canvas.toDataURL();
+            container.appendChild(img);
+        }
+    }
+
+
+
+
+
+
+
+</script>
+
+
+
+
+
+
+<!-- Animations, or at least trying to -->
+<style>
+    /* Additions for modal animations */
+    .modal {
+        animation: fadeInModal 0.2s forwards;
+
+    }
+
+    @keyframes fadeInModal {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes fadeOutModal {
+        from {
+            opacity: 1;
+        }
+
+        to {
+            opacity: 0;
+        }
+    }
+
+    .modal img {
+        animation: slideIn 0.5s ease-out;
+    }
+
+
+
+
+    .gallery img:hover {
+        filter: grayscale(0%);
+    }
+</style>

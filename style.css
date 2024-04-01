@@ -1,0 +1,448 @@
+@font-face {
+    font-family: 'sfmono';
+    src: url('/font/Sfmono/SF-Mono-Regular.otf') format('opentype');
+    font-weight: normal;
+    /* Or 400 */
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'sfmono';
+    src: url('/font/Sfmono/SF-Mono-Light.otf') format('opentype');
+    font-weight: 300;
+    /* Light */
+    font-style: normal;
+}
+
+
+/* DEFAULTS */
+:root {
+    --bgcolor: #eee;
+    --bordcolor: #92929246;
+    --black: #111;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bgcolor: #111;
+        --black: #eee;
+    }
+
+    #logo {
+        filter: invert(100%);
+    }
+}
+
+body {
+    background-color: var(--bgcolor);
+    margin: 0px;
+
+}
+
+
+/* SNAP CONTAINER TEST */
+
+/* Container that holds all your sections */
+.snap-container {
+    height: 100vh;
+    /* Full height of the viewport */
+    overflow-y: scroll;
+    /* Allows vertical scrolling */
+    scroll-snap-type: y mandatory;
+    /* Enables vertical scroll snapping */
+}
+
+/* Each section */
+main {
+    scroll-snap-align: start;
+    /* Aligns the start edge of the section with the container's scroll snap boundary */
+    /* Your existing styles for main */
+}
+
+
+/* NAVBAR */
+.navbar {
+    top: 1vh;
+    height: 4vh;
+    display: grid;
+    width: 100vw;
+    /* border: 1px solid red; */
+    grid-template-rows: 5vh;
+    /* grid-template-columns: 20vw 10vw 60vw 9vw; */
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    padding: 2vh;
+    position: fixed;
+    font-size: 11px;
+    text-transform: uppercase;
+    font-family: 'sfmono', monospace;
+    z-index: 1001;
+    color: white;
+    mix-blend-mode: difference;
+}
+
+.navbar a {
+    text-decoration: underline;
+    cursor: pointer;
+    color: var(--black);
+    color: white;
+    mix-blend-mode: difference;
+}
+
+
+.navbar>div {}
+
+.navbar>#nav0 {
+    grid-column: 1;
+}
+
+.navbar>#nav1 {
+    grid-column: 2;
+}
+
+.navbar>#nav2 {
+    grid-column: 5;
+}
+
+.navbar>#nav3 {
+    grid-column: 6;
+}
+
+.navbar>#nav4 {
+    grid-column: 8;
+}
+
+
+
+/* Main pages */
+main {
+    height: 100vh;
+    width: 100vw;
+    /* border: 1px solid black; */
+    position: relative;
+    display: flex;
+}
+
+
+#logo {
+    position: absolute;
+    /* border: 1px solid orange; */
+    pointer-events: none;
+
+
+    width: 60vw;
+    height: auto;
+    right: 0vw;
+    bottom: 1vh;
+}
+
+main>#aboutme {
+    color: var(--black);
+    /* border: 1px solid salmon; */
+    position: absolute;
+    top: 7vh;
+    left: 5vw;
+    width: 45vw;
+    font-size: 35px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+
+/* terza pagina */
+#Thirdpage {
+    /* All this just so that it expand based on the gallery items */
+    display: flex;
+    flex-wrap: wrap;
+    overflow-x: auto;
+}
+
+
+#gallerymain {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gallery {
+    position: absolute;
+    top: 10vh;
+
+    /* column-count: 3; */
+    column-gap: 5px;
+    row-gap: 10px;
+    width: 100vw;
+    padding-left: 1vw;
+    padding-right: 1vw;
+}
+
+.worksection {
+    width: 98vw;
+    border-bottom: 1px solid black;
+    font-size: 70px;
+    text-transform: uppercase;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    display: grid;
+    grid-template-columns: 1fr 0.5fr;
+    cursor: pointer;
+    transition: opacity 0.2s ease-in-out;
+    /* margin-bottom: 5vh;  test*/ 
+}
+.worksection>subtitlegallery{
+    display: flex;
+    justify-content: end;
+    align-items: end;
+    font-size: 20px;
+    opacity: 60%; /* Positions subtitle at the bottom */
+}
+
+
+.worksection:hover {
+    opacity: 50%;
+}
+
+.gallery img {
+    width: 100%;
+    height: auto;
+    margin-top: 6px;
+    cursor: pointer;
+    filter: grayscale(100%);
+}
+
+/* modal test */
+
+/* The Modal (background) */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: auto;
+    background-color: var(--bgcolor);
+    align-items: center;
+    justify-content: center;
+}
+
+/* Modal Content */
+/* .modal-content {
+    position: relative;
+    background-color: aqua;
+    width: 70vw;
+    overflow-y: auto;
+} */
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    grid-column: 1;
+    grid-row: 2;
+    /* position: fixed; */
+    /* bottom: 1vh;
+    height: 4vh; */
+    /* display: grid; */
+    /* width: 100vw; */
+    /* grid-template-columns: repeat(8, minmax(0, 1fr)); */
+    /* padding: 2vh; */
+    font-family: 'sfmono', monospace;
+    display: block;
+    /* transform: rotate(+90deg); */
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    pointer-events: all;
+
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-content {
+    height: 30vh;
+    display: grid;
+    width: 100vw;
+    /* border: 1px solid red; */
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    /* grid-template-columns: 20vw 10vw 60vw 9vw; */
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    padding: 2vh;
+    font-size: 11px;
+    font-family: 'sfmono', monospace;
+    z-index: 1001;
+    color: white;
+    /* mix-blend-mode: difference; */
+    position: fixed;
+    bottom: 20vh;
+    pointer-events: none;
+}
+
+#modal-title {
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 90px;
+    color: var(--black);
+    grid-column: 2;
+}
+
+#modal-desc {
+    color: var(--black);
+    font-size: 11px;
+    font-family: 'sfmono', monospace;
+    grid-column: 2;
+}
+
+#modal-info {
+    color: var(--black);
+    font-size: 11px;
+    font-family: 'sfmono', monospace;
+    grid-column: 4;
+}
+
+
+
+
+
+.modal-imggallery {
+    grid-row: 2;
+    grid-column: 2;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    display: flex;
+    flex-wrap: nowrap;
+    height: auto;
+    width: 100%;
+}
+
+.imgcontainer {
+    display: grid;
+    grid-template-rows: 10vh 80vh 10vh;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    flex: 0 0 auto;
+    overflow-y: hidden;
+}
+
+.modal img {
+    scroll-snap-align: start;
+    height: auto;
+    width: 100%;
+    margin-right: 20vw;
+    object-fit: contain;
+}
+
+
+.modal iframe {
+    scroll-snap-align: start;
+    margin-right: 20vw;
+
+    width: 90% !important;
+    /* Ensures iframe takes full width of its container */
+    min-width: 90% !important;
+
+}
+
+.modal-imggallery::-webkit-scrollbar {
+    display: none;
+}
+
+
+
+/* Mobile responsive */
+@media(max-width: 800px) {
+    #logo {
+        position: absolute;
+        pointer-events: none;
+
+
+        width: 100vw;
+        height: auto;
+        right: 0vw;
+        bottom: 15vh;
+    }
+
+    .navbar>#nav0 {
+        display: "";
+    }
+
+    .navbar>#nav1 {}
+
+    .navbar>#nav2 {
+        display: none;
+    }
+
+
+    main>#aboutme {
+        /* border: 1px solid salmon; */
+        width: 80vw;
+        font-size: 20px;
+        padding-top: 10vh;
+    }
+
+    .gallery {
+        column-count: 2;
+        padding-top: 10vh;
+
+    }
+
+
+    /* modal responsive */
+    .imgcontainer {
+        grid-template-columns: 1fr;
+        grid-template-rows: 10vh 50vh 40vh;
+    }
+
+    .modal-content {
+        bottom: 10vh;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    #modal-desc {
+        grid-column-end: 3;
+    }
+
+    .close {
+        display: block;
+    }
+
+
+}
+
+
+    /* Additions for modal animations */
+    .modal {
+        animation: fadeInModal 0.2s forwards;
+
+    }
+
+    @keyframes fadeInModal {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes fadeOutModal {
+        from {
+            opacity: 1;
+        }
+
+        to {
+            opacity: 0;
+        }
+    }
+
+    .modal img {
+        animation: slideIn 0.5s ease-out;
+    }
+
+
+
+
+    .gallery img:hover {
+        filter: grayscale(0%);
+    }
