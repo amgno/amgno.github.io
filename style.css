@@ -380,18 +380,18 @@ main>#aboutme {
         padding-top: 10vh;
     }
 
-    .gallery {
+    /* .gallery {
         column-count: 2;
         padding-top: 10vh;
 
-    }
+    } */
 
 
     /* modal responsive */
-    .imgcontainer {
+    /* .imgcontainer {
         grid-template-columns: 1fr;
         grid-template-rows: 10vh 50vh 40vh;
-    }
+    } */
 
     .modal-content {
         bottom: 10vh;
@@ -405,6 +405,11 @@ main>#aboutme {
     .close {
         display: block;
     }
+
+
+    .worksection {
+        font-size: 30px;
+    } 
 
 
 }
