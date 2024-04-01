@@ -123,7 +123,6 @@
 <script>
 
     window.onload = function () {
-        // Hide the preloader
         console.log("loaded");
     };
 
@@ -157,7 +156,7 @@
 
             images: [],
             pdf: "./works/01 - Olin/document.pdf",
-            video: "https://www.youtube.com/embed/sukNDF-ula4?si=ZjqOtKqEEsrfjEBv&amp;controls=0?",
+            video: "https://www.youtube.com/embed/sukNDF-ula4?autoplay=1&controls=0&mute=1",
             bgcolor: "#911011",
         },
         {
@@ -226,14 +225,14 @@
         const ptype = document.getElementById('modal-v-ptype');
         const tools = document.getElementById('modal-v-tools');
         const date = document.getElementById('modal-v-date');
-        const imageContainer = document.getElementById('modal-imggid'); // Make sure this ID matches your HTML
+        const imageContainer = document.getElementById('modal-imggid'); 
 
-        // Clear previous images
+
         imageContainer.innerHTML = '';
         imageContainer.scrollLeft = 0;
         setTimeout(() => {
-            imageContainer.scrollLeft = 0; // Reset the horizontal scroll position
-        }, 500); // Adjust delay as necessary
+            imageContainer.scrollLeft = 0; 
+        }, 500); 
 
 
         if (project.video && project.video.trim() !== "") {
