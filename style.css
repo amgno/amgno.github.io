@@ -175,16 +175,20 @@ main>#aboutme {
 }
 
 .worksection {
+    overflow-x: hidden;
     width: 98vw;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid var(--bordcolor);
     font-size: 70px;
     text-transform: uppercase;
     font-family: -apple-system, BlinkMacSystemFont, sans-serif;
     display: grid;
     grid-template-columns: 1fr 0.5fr;
     cursor: pointer;
-    transition: opacity 0.2s ease-in-out;
-    /* margin-bottom: 5vh;  test*/ 
+    transition: all 0.2s ease-in-out; /* Adjust transition to background */
+    color: var(--black);
+    background-size:cover; /* Ensure the background covers the element */
+    background-position: center; /* Center the background image */
+    /* margin-bottom: 5vh; */
 }
 .worksection>subtitlegallery{
     display: flex;
@@ -196,7 +200,9 @@ main>#aboutme {
 
 
 .worksection:hover {
-    opacity: 50%;
+    /* background-image: url('/works/03\ -\ Geppo\ Website/thumb.png');
+    height: 40vh; */
+    opacity: 60%;
 }
 
 .gallery img {
@@ -388,10 +394,10 @@ main>#aboutme {
 
 
     /* modal responsive */
-    /* .imgcontainer {
+    .imgcontainer {
         grid-template-columns: 1fr;
         grid-template-rows: 10vh 50vh 40vh;
-    } */
+    }
 
     .modal-content {
         bottom: 10vh;
@@ -410,6 +416,10 @@ main>#aboutme {
     .worksection {
         font-size: 30px;
     } 
+
+    .worksection>subtitlegallery{
+        font-size: 12px;
+    }
 
 
 }
