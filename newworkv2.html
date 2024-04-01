@@ -245,22 +245,19 @@
         }
 
 
-        // Setting project information
+
         number.textContent = project.number;
         title.textContent = project.name;
-        desc.textContent = project.description; // Ensure you have this element in your HTML
+        desc.textContent = project.description;
         ptype.textContent = project.ptype;
         tools.textContent = project.tools;
         date.textContent = project.date;
 
-        // Iterate over each image URL in the project and create an <img> element
+
         project.images.forEach((imageUrl) => {
             const img = document.createElement('img');
             img.src = imageUrl;
-            // Optionally add a class for styling. Ensure the class name matches your CSS.
-            // img.classList.add('modal-imggallery');
 
-            // Append the new img element to the container, not a string
             imageContainer.appendChild(img);
         });
         displayPdfAsImages(project.pdf);
@@ -278,11 +275,10 @@
             const g = parseInt(colorHex.substr(3, 2), 16);
             const b = parseInt(colorHex.substr(5, 2), 16);
 
-            // Calculate luminance
+
             const luminance = 0.299 * r + 0.587 * g + 0.114 * b;
 
-            // Luminance threshold: common value is 150, adjust based on needs
-            // return luminance < 150 ? 1 : 0;
+
             return luminance < 150 ? true : false;
         }
 
@@ -298,25 +294,25 @@
     async function displayPdfAsImages(pdfUrl) {
         const loadingTask = pdfjsLib.getDocument(pdfUrl);
         const pdf = await loadingTask.promise;
-        const container = document.getElementById('modal-imggid'); // Your gallery container
+        const container = document.getElementById('modal-imggid'); 
 
         for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
             const page = await pdf.getPage(pageNumber);
 
-            // Create a canvas to render the page
+
             const canvas = document.createElement('canvas');
             const viewport = page.getViewport({ scale: 1 });
             canvas.height = viewport.height;
             canvas.width = viewport.width;
 
-            // Render PDF page into canvas context
+
             const renderContext = {
                 canvasContext: canvas.getContext('2d'),
                 viewport: viewport
             };
             await page.render(renderContext).promise;
 
-            // Convert canvas to an image and append to the gallery
+
             const img = document.createElement('img');
             img.src = canvas.toDataURL();
             container.appendChild(img);
