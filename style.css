@@ -14,6 +14,17 @@
     font-style: normal;
 }
 
+body::-webkit-scrollbar{
+    display: none;
+}
+
+main::-webkit-scrollbar{
+    display: none;
+}
+
+*::-webkit-scrollbar{
+    display: none;
+}
 
 /* DEFAULTS */
 :root {
