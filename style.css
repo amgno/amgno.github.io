@@ -14,15 +14,15 @@
     font-style: normal;
 }
 
-body::-webkit-scrollbar{
+body::-webkit-scrollbar {
     display: none;
 }
 
-main::-webkit-scrollbar{
+main::-webkit-scrollbar {
     display: none;
 }
 
-*::-webkit-scrollbar{
+*::-webkit-scrollbar {
     display: none;
 }
 
@@ -195,18 +195,23 @@ main>#aboutme {
     display: grid;
     grid-template-columns: 1fr 0.5fr;
     cursor: pointer;
-    transition: all 0.2s ease-in-out; /* Adjust transition to background */
+    transition: all 0.2s ease-in-out;
+    /* Adjust transition to background */
     color: var(--black);
-    background-size:cover; /* Ensure the background covers the element */
-    background-position: center; /* Center the background image */
+    background-size: cover;
+    /* Ensure the background covers the element */
+    background-position: center;
+    /* Center the background image */
     /* margin-bottom: 5vh; */
 }
-.worksection>subtitlegallery{
+
+.worksection>subtitlegallery {
     display: flex;
     justify-content: end;
     align-items: end;
     font-size: 20px;
-    opacity: 60%; /* Positions subtitle at the bottom */
+    opacity: 60%;
+    /* Positions subtitle at the bottom */
 }
 
 
@@ -379,7 +384,7 @@ main>#aboutme {
         bottom: 15vh;
     }
 
-    .navbar{
+    .navbar {
         font-size: 9px;
     }
 
@@ -420,11 +425,11 @@ main>#aboutme {
         font-size: 9px;
     }
 
-    #modal-info{
+    #modal-info {
         font-size: 9px;
     }
 
-    #modal-v-date{
+    #modal-v-date {
         font-size: 9px;
     }
 
@@ -444,9 +449,9 @@ main>#aboutme {
 
     .worksection {
         font-size: 30px;
-    } 
+    }
 
-    .worksection>subtitlegallery{
+    .worksection>subtitlegallery {
         font-size: 12px;
         white-space: pre;
     }
@@ -455,39 +460,62 @@ main>#aboutme {
 }
 
 
-    /* Additions for modal animations */
-    .modal {
-        animation: fadeInModal 0.2s forwards;
+/* Additions for modal animations */
+.modal {
+    animation: fadeInModal 0.2s forwards;
 
+}
+
+@keyframes fadeInModal {
+    from {
+        opacity: 0;
     }
 
-    @keyframes fadeInModal {
-        from {
-            opacity: 0;
-        }
+    to {
+        opacity: 1;
+    }
+}
 
-        to {
-            opacity: 1;
-        }
+@keyframes fadeOutModal {
+    from {
+        opacity: 1;
     }
 
-    @keyframes fadeOutModal {
-        from {
-            opacity: 1;
-        }
-
-        to {
-            opacity: 0;
-        }
+    to {
+        opacity: 0;
     }
+}
 
-    .modal img {
-        animation: slideIn 0.5s ease-out;
-    }
+.modal img {
+    animation: slideIn 0.5s ease-out;
+}
 
 
 
 
-    .gallery img:hover {
-        filter: grayscale(0%);
-    }
+.gallery img:hover {
+    filter: grayscale(0%);
+}
+
+
+
+#onhoverpreview {
+    position: absolute;
+    z-index: 1500;
+    top: 20vh;
+    display: flex;
+    left: 40vw;
+    height: 30vh;
+    flex-direction: column;
+    width: 30vh;
+    transition: all 0.2s ease-in-out;
+}
+
+#onhoverpreview>img {
+    display: flex;
+}
+
+#onhoverpreview>p {
+    font-family: 'sfmono';
+    color: var(--black);
+}

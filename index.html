@@ -48,23 +48,27 @@
 
         <!-- terza pagina // works -->
         <main id="Thirdpage" id="gallerymain">
+            <div id="onhoverpreview">
+                <img src="" alt="" id="onhoverpewviewimg">
+                <p>CLICK TO OPEN</p>
+            </div>
             <div class="gallery">
-                <div class="worksection" onclick="populateModal(projects[0])">
+                <div class="worksection" onclick="populateModal(projects[0])" onmouseover="getYpos(this,'./works/01 - Olin/thumb.png')" onmouseleave="hidepreview()">
                     <titlegallery>OLIN SKI</titlegallery>
                     <subtitlegallery>Brand Video & Brand Book</subtitlegallery>
                 </div>
 
-                <div class="worksection" onclick="populateModal(projects[1])">
+                <div class="worksection" onclick="populateModal(projects[1])" onmouseover="getYpos(this, './works/02 - Typographic/thumb.png')" onmouseleave="hidepreview()">
                     <titlegallery>Typographic</titlegallery>
                     <subtitlegallery>booklet</subtitlegallery>
                 </div>
 
-                <div class="worksection" onclick="populateModal(projects[2])">
+                <div class="worksection" onclick="populateModal(projects[2])" onmouseover="getYpos(this, './works/03 - Geppo Website/thumb.png')" onmouseleave="hidepreview()">
                     <titlegallery>GEPPO's WEBSITE</titlegallery>
                     <subtitlegallery>Website</subtitlegallery>
                 </div>
 
-                <div class="worksection" onclick="populateModal(projects[3])">
+                <div class="worksection" onclick="populateModal(projects[3])" onmouseover="getYpos(this, './works/04 - Platform game/thumb.png')" onmouseleave="hidepreview()">
                     <titlegallery>JACK E IL FAGIOLO CLIMATICO</titlegallery>
                     <subtitlegallery>Platform game</subtitlegallery>
                 </div>
@@ -209,6 +213,8 @@
 
 
     function populateModal(project) {
+        const preview = document.getElementById('onhoverpreview');
+        preview.style.opacity = '0%';
 
         // try {
         //     stylemodal(project);
@@ -320,6 +326,23 @@
     }
 
 
+
+    function getYpos(element, immggurl) {
+    const rect = element.getBoundingClientRect();
+    const topPosition = rect.top + window.pageYOffset;
+    const preview = document.getElementById('onhoverpreview');
+    preview.style.opacity = '100%';
+    preview.style.position = 'absolute'; // Make sure the element is positioned absolutely
+    preview.style.top = topPosition + 1+ 'px'; 
+    const imaggine = document.getElementById('onhoverpewviewimg');
+    imaggine.src = immggurl;
+    }
+
+
+    function hidepreview(){
+        const preview = document.getElementById('onhoverpreview');
+        preview.style.opacity = '0%';
+    }
 
 
 
