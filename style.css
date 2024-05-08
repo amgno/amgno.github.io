@@ -204,6 +204,7 @@ main>#aboutme {
     background-size:cover; /* Ensure the background covers the element */
     background-position: center; /* Center the background image */
     /* margin-bottom: 5vh; */
+
 }
 .worksection>subtitlegallery{
     display: flex;
@@ -217,7 +218,8 @@ main>#aboutme {
 .worksection:hover {
     /* background-image: url('/works/03\ -\ Geppo\ Website/thumb.png');
     height: 40vh; */
-    opacity: 60%;
+    /* opacity: 60%; */
+    cursor: none;
 }
 
 .gallery img {

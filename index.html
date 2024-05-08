@@ -4,6 +4,14 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+    <!-- Custom cursor -->
+    <div class="cursor-dot" data-cursor-dot id="cursordot"></div>
+    <div class="cursor-outline" data-cursor-outline id="cursorout"></div>
+    <link rel="stylesheet" type="text/css" href="cursor.css">
+    <script src="cursor.js"></script>
 </head>
 
 
@@ -33,9 +41,11 @@
                 <br>
                 My name is <ctext>Alessandro Magnocavallo</ctext>. I am currently
                 advancing my academic pursuit in Communication Design at Politecnico di Milano.
-                With a foundational interest in the realms of <ctext>web</ctext> and <ctext>graphic</ctext> design, my academic and project-based
+                With a foundational interest in the realms of <ctext>web</ctext> and <ctext>graphic</ctext> design, my
+                academic and project-based
                 experiences have been dedicated to the exploration and mastery of visual communication. My approach is
-                <ctext>methodical</ctext>, yet <ctext>creative</ctext>, aiming to merge aesthetic appeal with functional design to create intuitive
+                <ctext>methodical</ctext>, yet <ctext>creative</ctext>, aiming to merge aesthetic appeal with functional
+                design to create intuitive
                 and engaging digital experiences.
                 <br>
                 <br>
@@ -100,7 +110,8 @@
 
             <!-- You can add more content here if needed -->
             <p id="modal-desc">
-                <b id="modal-v-title" style="font-family: -apple-system, BlinkMacSystemFont, sans-serif;">Project name</b>
+                <b id="modal-v-title" style="font-family: -apple-system, BlinkMacSystemFont, sans-serif;">Project
+                    name</b>
                 <br><br>
                 <span id="modal-v-desc">Quick little description</span>
                 <br><br><br>
@@ -225,14 +236,14 @@
         const ptype = document.getElementById('modal-v-ptype');
         const tools = document.getElementById('modal-v-tools');
         const date = document.getElementById('modal-v-date');
-        const imageContainer = document.getElementById('modal-imggid'); 
+        const imageContainer = document.getElementById('modal-imggid');
 
 
         imageContainer.innerHTML = '';
         imageContainer.scrollLeft = 0;
         setTimeout(() => {
-            imageContainer.scrollLeft = 0; 
-        }, 500); 
+            imageContainer.scrollLeft = 0;
+        }, 500);
 
 
         if (project.video && project.video.trim() !== "") {
@@ -294,7 +305,7 @@
     async function displayPdfAsImages(pdfUrl) {
         const loadingTask = pdfjsLib.getDocument(pdfUrl);
         const pdf = await loadingTask.promise;
-        const container = document.getElementById('modal-imggid'); 
+        const container = document.getElementById('modal-imggid');
 
         for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
             const page = await pdf.getPage(pageNumber);
@@ -320,6 +331,44 @@
     }
 
 
+
+
+    const workSectionElements = document.querySelectorAll('.worksection');
+
+    let divhoverx;
+    let divhovery;
+
+    workSectionElements.forEach((element) => {
+        element.addEventListener('mouseover', () => {
+            const rect = element.getBoundingClientRect();
+            stuck = true;
+            const adjustedLeft = rect.left + rect.width / 2;
+            const adjustedTop = window.pageYOffset + rect.top + rect.height / 2;
+
+            cursorDot.style.opacity = '0';
+
+            divhoverx = `${adjustedTop}px`;
+            divhovery = `${adjustedLeft}px`;
+            // cursorOutline.style.top = `${adjustedTop}px`;
+            // cursorOutline.style.left = `${adjustedLeft}px`;
+            cursorOutline.style.borderRadius = '0px';
+            cursorOutline.style.width = `${rect.width * 2}px`;
+            cursorOutline.style.height = `${rect.height}px`;
+        });
+
+
+        element.addEventListener('mouseout', () => {
+            stuck = false;  // Allow animations to resume
+            // Reset to default styles after animation cancel
+            cursorDot.style.opacity = '100';
+            cursorOutline.style.width = '25px';
+            cursorOutline.style.height = '25px';
+            cursorOutline.style.borderRadius = '50%';
+            cursorOutline.style.left = '0px'; // Reset position if needed
+            cursorOutline.style.top = '0px';
+        });
+
+    });
 
 
 
