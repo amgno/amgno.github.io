@@ -374,6 +374,40 @@
 
 
 
+    const modalimg = document.getElementById('modal-imggid');
+
+    // Add event listener for mouse click
+    modalimg.addEventListener('mousedown', (event) => {
+        // Calculate the scroll amount
+        const scrollAmount = 1000; // Adjust this value to your liking
+
+        // Scroll the element
+        modalimg.scrollLeft += scrollAmount;
+    });
+
+
+    modalimg.addEventListener('mouseover', (event) => {
+        cursorDot.innerHTML = '>';
+        // cursorDot.width = '0px';
+        cursorOutline.style.width = '50px';
+        cursorOutline.color = 'black';
+        cursorOutline.style.height = '50px';
+        cursorOutline.style.borderRadius = '50%';
+    });
+
+    modalimg.addEventListener('mouseout', () => {
+        // Reset to default styles after animation cancel
+        cursorDot.innerHTML = '';
+        cursorDot.style.opacity = '100';
+        cursorOutline.style.width = '25px';
+        cursorOutline.style.height = '25px';
+        cursorOutline.style.borderRadius = '50%';
+        cursorOutline.style.left = '0px'; // Reset position if needed
+        cursorOutline.style.top = '0px';
+    });
+
+
+
 </script>
 
 

@@ -22,6 +22,10 @@ main::-webkit-scrollbar{
     display: none;
 }
 
+* {
+    scroll-behavior: smooth;
+}
+
 *::-webkit-scrollbar{
     display: none;
 }
