@@ -1,0 +1,18 @@
+@font-face {
+    font-family: 'Sequel Sans VF';
+    src: local('Sequel Sans VF Head'), local('Sequel-Sans-VF-Head'),
+        url('SequelSansVFHead.woff2') format('woff2'),
+        url('SequelSansVFHead.woff') format('woff'),
+        url('SequelSansVFHead.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+
+@font-face {
+    font-family: 'Tiempos';
+    src: local('Tiempos'), local('Tiempos'),
+        url('TiemposMediumItalic.otf') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+  }

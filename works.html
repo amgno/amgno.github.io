@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AM | About</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="Sequel sans/style.css">
+</head>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Define the SVG content
+        const svgContent = `
+            <svg class="selected-works-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
+                <path style="fill:#fff" d="m17.5 5.999-.707.707 5.293 5.293H1v1h21.086l-5.294 5.295.707.707L24 12.499l-6.5-6.5z" data-name="Right" />
+            </svg>
+        `;
+
+        // Find all <arrow> elements
+        const arrowElements = document.querySelectorAll('arrow');
+
+        // Replace each <arrow> element with the SVG content
+        arrowElements.forEach(function (arrow) {
+            arrow.outerHTML = svgContent;
+        });
+        document.body.style.opacity = '0%';
+        document.body.style.opacity = '100%';
+    });
+</script>
+
+
+<script src="./transition.js"></script>
+
+
+<body>
+    <div class="main-page">
+
+        <div class="main-page-info">
+            <nav style="line-height: 0.5rem;">
+                <h1>SELECTED WORKS
+                    <svg class="main-page-info-star" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+                        <path fill="#fff" stroke="#000" stroke-width=".3"
+                            d="m9.145 7.98 3.069 4.394-2.019 1.415-3.07-4.638-.124-.188-.126.188-3.07 4.589-2.02-1.415 3.021-4.346.116-.167-.193-.061-4.54-1.444.745-2.341L5.57 5.602l.2.071V.15H8.18v5.522l.2-.07 4.685-1.636.745 2.34-4.588 1.445-.195.06.117.168Z">
+                        </path>
+                    </svg>
+                </h1>
+
+                <div class="work-list">
+                    <a href="./project.html?p=01">OLIN SKI
+                        <arrow class="selected-works-arrow"></arrow>
+                    </a>
+
+                    <a href="./project.html?p=02">LIMITAZIONE
+                        <arrow class="selected-works-arrow"></arrow>
+                    </a>
+
+                    <a href="./project.html?p=03">GEPPO' WEBSITE
+                        <arrow class="selected-works-arrow"></arrow>
+                    </a>
+
+                    <a href="./project.html?p=04">JACK E IL FAGIOLO CLIMATICO
+                        <arrow class="selected-works-arrow"></arrow>
+                    </a>
+
+                    <a href="./project.html?p=05">PORTFOLIO
+                        <arrow class="selected-works-arrow"></arrow>
+                    </a>
+
+                    <a href="./project.html?p=06">ROLLI DI GENOVA
+                        <arrow class="selected-works-arrow"></arrow>
+                    </a>
+                </div>
+                <h1><a>2024</a>// <a href="./about.html">INFO</a></h1>
+                <h1></h1>
+                <h1></h1>
+                <h1><a href="./index.html">BACK</a><a href=""></a></h1>
+            </nav>
+        </div>
+
+
+    </div>
+</body>

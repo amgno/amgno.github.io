@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AM | About</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="Sequel sans/style.css">
+    <script src="./projects.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.7.570/pdf.min.js"></script>
+</head>
+
+
+<script>
+    async function displayPdfAsImages(pdfUrl) {
+        const loadingTask = pdfjsLib.getDocument(pdfUrl);
+        const pdf = await loadingTask.promise;
+        const container = document.getElementById('img-div');
+
+        for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
+            const page = await pdf.getPage(pageNumber);
+
+
+            const canvas = document.createElement('canvas');
+            const viewport = page.getViewport({ scale: 1 });
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+
+            const renderContext = {
+                canvasContext: canvas.getContext('2d'),
+                viewport: viewport
+            };
+            await page.render(renderContext).promise;
+
+
+            const img = document.createElement('img');
+            img.src = canvas.toDataURL();
+            container.appendChild(img);
+        }
+    }
+
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        document.body.style.opacity = '0%';
+        document.body.style.opacity = '100%';
+        // Function to get query parameter
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // Get the project ID from the query parameter
+        const projectId = getQueryParam('p');
+
+        // Find the project data based on the ID
+        const project = projects.find(p => p.number == projectId);
+
+        // Display the project content
+        if (project) {
+            console.log(project.name);
+            document.getElementById('span-number').innerHTML = project.number;
+            document.getElementById('span-date').innerHTML = project.date;
+            document.getElementById('span-name').innerHTML = project.name;
+            document.getElementById('span-desc').innerHTML = project.description;
+            document.getElementById('span-tools').innerHTML = project.tools;
+            document.getElementById('span-type').innerHTML = project.ptype;
+            setTimeout(function () {
+                document.body.style.background = project.bgcolor;
+            }, 600); // Match the transition duration
+            
+
+            var imageContainer = document.getElementById('img-div');
+
+            if (!project.video) {
+                console.log("no video, removing div");
+                document.getElementById('video-div').style.display = 'none';
+            }
+            document.getElementById('video-player').src = project.video
+
+            project.images.forEach((imageUrl) => {
+                const img = document.createElement('img');
+                img.src = imageUrl;
+
+                imageContainer.appendChild(img);
+            });
+            displayPdfAsImages(project.pdf);
+
+
+
+
+        } else {
+            document.getElementById('project-content').innerHTML = '<p>Project not found.</p>';
+        }
+    });
+</script>
+
+
+<script src="./transition.js"></script>
+
+<body>
+    <div class="main-page">
+
+        <div class="main-page-info">
+            <nav style="line-height: 0.5rem;">
+                <h1><span id="span-number">PHNUMBER</span>
+                    <svg class="main-page-info-star" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+                        <path fill="#fff" stroke="#000" stroke-width=".3"
+                            d="m9.145 7.98 3.069 4.394-2.019 1.415-3.07-4.638-.124-.188-.126.188-3.07 4.589-2.02-1.415 3.021-4.346.116-.167-.193-.061-4.54-1.444.745-2.341L5.57 5.602l.2.071V.15H8.18v5.522l.2-.07 4.685-1.636.745 2.34-4.588 1.445-.195.06.117.168Z">
+                        </path>
+                    </svg>
+                </h1>
+
+                <div class="project-main">
+                    <div id="project-info">
+                        <btitle id="span-name"></btitle>
+                    </div>
+
+
+                    <div id="project-info">
+                        <h1>ABOUT</h1>
+                        <p><span id="span-desc"></span></p>
+                        <h1>TOOLS USED</h1>
+                        <p><span id="span-tools"></span></p>
+                    </div>
+
+
+                    <div id="video-div">
+                        <h1>VIDEO</h1>
+                        <video controls>
+                            <source src="" type="video/mp4" id="video-player">
+                        </video>
+                    </div>
+
+                    <div id="image-gallery">
+                        <h1>ASSETS</h1>
+
+                        <div id="img-div"></div>
+                    </div>
+
+
+
+
+
+
+
+
+
+                </div>
+                <h1><a>
+                        <span id="span-type" style="text-transform: uppercase;">PHNAME</span>
+                    </a>SCROLL <a>
+                        <span id="span-date" style="text-transform: uppercase;">PHDATE</span>
+                    </a></h1>
+                <h1></h1>
+                <h1></h1>
+                <h1><a href="./works.html">BACK</a><a href=""></a></h1>
+            </nav>
+        </div>
+
+
+    </div>
+</body>

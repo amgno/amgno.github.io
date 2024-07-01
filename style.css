@@ -1,503 +1,206 @@
-@font-face {
-    font-family: 'sfmono';
-    src: url('/font/Sfmono/SF-Mono-Regular.otf') format('opentype');
-    font-weight: normal;
-    /* Or 400 */
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'sfmono';
-    src: url('/font/Sfmono/SF-Mono-Light.otf') format('opentype');
-    font-weight: 300;
-    /* Light */
-    font-style: normal;
-}
-
-body::-webkit-scrollbar{
-    display: none;
-}
-
-main::-webkit-scrollbar{
-    display: none;
-}
-
-* {
-    scroll-behavior: smooth;
-}
-
-*::-webkit-scrollbar{
-    display: none;
-}
-
-/* DEFAULTS */
-:root {
-    --bgcolor: #eee;
-    --bordcolor: #92929246;
-    --black: #111;
-}
-
-@media (prefers-color-scheme: dark) {
-    :root {
-        --bgcolor: #111;
-        --black: #eee;
-    }
-
-    #logo {
-        filter: invert(100%);
-    }
-}
-
 body {
-    background-color: var(--bgcolor);
-    margin: 0px;
-
-}
-
-ctext {
-    color: #e93f21;
-}
-
-
-/* SNAP CONTAINER TEST */
-
-/* Container that holds all your sections */
-.snap-container {
-    height: 100vh;
-    /* Full height of the viewport */
-    overflow-y: scroll;
-    /* Allows vertical scrolling */
-    scroll-snap-type: y mandatory;
-    /* Enables vertical scroll snapping */
-}
-
-/* Each section */
-main {
-    scroll-snap-align: start;
-    /* Aligns the start edge of the section with the container's scroll snap boundary */
-    /* Your existing styles for main */
-}
-
-
-/* NAVBAR */
-.navbar {
-    top: 1vh;
-    height: 4vh;
-    display: grid;
-    width: 100vw;
-    /* border: 1px solid red; */
-    grid-template-rows: 5vh;
-    /* grid-template-columns: 20vw 10vw 60vw 9vw; */
-    grid-template-columns: repeat(8, minmax(0, 1fr));
-    padding: 2vh;
-    position: fixed;
-    font-size: 11px;
-    text-transform: uppercase;
-    font-family: 'sfmono', monospace;
-    z-index: 1001;
+    padding: 0;
+    margin: 0;
+    background-color: black;
     color: white;
-    mix-blend-mode: difference;
-}
-
-.navbar a {
-    text-decoration: underline;
-    cursor: pointer;
-    color: var(--black);
-    color: white;
-    mix-blend-mode: difference;
-}
-
-
-.navbar>div {}
-
-.navbar>#nav0 {
-    grid-column: 1;
-}
-
-.navbar>#nav1 {
-    grid-column: 2;
-}
-
-.navbar>#nav2 {
-    grid-column: 5;
-}
-
-.navbar>#nav3 {
-    grid-column: 6;
-}
-
-.navbar>#nav4 {
-    grid-column: 8;
-}
-
-
-
-/* Main pages */
-main {
-    height: 100vh;
-    width: 100vw;
-    /* border: 1px solid black; */
-    position: relative;
+    font-family: 'Sequel Sans VF';
     display: flex;
-}
-
-
-#logo {
-    position: absolute;
-    /* border: 1px solid orange; */
-    pointer-events: none;
-
-
-    width: 60vw;
-    height: auto;
-    right: 0vw;
-    bottom: 1vh;
-}
-
-main>#aboutme {
-    color: var(--black);
-    /* border: 1px solid salmon; */
-    position: absolute;
-    top: 7vh;
-    left: 5vw;
-    width: 45vw;
-    font-size: 35px;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-}
-
-
-/* terza pagina */
-#Thirdpage {
-    /* All this just so that it expand based on the gallery items */
-    display: flex;
-    flex-wrap: wrap;
-    overflow-x: auto;
-}
-
-
-#gallerymain {
-    display: flex;
-    align-items: center;
     justify-content: center;
 }
 
-.gallery {
-    position: absolute;
-    top: 10vh;
-
-    /* column-count: 3; */
-    column-gap: 5px;
-    row-gap: 10px;
-    width: 100vw;
-    padding-left: 1vw;
-    padding-right: 1vw;
-}
-
-.worksection {
-    overflow-x: hidden;
-    width: 98vw;
-    border-bottom: 1px solid var(--bordcolor);
-    font-size: 70px;
-    text-transform: uppercase;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    display: grid;
-    grid-template-columns: 1fr 0.5fr;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out; /* Adjust transition to background */
-    color: var(--black);
-    background-size:cover; /* Ensure the background covers the element */
-    background-position: center; /* Center the background image */
-    /* margin-bottom: 5vh; */
-
-}
-.worksection>subtitlegallery{
-    display: flex;
-    justify-content: end;
-    align-items: end;
-    font-size: 20px;
-    opacity: 60%; /* Positions subtitle at the bottom */
-}
-
-
-.worksection:hover {
-    /* background-image: url('/works/03\ -\ Geppo\ Website/thumb.png');
-    height: 40vh; */
-    /* opacity: 60%; */
-    cursor: none;
-}
-
-.gallery img {
-    width: 100%;
-    height: auto;
-    margin-top: 6px;
-    cursor: pointer;
-    filter: grayscale(100%);
-}
-
-/* modal test */
-
-/* The Modal (background) */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100vw;
-    height: 100vh;
-    overflow: auto;
-    background-color: var(--bgcolor);
-    align-items: center;
-    justify-content: center;
-}
-
-/* Modal Content */
-/* .modal-content {
-    position: relative;
-    background-color: aqua;
-    width: 70vw;
-    overflow-y: auto;
-} */
-
-/* The Close Button */
-.close {
-    color: #aaa;
-    grid-column: 1;
-    grid-row: 2;
-    /* position: fixed; */
-    /* bottom: 1vh;
-    height: 4vh; */
-    /* display: grid; */
-    /* width: 100vw; */
-    /* grid-template-columns: repeat(8, minmax(0, 1fr)); */
-    /* padding: 2vh; */
-    font-family: 'sfmono', monospace;
-    display: block;
-    /* transform: rotate(+90deg); */
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    pointer-events: all;
-
-}
-
-.close:hover,
-.close:focus {
-    color: black;
+a {
     text-decoration: none;
+    color: inherit;
+}
+
+.main-page {
+    width: 100vh;
+    height: 99vh;
+    display: flex;
+    justify-content: center;
+}
+
+h1 {
+    display: flex;
+    font-size: inherit;
+    font-weight: 600;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.main-page-info {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    white-space: nowrap;
+    position: relative;
+    width: 350px;
+    justify-content: center;
+}
+
+.main-page-info-star {
+    height: 14px;
+    width: 14px;
+    float: right;
+    display: flex;
+    justify-content: center;
+}
+
+.about-me {
+    display: flex;
+    width: 350px;
+    flex-wrap: wrap;
+    white-space: initial;
+    line-height: 20px;
+    text-align: justify;
+    margin-top: 32px;
+    margin-bottom: 32px;
+}
+
+
+
+
+.work-list {
+    display: block;
+    width: 400px;
+    margin-top: 32px;
+    margin-bottom: 32px;
+    font-size: 16px;
+    line-height: 18px;
+}
+
+.selected-works-arrow {
+    height: 22px;
+    width: 22px;
+    float: right;
+    display: flex;
+    justify-content: center;
+}
+
+.work-list > a {
+    display: flex;
+    font-size: inherit;
+    font-weight: 600;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.work-list > a {
+    margin: 0;
+    margin-top: 4px;
+    padding-bottom: 2px;
+    transition: all 0.4s ease-in-out;
     cursor: pointer;
 }
 
-.modal-content {
-    height: 30vh;
-    display: grid;
-    width: 100vw;
-    /* border: 1px solid red; */
-    grid-template-rows: repeat(2, minmax(0, 1fr));
-    /* grid-template-columns: 20vw 10vw 60vw 9vw; */
-    grid-template-columns: repeat(8, minmax(0, 1fr));
-    padding: 2vh;
-    font-size: 11px;
-    font-family: 'sfmono', monospace;
-    z-index: 1001;
-    color: white;
-    /* mix-blend-mode: difference; */
-    position: fixed;
-    bottom: 20vh;
-    pointer-events: none;
-}
 
-#modal-title {
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 90px;
-    color: var(--black);
-    grid-column: 2;
-}
 
-#modal-desc {
-    color: var(--black);
-    font-size: 11px;
-    font-family: 'sfmono', monospace;
-    grid-column: 2;
-}
-
-#modal-info {
-    color: var(--black);
-    font-size: 11px;
-    font-family: 'sfmono', monospace;
-    grid-column: 4;
+.work-list > a:hover {
+    background-color: rgb(21, 21, 21);
 }
 
 
-
-
-
-.modal-imggallery {
-    grid-row: 2;
-    grid-column: 2;
-    overflow-x: scroll;
-    overflow-y: hidden;
-    scroll-snap-type: x mandatory;
+.project-main {
     display: flex;
-    flex-wrap: nowrap;
-    height: auto;
-    width: 100%;
+    min-width: 80vw;
+    width: 80vw;
+    height: 80vh;
+    flex-wrap: wrap;
+    white-space: initial;
+    line-height: 20px;
+    text-align: justify;
+    margin-top: 32px;
+    margin-bottom: 32px;
+    overflow: scroll;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
-.imgcontainer {
-    display: grid;
-    grid-template-rows: 10vh 80vh 10vh;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    flex: 0 0 auto;
+
+
+#video-div {
+    min-width: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#video-div > video {
+    width: 100%;
+    height: 80%;
+    margin: 0;
+    padding: 0;
+}
+
+#image-gallery {
+    min-width: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#img-div {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    width: 100%;
+    overflow: scroll;
     overflow-y: hidden;
 }
 
-.modal img {
-    scroll-snap-align: start;
-    height: auto;
+#img-div > img {
+    width: 80%;
+
+}
+
+
+#project-info {
+    min-width: 100%;
     width: 100%;
-    margin-right: 20vw;
-    object-fit: contain;
+    margin: 0;
+    padding: 0;
+    min-height: 15%;
+}
+
+btitle {
+    font-size: 120px;
+    font-family: Tiempos;
+    line-height: normal;
 }
 
 
-.modal iframe {
-    scroll-snap-align: start;
-    margin-right: 20vw;
 
-    width: 90% !important;
-    /* Ensures iframe takes full width of its container */
-    min-width: 90% !important;
+/*SCROLLBAR*/
 
-}
-
-.modal-imggallery::-webkit-scrollbar {
+.project-main::-webkit-scrollbar {
     display: none;
 }
 
 
+::-webkit-scrollbar {
+    width: 10px;
+    height: 7px;
+}
+ 
+::-webkit-scrollbar-track {
+    background-color: #4343437d;
+    -webkit-border-radius: 10px;
+    border-radius: 6px;
+}
 
-/* Mobile responsive */
-@media(max-width: 800px) {
-    #logo {
-        position: absolute;
-        pointer-events: none;
-
-
-        width: 100vw;
-        height: auto;
-        right: 0vw;
-        bottom: 15vh;
-    }
-
-    .navbar{
-        font-size: 9px;
-    }
-
-    .navbar>#nav0 {
-        display: "";
-    }
-
-    .navbar>#nav1 {}
-
-    .navbar>#nav2 {
-        display: none;
-    }
-
-
-    main>#aboutme {
-        /* border: 1px solid salmon; */
-        width: 80vw;
-        font-size: 20px;
-        padding-top: 10vh;
-    }
-
-    /* .gallery {
-        column-count: 2;
-        padding-top: 10vh;
-
-    } */
-
-
-    /* modal responsive */
-    .imgcontainer {
-        grid-template-columns: 1fr;
-        grid-template-rows: 10vh 50vh 40vh;
-    }
-
-    .modal-content {
-        bottom: 10vh;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        font-size: 9px;
-    }
-
-    #modal-info{
-        font-size: 9px;
-    }
-
-    #modal-v-date{
-        font-size: 9px;
-    }
-
-    #modal-v-tools {
-        font-size: 9px;
-    }
-
-    #modal-desc {
-        grid-column-end: 3;
-        font-size: 9px;
-    }
-
-    .close {
-        display: block;
-    }
-
-
-    .worksection {
-        font-size: 30px;
-    } 
-
-    .worksection>subtitlegallery{
-        font-size: 12px;
-        white-space: pre;
-    }
-
-
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: #424242; 
 }
 
 
-    /* Additions for modal animations */
-    .modal {
-        animation: fadeInModal 0.2s forwards;
-
-    }
-
-    @keyframes fadeInModal {
-        from {
-            opacity: 0;
-        }
-
-        to {
-            opacity: 1;
-        }
-    }
-
-    @keyframes fadeOutModal {
-        from {
-            opacity: 1;
-        }
-
-        to {
-            opacity: 0;
-        }
-    }
-
-    .modal img {
-        animation: slideIn 0.5s ease-out;
-    }
-
-
-
-
-    .gallery img:hover {
-        filter: grayscale(0%);
-    }
+/*TEST TRANSITIONS*/
+body {
+    opacity: 0;
+    transition: all 0.5s ease-in-out;
+}
