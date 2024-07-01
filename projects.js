@@ -4,7 +4,7 @@ const projects = [
         name: "Olin Ski",
         description: "BrandBook and BrandVideo made for a University Course, Metaprogetto. Based on a old Ski company",
         ptype: "Brandbook & Video",
-        tools: "Illustrator | inDesign | Photoshop | Premier Pro | After Effect",
+        tools: "Illustrator InDesign Photoshop Premier Pro After Effect",
         date: "1st smst 2y // 2023",
 
         images: [],
