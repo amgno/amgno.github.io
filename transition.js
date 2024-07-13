@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.body.style.opacity = '0%';
     setTimeout(function () {
         document.body.style.opacity = '100%';
-    }, 600); // Match the transition duration
+    }, 200); // Match the transition duration
 
 
     document.querySelectorAll('a[href]').forEach(function (link) {
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             setTimeout(function () {
                 window.location.href = targetUrl; // Navigate after fade-out
-            }, 500); // Match the transition duration
+            }, 250); // Match the transition duration
         });
     });
 
