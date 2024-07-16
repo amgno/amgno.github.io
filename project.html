@@ -72,7 +72,7 @@
             setTimeout(function () {
                 document.body.style.background = project.bgcolor;
             }, 600); // Match the transition duration
-            
+
 
             var imageContainer = document.getElementById('img-div');
 
@@ -107,7 +107,14 @@
 
         <div class="main-page-info">
             <nav style="line-height: 0.5rem;">
-                <h1><span id="span-number">PHNUMBER</span>
+                <h1>
+                    <span>
+                        <a href="./index.html">INDEX</a>
+                        <span style="margin-left: 5px; margin-right: 5px; font-size: 14px;">></span>
+                        <a href="./works.html">SELECTED WORKS</a>
+                        <span style="margin-left: 5px; margin-right: 5px; font-size: 14px;">></span>
+                        <span id="span-number">PHNUMBER</span>
+                    </span>
                     <svg class="main-page-info-star" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
                         <path fill="#fff" stroke="#000" stroke-width=".3"
                             d="m9.145 7.98 3.069 4.394-2.019 1.415-3.07-4.638-.124-.188-.126.188-3.07 4.589-2.02-1.415 3.021-4.346.116-.167-.193-.061-4.54-1.444.745-2.341L5.57 5.602l.2.071V.15H8.18v5.522l.2-.07 4.685-1.636.745 2.34-4.588 1.445-.195.06.117.168Z">
@@ -124,6 +131,10 @@
 
                     <div id="project-info">
                         <div>
+                            <h1 id="span-type" style="text-transform: uppercase;">PHNAME</h1>
+                            <h1 id="span-date" style="text-transform: uppercase;">PHDATE</h1>
+                        </div>
+                        <div>
                             <h1>ABOUT</h1>
                             <p><span id="span-desc"></span></p>
                         </div>
@@ -131,7 +142,7 @@
                             <h1>TOOLS USED</h1>
                             <p><span id="span-tools"></span></p>
                         </div>
-                        
+
 
                     </div>
 
@@ -144,7 +155,12 @@
                     </div>
 
                     <div id="image-gallery">
-                        <h1>ASSETS</h1>
+                        <h1><span style="display: flex; flex-direction: row;">ASSETS
+                            <svg class="asset-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
+                                <path style="fill:#fff" d="m17.5 5.999-.707.707 5.293 5.293H1v1h21.086l-5.294 5.295.707.707L24 12.499l-6.5-6.5z" data-name="Right" />
+                            </svg>
+                        </span>
+                        </h1>
 
                         <div id="img-div"></div>
                     </div>
@@ -158,14 +174,13 @@
 
 
                 </div>
-                <h1><a>
-                        <span id="span-type" style="text-transform: uppercase;">PHNAME</span>
-                    </a>SCROLL <a>
-                        <span id="span-date" style="text-transform: uppercase;">PHDATE</span>
-                    </a></h1>
+                <h1>
+                    <a href="./contact.html">CONTACT</a>
+                    <a>//</a>
+                    <a href="./about.html">INFO</a>
+                </h1>
                 <h1></h1>
                 <h1></h1>
-                <h1><a href="./works.html" class="backbtn">BACK</a><a href=""></a></h1>
             </nav>
         </div>
 

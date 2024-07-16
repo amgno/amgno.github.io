@@ -46,6 +46,7 @@ const projects = [
 
         images: ['./works/04 - Platform game/images/img1.png', './works/04 - Platform game/images/img2.png', './works/04 - Platform game/images/img3.png'],
         pdf: "",
+        bgcolor: "#eca71e",
     },
     {
         number: "05",
