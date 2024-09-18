@@ -9,10 +9,22 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="Sequel sans/style.css">
     <link rel="icon" type="image/x-icon" href="./favicon.ico">
+    <style>
+        .work-list a {
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .selected-works-arrow {
+            width: 25px;
+            height: 25px;
+            margin-left: 10px;
+        }
+    </style>
 </head>
 
-
-
+<script src="./projects.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         // Define the SVG content
@@ -22,21 +34,24 @@
             </svg>
         `;
 
-        // Find all <arrow> elements
-        const arrowElements = document.querySelectorAll('arrow');
-
-        // Replace each <arrow> element with the SVG content
-        arrowElements.forEach(function (arrow) {
-            arrow.outerHTML = svgContent;
+        // Generate project links
+        const workList = document.querySelector('.work-list');
+        projects.forEach(project => {
+            const projectLink = document.createElement('a');
+            projectLink.href = `./project.html?p=${project.number}`;
+            projectLink.innerHTML = `
+                <span>${project.name}</span>
+                ${svgContent}
+            `;
+            workList.appendChild(projectLink);
         });
+
         document.body.style.opacity = '0%';
         document.body.style.opacity = '100%';
     });
 </script>
 
-
 <script src="./transition.js"></script>
-
 
 <body>
     <div class="main-page">
@@ -57,29 +72,7 @@
                 </h1>
 
                 <div class="work-list">
-                    <a href="./project.html?p=01">OLIN SKI
-                        <arrow class="selected-works-arrow"></arrow>
-                    </a>
-
-                    <a href="./project.html?p=02">LIMITAZIONE
-                        <arrow class="selected-works-arrow"></arrow>
-                    </a>
-
-                    <a href="./project.html?p=03">GEPPO' WEBSITE
-                        <arrow class="selected-works-arrow"></arrow>
-                    </a>
-
-                    <a href="./project.html?p=04">JACK E IL FAGIOLO CLIMATICO
-                        <arrow class="selected-works-arrow"></arrow>
-                    </a>
-
-                    <a href="./project.html?p=05">PORTFOLIO
-                        <arrow class="selected-works-arrow"></arrow>
-                    </a>
-
-                    <a href="./project.html?p=06">ROLLI DI GENOVA
-                        <arrow class="selected-works-arrow"></arrow>
-                    </a>
+                    <!-- Project links will be dynamically inserted here -->
                 </div>
                 <h1><a href="./contact.html">CONTACT</a>// <a href="./about.html">INFO</a></h1>
                 <h1></h1>
@@ -90,3 +83,5 @@
 
     </div>
 </body>
+
+</html>

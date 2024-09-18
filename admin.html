@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AM | Admin Panel</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="Sequel sans/style.css">
+    <link rel="icon" type="image/x-icon" href="./favicon.ico">
+    <style>
+        .main-page-info {
+            max-width: 100%;
+            padding: 20px;
+        }
+        #login-form, #admin-panel {
+            margin-top: 20px;
+        }
+        input[type="password"], input[type="text"], button {
+            font-family: 'Sequel Sans VF', sans-serif;
+            font-size: 16px;
+            margin: 5px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #000;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #333;
+        }
+        #projects-list {
+            margin-top: 20px;
+        }
+        #projects-list > div {
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+        #projects-list h3 {
+            margin-top: 0;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+        }
+        #projects-list label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        #projects-list input {
+            margin-top: 5px;
+        }
+        .project-actions {
+            margin-top: 15px;
+        }
+        .project-actions button {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-page">
+        <div class="main-page-info">
+            <nav style="line-height: 0.5rem;">
+                <h1>
+                    <span>
+                        <a href="./index.html">INDEX</a>
+                        <span style="margin-left: 5px; margin-right: 5px; font-size: 14px;">></span>
+                        <span>ADMIN PANEL</span>
+                    </span>
+                    <svg class="main-page-info-star" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+                        <path fill="#fff" stroke="#000" stroke-width=".3"
+                            d="m9.145 7.98 3.069 4.394-2.019 1.415-3.07-4.638-.124-.188-.126.188-3.07 4.589-2.02-1.415 3.021-4.346.116-.167-.193-.061-4.54-1.444.745-2.341L5.57 5.602l.2.071V.15H8.18v5.522l.2-.07 4.685-1.636.745 2.34-4.588 1.445-.195.06.117.168Z">
+                        </path>
+                    </svg>
+                </h1>
+
+                <div id="login-form">
+                    <h2>Admin Login</h2>
+                    <input type="password" id="password" placeholder="Enter password">
+                    <button onclick="login()">Login</button>
+                </div>
+
+                <div id="admin-panel" style="display: none;">
+                    <h2>Projects Management</h2>
+                    <div id="projects-list"></div>
+                    <div class="project-actions">
+                        <button onclick="addProject()">Add New Project</button>
+                        <button onclick="saveProjects()">Save Changes</button>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <script src="./projects.js"></script>
+    <script src="admin.js"></script>
+    <script src="./transition.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                document.body.style.opacity = '100%';
+            }, 0);
+        });
+    </script>
+</body>
+</html>
