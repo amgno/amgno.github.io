@@ -58,15 +58,19 @@ const projects = [
   },
   {
     "number": "05",
-    "name": "My Portfolio",
-    "description": "This website was entirely made by me, hard coded from scratch. It's open-source, meaning you can go check out the code behing it",
+    "name": "Portfolio",
+    "description": "Dynamic website with a working admin dashboard to update and edit Projects",
     "ptype": "Website",
-    "tools": "vscode",
-    "date": "March 2024",
+    "tools": "vscode ",
+    "date": "Updated Sept 2024",
     "images": [
-      ""
+      "/works/05 - Portfolio/images/Screenshot 2024-09-19 alle 17.45.47.png",
+      "/works/05 - Portfolio/images/Screenshot 2024-09-19 alle 17.45.42.png",
+      "/works/05 - Portfolio/images/Screenshot 2024-09-19 alle 17.45.39.png"
     ],
-    "pdf": ""
+    "pdf": "",
+    "video": "",
+    "bgcolor": "#4d3729"
   },
   {
     "number": "06",
