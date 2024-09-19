@@ -88,7 +88,9 @@
 
                 imageContainer.appendChild(img);
             });
-            displayPdfAsImages(project.pdf);
+            if (project.pdf) {
+                displayPdfAsImages(project.pdf);
+            }
 
 
 

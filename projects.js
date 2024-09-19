@@ -81,19 +81,5 @@ const projects = [
     "pdf": "./works/06 - Rolli/document.pdf",
     "video": "https://data.088899.xyz/ROLLI-main.mp4",
     "bgcolor": "#590202"
-  },
-  {
-    "number": "07",
-    "name": "test",
-    "description": "wow cool description",
-    "ptype": "startup",
-    "tools": "AI IDK IDK",
-    "date": "2nd sms sdasd",
-    "images": [
-      ""
-    ],
-    "pdf": "",
-    "video": "",
-    "bgcolor": "#eca712"
   }
 ];

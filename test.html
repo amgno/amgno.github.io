@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Upload</title>
+</head>
+<body>
+    <h1>Test File Upload</h1>
+    <form id="upload-form">
+        <input type="file" name="files" multiple>
+        <input type="text" name="projectIndex" placeholder="Project Index">
+        <button type="submit">Upload</button>
+    </form>
+    <script>
+        document.getElementById('upload-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>

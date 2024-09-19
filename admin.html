@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,13 +10,31 @@
     <link rel="icon" type="image/x-icon" href="./favicon.ico">
     <style>
         .main-page-info {
-            max-width: 100%;
+            font-size: 16px;
+            white-space: collapse !important; 
+        }
+
+        body {
+            font-family: 'Sequel Sans VF', sans-serif;
+            background-color: white;
+            color: black;
+            margin: 0;
             padding: 20px;
         }
-        #login-form, #admin-panel {
+
+        .main-page-info {
+            padding: 20px;
+            width: auto !important;
+        }
+
+        #login-form,
+        #admin-panel {
             margin-top: 20px;
         }
-        input[type="password"], input[type="text"], button {
+
+        input[type="password"],
+        input[type="text"],
+        button {
             font-family: 'Sequel Sans VF', sans-serif;
             font-size: 16px;
             margin: 5px 0;
@@ -25,6 +44,7 @@
             width: 100%;
             box-sizing: border-box;
         }
+
         button {
             background-color: #000;
             color: #fff;
@@ -33,39 +53,102 @@
             cursor: pointer;
             transition: background-color 0.3s;
         }
+
         button:hover {
             background-color: #333;
         }
+
         #projects-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
             margin-top: 20px;
         }
-        #projects-list > div {
-            margin-bottom: 20px;
-            padding: 20px;
+
+        .project-box {
+            width: 100%;
             border: 1px solid #ccc;
             border-radius: 4px;
             background-color: #f9f9f9;
+            height: auto;
         }
-        #projects-list h3 {
-            margin-top: 0;
-            border-bottom: 1px solid #ccc;
-            padding-bottom: 10px;
+
+        .project-header {
+            background-color: #e0e0e0;
+            padding: 10px;
+            cursor: pointer;
         }
-        #projects-list label {
+
+        .project-header h3 {
+            margin: 0;
+        }
+
+        .project-content {
+            display: none;
+            padding: 15px;
+        }
+
+        .project-content.active {
+            display: block;
+        }
+
+        .project-content label {
             display: block;
             margin-bottom: 10px;
         }
-        #projects-list input {
+
+        .project-content input {
             margin-top: 5px;
+            width: calc(100% - 20px);
         }
+
         .project-actions {
             margin-top: 15px;
         }
+
         .project-actions button {
             margin-right: 10px;
         }
+
+        .project-content-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .project-content-wrapper>label {
+            flex: 1 1 calc(50% - 10px);
+            margin-right: 10px;
+            box-sizing: border-box;
+            padding-right: 10px;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            border-radius: 4px;
+            color: white;
+            font-weight: bold;
+            z-index: 1000;
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .notification.success {
+            background-color: #4CAF50;
+        }
+
+        .notification.error {
+            background-color: #f44336;
+        }
+
+        .notification.fade-out {
+            opacity: 0;
+        }
     </style>
 </head>
+
 <body>
     <div class="main-page">
         <div class="main-page-info">
@@ -93,7 +176,7 @@
                     <h2>Projects Management</h2>
                     <div id="projects-list"></div>
                     <div class="project-actions">
-                        <button onclick="addProject()">Add New Project</button>
+                        <button onclick="addProject()">Add New Project</button><br>
                         <button onclick="saveProjects()">Save Changes</button>
                     </div>
                 </div>
@@ -104,11 +187,12 @@
     <script src="admin.js"></script>
     <script src="./transition.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(function() {
+        document.addEventListener('DOMContentLoaded', function () {
+            setTimeout(function () {
                 document.body.style.opacity = '100%';
             }, 0);
         });
     </script>
 </body>
+
 </html>

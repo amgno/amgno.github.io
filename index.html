@@ -9,6 +9,31 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="Sequel sans/style.css">
     <link rel="icon" type="image/x-icon" href="./favicon.ico">
+    <script>
+        let kPressCount = 0;
+        let lastKeyPressTime = 0;
+
+        document.addEventListener('keydown', function(event) {
+            const currentTime = new Date().getTime();
+            
+            if (event.key.toLowerCase() === 'k') {
+                if (currentTime - lastKeyPressTime > 1000) {
+                    // Reset count if more than 1 second has passed
+                    kPressCount = 0;
+                }
+                
+                kPressCount++;
+                lastKeyPressTime = currentTime;
+
+                if (kPressCount === 3) {
+                    window.location.href = './admin.html';
+                }
+            } else {
+                // Reset count if any other key is pressed
+                kPressCount = 0;
+            }
+        });
+    </script>
 </head>
 
 <script src="./transition.js"></script>

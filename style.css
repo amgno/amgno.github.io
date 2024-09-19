@@ -187,8 +187,9 @@ h1 {
 }
 
 #img-div > img {
-    height: 80%;
+    height: 80% !important;
     width: auto;
+    object-fit: contain;
 }
 
 
