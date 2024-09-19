@@ -59,7 +59,7 @@ const projects = [
   {
     "number": "05",
     "name": "Portfolio",
-    "description": "Dynamic website with a working admin dashboard to update and edit Projects",
+    "description": "Dynamic website with a working admin dashboard to update and edit Projects. You can find all the source code into GitHub <a href=\"https://github.com/amgno/amgno.github.io/tree/node\">here</a>",
     "ptype": "Website",
     "tools": "vscode ",
     "date": "Updated Sept 2024",
