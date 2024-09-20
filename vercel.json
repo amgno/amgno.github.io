@@ -1,1 +1,8 @@
-{ "version": 2, "rewrites": [{ "source": "/(.*)", "destination": "/server.js" }] }
+{ "version": 2, "rewrites": [
+    { "source": "/(.*)", "destination": "/server.js" },
+    { "source": "/admin", "destination": "/server.js" },
+    { "source": "/login", "destination": "/server.js" },
+    { "source": "/upload", "destination": "/server.js" },
+    { "source": "/save-projects", "destination": "/server.js" }
+  ]
+}
