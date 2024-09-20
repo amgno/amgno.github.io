@@ -1,12 +1,31 @@
 {
-  "version": 2,
-  "buildCommand": "node server.js",
-  "installCommand": "npm install",
-  "routes": [
-    { "src": "/admin", "dest": "server.js" },
-    { "src": "/login", "methods": ["POST"], "dest": "server.js" },
-    { "src": "/upload", "methods": ["POST"], "dest": "server.js" },
-    { "src": "/save-projects", "methods": ["POST"], "dest": "server.js" },
-    { "src": "/(.*)", "dest": "server.js" }
-  ]
-}
+    "version": 2,
+    "builds": [
+      {
+        "src": "server.js",
+        "use": "@vercel/node"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/admin",
+        "dest": "server.js"
+      },
+      {
+        "src": "/login",
+        "dest": "server.js"
+      },
+      {
+        "src": "/upload",
+        "dest": "server.js"
+      },
+      {
+        "src": "/save-projects",
+        "dest": "server.js"
+      },
+      {
+        "src": "/(.*)",
+        "dest": "server.js"
+      }
+    ]
+  }
