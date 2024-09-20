@@ -79,8 +79,27 @@
             if (!project.video) {
                 console.log("no video, removing div");
                 document.getElementById('video-div').style.display = 'none';
+            } else {
+                // Lazy load the video
+                const videoContainer = document.getElementById('video-div');
+                const videoPlayer = document.getElementById('video-player');
+                videoPlayer.setAttribute('data-src', project.video);
+                
+                // Load video when it comes into view
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const source = document.createElement('source');
+                            source.src = videoPlayer.getAttribute('data-src');
+                            source.type = 'video/mp4';
+                            videoPlayer.appendChild(source);
+                            videoPlayer.load();
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                });
+                observer.observe(videoContainer);
             }
-            document.getElementById('video-player').src = project.video
 
             project.images.forEach((imageUrl) => {
                 const img = document.createElement('img');
@@ -151,9 +170,7 @@
 
                     <div id="video-div">
                         <h1>VIDEO</h1>
-                        <video controls>
-                            <source src="" type="video/mp4" id="video-player">
-                        </video>
+                        <video id="video-player" controls></video>
                     </div>
 
                     <div id="image-gallery">
