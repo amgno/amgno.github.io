@@ -43,7 +43,7 @@ app.post('/login', (req, res) => {
     if (password === ADMIN_PASSWORD) {
         res.json({ success: true });
     } else {
-        res.status(401).json({ success: false, message: 'Incorrect password' });
+        res.status(401).json({ success: false, message: 'Invalid password' });
     }
 });
 
