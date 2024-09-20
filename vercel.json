@@ -1,2 +1,11 @@
-{ "version": 2, "installCommand": "npm install"
+{
+  "version": 2,
+  "installCommand": "npm install",
+  "routes": [
+    { "src": "/admin", "dest": "server.js" },
+    { "src": "/login", "methods": ["POST"], "dest": "server.js" },
+    { "src": "/upload", "methods": ["POST"], "dest": "server.js" },
+    { "src": "/save-projects", "methods": ["POST"], "dest": "server.js" },
+    { "src": "/(.*)", "dest": "server.js" }
+  ]
 }
