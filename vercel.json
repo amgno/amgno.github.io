@@ -2,14 +2,30 @@
     "version": 2,
     "builds": [
       {
-        "src": "index.js",
+        "src": "server.js",
         "use": "@vercel/node"
       }
     ],
     "routes": [
       {
+        "src": "/admin",
+        "dest": "server.js"
+      },
+      {
+        "src": "/login",
+        "dest": "server.js"
+      },
+      {
+        "src": "/upload",
+        "dest": "server.js"
+      },
+      {
+        "src": "/save-projects",
+        "dest": "server.js"
+      },
+      {
         "src": "/(.*)",
-        "dest": "index.js"
+        "dest": "server.js"
       }
     ]
   }
