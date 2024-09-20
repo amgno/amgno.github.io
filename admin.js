@@ -52,7 +52,14 @@ function loadProjects() {
             <div class="project-content" id="project-content-${index}">
                 <div class="project-content-wrapper">
                     ${Object.entries(project).map(([key, value]) => {
-                        if (key === 'images') {
+                        if (key === 'description') {
+                            return `
+                                <label for="${index}-${key}">
+                                    ${key}: 
+                                    <textarea id="${index}-${key}">${value}</textarea>
+                                </label>
+                            `;
+                        } else if (key === 'images') {
                             return `
                                 <label>
                                     ${key}: 
@@ -72,7 +79,7 @@ function loadProjects() {
                             `;
                         } else {
                             return `
-                                <label>
+                                <label for="${index}-${key}">
                                     ${key}: 
                                     <input type="text" id="${index}-${key}" value="${value}">
                                 </label>

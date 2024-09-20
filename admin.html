@@ -120,6 +120,28 @@
             margin-right: 10px;
             box-sizing: border-box;
             padding-right: 10px;
+            margin-bottom: 15px; /* Add some vertical spacing */
+        }
+
+        /* New styles for description */
+        .project-content-wrapper label[for$="-description"] {
+            flex-basis: 100%;
+            width: 100%;
+        }
+
+        .project-content-wrapper label[for$="-description"] textarea {
+            width: 100%;
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        /* Ensure all inputs have consistent styling */
+        .project-content-wrapper input,
+        .project-content-wrapper textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            box-sizing: border-box;
         }
 
         .notification {
