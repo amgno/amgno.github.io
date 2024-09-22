@@ -18,6 +18,38 @@ a:hover {
 }
 
 
+.atag {
+    background: linear-gradient(90deg, #ffffff 0%, #cbcbcb 50%, #ffffff 100%);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: shine 3s linear infinite;
+    animation-delay: var(--shine-delay, 0s);
+    text-decoration: none;
+    padding: 0.1em 0;
+    line-height: 1.2;
+    display: inline-block;
+    position: relative;
+}
+
+.atag::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    bottom: 0;
+    left: 0;
+    background-color: #ffffff;
+    transform: scaleX(0);
+    transform-origin: bottom left;
+    transition: transform 0.3s ease-out;
+}
+
+.atag:hover::after {
+    transform: scaleX(1);
+}
+
 .backbtn {
     font-family: Tiempos;
     text-transform: lowercase;
