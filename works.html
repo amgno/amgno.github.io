@@ -15,11 +15,18 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            transition: all 0.3s ease;
+            padding: 5px 0;
         }
         .selected-works-arrow {
             width: 25px;
             height: 25px;
             margin-left: 10px;
+            transition: transform 0.3s ease;
+            transform: translateX(-5px);
+        }
+        .work-list a:hover .selected-works-arrow {
+            transform: translateX(0);
         }
     </style>
 </head>
