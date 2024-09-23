@@ -11,6 +11,8 @@ jobs:
           sshpass -p ${{ secrets.PASSWORD }} ssh -o StrictHostKeyChecking=no ${{ secrets.USER_NAME }}@${{ secrets.SERVER_ADDRESS }} -p ${{ secrets.SSH_PORT }} 
           echo ✅ SSH connection successful &&
           ls &&
+          echo ✅ Listing directory &&
+          echo wow &&
           cd ~/${{ secrets.APP_ROOT }}/ &&
           echo ✅ Pulling from GitHub &&
           git pull &&
