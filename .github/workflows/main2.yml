@@ -10,7 +10,7 @@ jobs:
         run: |
           sshpass -p ${{ secrets.PASSWORD }} ssh -o StrictHostKeyChecking=no ${{ secrets.USER_NAME }}@${{ secrets.SERVER_ADDRESS }} -p ${{ secrets.SSH_PORT }} 
           echo ✅ SSH connection successful &&
-          cd /home/ubuntu/myport/ &&
+          cd /home/deployer/ &&
           echo ✅ Pulling from GitHub &&
           git pull &&
           echo ✅ Starting docker &&
