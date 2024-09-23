@@ -59,9 +59,9 @@ const projects = [
   {
     "number": "05",
     "name": "Portfolio",
-    "description": "Dynamic website with a working admin dashboard to update and edit Projects. You can find all the source code into GitHub <a href=\"https://github.com/amgno/amgno.github.io/tree/node\">here</a>",
+    "description": "Dynamic website with a working admin dashboard to update and edit Projects. \nA little help from Claude AI was used for difficult tasks.\n\nYou can find all the source code into GitHub <a href=\"https://github.com/amgno/amgno.github.io/tree/node\" class=\"atag\">here</a>\n\n",
     "ptype": "Website",
-    "tools": "vscode ",
+    "tools": "vscode, cursor",
     "date": "Updated Sept 2024",
     "images": [
       "/works/05 - Portfolio/images/Screenshot 2024-09-19 alle 17.45.47.png",

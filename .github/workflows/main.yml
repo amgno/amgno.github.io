@@ -1,0 +1,20 @@
+name: Deploy
+on:
+  push:
+    branches: [ dev ]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Access to Server, Remove Docker Containers, Build Docker Image, Run Docker Container
+        run: |
+          sshpass -p ${{ secrets.PASSWORD }} ssh -o StrictHostKeyChecking=no ${{ secrets.USER_NAME }}@${{ secrets.SERVER_ADDRESS }} -p ${{ secrets.SSH_PORT }} "
+          echo ✅ SSH connection successful &&
+          cd ~/${{ secrets.APP_ROOT }}/ &&
+          echo ✅ Pulling from GitHub &&
+          git pull &&
+          echo ✅ Starting docker &&
+          cd amgno.github.io &&
+          docker-compose down &&
+          docker-compose up -d &&
+          echo ✅ Done
