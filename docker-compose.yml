@@ -10,3 +10,17 @@ services:
     environment:
       - NODE_ENV=production
       - ADMIN_PASSWORD=pass
+    networks:
+      - caddy
+    labels:
+      caddy: pf.dev.magno.me
+      caddy.reverse_proxy: "{{upstreams 3000}}"
+
+      
+networks:
+  caddy:
+    external: true
+
+
+
+    
