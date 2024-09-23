@@ -8,7 +8,7 @@ jobs:
     steps:
       - name: Access to Server, Remove Docker Containers, Build Docker Image, Run Docker Container
         run: |
-          sshpass -p ${{ secrets.PASSWORD }} ssh -o StrictHostKeyChecking=no ${{ secrets.USER_NAME }}@${{ secrets.SERVER_ADDRESS }} -p ${{ secrets.SSH_PORT }} "
+          sshpass -p ${{ secrets.PASSWORD }} ssh -o StrictHostKeyChecking=no ${{ secrets.USER_NAME }}@${{ secrets.SERVER_ADDRESS }} -p ${{ secrets.SSH_PORT }} 
           echo ✅ SSH connection successful &&
           cd ~/${{ secrets.APP_ROOT }}/ &&
           echo ✅ Pulling from GitHub &&
