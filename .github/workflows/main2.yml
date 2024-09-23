@@ -22,7 +22,7 @@ jobs:
           echo ✅ Pulling from GitHub &&
           git pull &&
           echo ✅ Starting docker &&
-          sudo docker-compose down &&
-          sudo docker-compose up -d &&
-          echo ✅ Donee
+          echo ${{ secrets.PASSWORD }} | sudo -S docker-compose down &&
+          echo ${{ secrets.PASSWORD }} | sudo -S docker-compose up -d &&
+          echo ✅ Done
           EOF
