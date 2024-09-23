@@ -8,19 +8,21 @@ jobs:
     steps:
       - name: Access to Server, Remove Docker Containers, Build Docker Image, Run Docker Container
         run: |
-          sshpass -p ${{ secrets.PASSWORD }} ssh -o StrictHostKeyChecking=no ${{ secrets.USER_NAME }}@${{ secrets.SERVER_ADDRESS }} -p ${{ secrets.SSH_PORT }}
+          sshpass -p ${{ secrets.PASSWORD }} ssh -o StrictHostKeyChecking=no ${{ secrets.USER_NAME }}@${{ secrets.SERVER_ADDRESS }} -p ${{ secrets.SSH_PORT }} << 'EOF'
           echo ✅ SSH connection successful &&
           ls &&
           echo ✅ Listing directory &&
           echo wow &&
-          if [ -d "/home/deployer/amgno.github.io" ]; then
-            cd /home/deployer/amgno.github.io &&
-            echo ✅ Pulling from GitHub &&
-            git pull &&
-            echo ✅ Starting docker &&
-            docker-compose down &&
-            docker-compose up -d &&
-            echo ✅ Done
-          else
-            echo ❌ Directory /home/deployer/amgno.github.io does not exist
-          fi
+          if [ ! -d "/home/deployer/amgno.github.io" ]; then
+            echo ❌ Directory /home/deployer/amgno.github.io does not exist, creating it &&
+            mkdir -p /home/deployer/amgno.github.io &&
+            echo ✅ Directory created
+          fi &&
+          cd /home/deployer/amgno.github.io &&
+          echo ✅ Pulling from GitHub &&
+          git pull &&
+          echo ✅ Starting docker &&
+          docker-compose down &&
+          docker-compose up -d &&
+          echo ✅ Done
+          EOF
