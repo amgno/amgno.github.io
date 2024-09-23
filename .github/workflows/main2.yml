@@ -13,10 +13,14 @@ jobs:
           ls &&
           echo ✅ Listing directory &&
           echo wow &&
-          cd /home/deployer/amgno.github.io &&
-          echo ✅ Pulling from GitHub &&
-          git pull &&
-          echo ✅ Starting docker &&
-          docker-compose down &&
-          docker-compose up -d &&
-          echo ✅ Done
+          if [ -d "/home/deployer/amgno.github.io" ]; then
+            cd /home/deployer/amgno.github.io &&
+            echo ✅ Pulling from GitHub &&
+            git pull &&
+            echo ✅ Starting docker &&
+            docker-compose down &&
+            docker-compose up -d &&
+            echo ✅ Done
+          else
+            echo ❌ Directory /home/deployer/amgno.github.io does not exist
+          fi
