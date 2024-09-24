@@ -39,12 +39,43 @@ function addMouseEffect() {
   let centerX = window.innerWidth / 2;
   let centerY = window.innerHeight / 2;
 
+  // Throttle mousemove event
+  let lastMouseMoveTime = 0;
+  const throttleDelay = 16; // Approximately 60 FPS
+
   document.addEventListener('mousemove', (e) => {
-    rotationY = (e.clientX - centerX) * 0.0001; // Further reduced sensitivity
-    rotationX = (e.clientY - centerY) * 0.0001; // Further reduced sensitivity
+    const currentTime = performance.now();
+    if (currentTime - lastMouseMoveTime >= throttleDelay) {
+      rotationY = (e.clientX - centerX) * 0.0001; // Further reduced sensitivity
+      rotationX = (e.clientY - centerY) * 0.0001; // Further reduced sensitivity
+      lastMouseMoveTime = currentTime;
+    }
   });
 
+  // Add FPS counter
+  const fpsCounter = document.createElement('div');
+  fpsCounter.style.position = 'fixed';
+  fpsCounter.style.display = 'none';
+  fpsCounter.style.top = '10px';
+  fpsCounter.style.left = '10px';
+  fpsCounter.style.color = 'white';
+  fpsCounter.style.fontSize = '14px';
+  document.body.appendChild(fpsCounter);
+
+  let lastFrameTime = performance.now();
+  let frameCount = 0;
+  let fps = 0;
+
   function updateStarPositions() {
+    const currentTime = performance.now();
+    frameCount++;
+    if (currentTime - lastFrameTime >= 1000) {
+      fps = frameCount;
+      frameCount = 0;
+      lastFrameTime = currentTime;
+      fpsCounter.textContent = `FPS: ${fps}`;
+    }
+
     stars.forEach(star => {
       let x = parseFloat(star.dataset.x);
       let y = parseFloat(star.dataset.y);
