@@ -127,7 +127,7 @@ function saveProjects() {
             if (input) {
                 if (key === 'images') {
                     const images = input.value.split(',').map(img => img.trim()).filter(img => img !== '');
-                    project[key] = images.length > 0 ? images : undefined;
+                    project[key] = images.length > 0 ? images : [];
                 } else {
                     project[key] = input.value;
                 }

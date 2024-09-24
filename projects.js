@@ -8,6 +8,7 @@ const projects = [
     "date": "1st smst 2y // 2023",
     "pdf": "./works/01 - Olin/document.pdf",
     "video": "https://data.088899.xyz/OLIN-small.mp4",
+    "images": [],
     "bgcolor": "#1d1d1d"
   },
   {
@@ -18,6 +19,7 @@ const projects = [
     "tools": "AI PS IN",
     "date": "1st smst 2y // 2023",
     "bgcolor": "#0b5394",
+    "images": [],
     "pdf": "./works/02 - Typographic/document.pdf"
   },
   {
@@ -57,11 +59,7 @@ const projects = [
     "ptype": "Website",
     "tools": "vscode, cursor",
     "date": "Updated Sept 2024",
-    "images": [
-      "/works/05 - Portfolio/images/Screenshot 2024-09-19 alle 17.45.47.png",
-      "/works/05 - Portfolio/images/Screenshot 2024-09-19 alle 17.45.42.png",
-      "/works/05 - Portfolio/images/Screenshot 2024-09-19 alle 17.45.39.png"
-    ],
+    "images": [],
     "pdf": "",
     "video": "",
     "bgcolor": "#4d3729"
@@ -75,24 +73,26 @@ const projects = [
     "date": "2nd smst 2y // 2024",
     "pdf": "./works/06 - Rolli/document.pdf",
     "video": "https://data.088899.xyz/ROLLI-main.mp4",
+    "images": [
+      "/works/06 - Rolli di Genova/images/pass.png",
+      "/works/06 - Rolli di Genova/images/70x100.png",
+      "/works/06 - Rolli di Genova/images/6x3.png",
+      "/works/06 - Rolli di Genova/images/tote3.png",
+      "/works/06 - Rolli di Genova/images/mappa7.png",
+      "/works/06 - Rolli di Genova/images/IMG_5269.png"
+    ],
     "bgcolor": "#590202"
   },
   {
     "number": "07",
     "name": "New Project",
-    "description": "brodosa jdoasndaod bodsbodosabdosabod oabsd ba",
-    "ptype": "TEST TEST TEST",
-    "tools": "vscode",
-    "date": "today baby",
-    "images": [
-      "/works/07 - New Project/images/R0000426.JPG",
-      "/works/07 - New Project/images/glen-carrie-XfA12IEoUkc-unsplash.jpg",
-      "/works/07 - New Project/images/Paolo_Monti_-_Servizio_fotografico_-_BEIC_6361591.jpg",
-      "/works/07 - New Project/images/tumblr_c8469aa0de64ef25f78b0576bcbdda60_719dc6f0_1280.jpg",
-      "/works/07 - New Project/images/16 I cassetti della memoria.jpg"
-    ],
-    "pdf": "/works/07 - New Project/A5 v2.pdf",
+    "description": "",
+    "ptype": "",
+    "tools": "",
+    "date": "",
+    "images": [],
+    "pdf": "",
     "video": "",
-    "bgcolor": "#321aaf"
+    "bgcolor": ""
   }
 ];
