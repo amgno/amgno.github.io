@@ -110,6 +110,7 @@ function addProject() {
         bgcolor: ''
     });
     loadProjects();
+    saveProjects(); // Automatically save the new project
 }
 
 function deleteProject(index) {
