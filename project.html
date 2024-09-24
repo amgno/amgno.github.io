@@ -108,14 +108,23 @@
                 observer.observe(videoContainer);
             }
 
-            project.images.forEach((imageUrl) => {
-                const img = document.createElement('img');
-                img.src = imageUrl;
 
-                imageContainer.appendChild(img);
-            });
+            if (project.images && project.images.length > 0) {
+                project.images.forEach((imageUrl) => {
+                    const img = document.createElement('img');
+                    img.src = imageUrl;
+                    imageContainer.appendChild(img);
+                });
+            } else {
+                console.log("no images, removing div");
+                document.getElementById('image-gallery').style.display = 'none';
+            }
+
             if (project.pdf) {
                 displayPdfAsImages(project.pdf);
+            } else {
+                console.log("no pdf, removing div");
+                document.getElementById('image-gallery-pdf').style.display = 'none';
             }
         } else {
             document.getElementById('project-content').innerHTML = '<p>Project not found.</p>';
@@ -180,10 +189,12 @@
 
                     <div id="image-gallery">
                         <h1><span style="display: flex; flex-direction: row;">IMAGES
-                            <svg class="asset-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
-                                <path style="fill:#fff" d="m17.5 5.999-.707.707 5.293 5.293H1v1h21.086l-5.294 5.295.707.707L24 12.499l-6.5-6.5z" data-name="Right" />
-                            </svg>
-                        </span>
+                                <svg class="asset-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
+                                    <path style="fill:#fff"
+                                        d="m17.5 5.999-.707.707 5.293 5.293H1v1h21.086l-5.294 5.295.707.707L24 12.499l-6.5-6.5z"
+                                        data-name="Right" />
+                                </svg>
+                            </span>
                         </h1>
                         <div id="new-img-div"></div>
                     </div>
@@ -191,12 +202,14 @@
                     <div style="height: 5vh;width: 10vh;"></div>
 
 
-                    <div id="image-gallery">
+                    <div id="image-gallery-pdf">
                         <h1><span style="display: flex; flex-direction: row;">PDF / DOCUMENT
-                            <svg class="asset-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
-                                <path style="fill:#fff" d="m17.5 5.999-.707.707 5.293 5.293H1v1h21.086l-5.294 5.295.707.707L24 12.499l-6.5-6.5z" data-name="Right" />
-                            </svg>
-                        </span>
+                                <svg class="asset-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
+                                    <path style="fill:#fff"
+                                        d="m17.5 5.999-.707.707 5.293 5.293H1v1h21.086l-5.294 5.295.707.707L24 12.499l-6.5-6.5z"
+                                        data-name="Right" />
+                                </svg>
+                            </span>
                         </h1>
                         <div id="img-div"></div>
                     </div>

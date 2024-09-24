@@ -211,6 +211,14 @@ h1 {
     border-top: 1px solid rgba(255, 255, 255, 0.50);
 }
 
+#image-gallery-pdf {
+    min-width: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.50);
+}
+
 #img-div {
     display: flex;
     flex-direction: row;

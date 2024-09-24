@@ -6,9 +6,6 @@ const projects = [
     "ptype": "Brandbook & Video",
     "tools": "Illustrator InDesign Photoshop Premier Pro After Effect",
     "date": "1st smst 2y // 2023",
-    "images": [
-      ""
-    ],
     "pdf": "./works/01 - Olin/document.pdf",
     "video": "https://data.088899.xyz/OLIN-small.mp4",
     "bgcolor": "#1d1d1d"
@@ -21,9 +18,6 @@ const projects = [
     "tools": "AI PS IN",
     "date": "1st smst 2y // 2023",
     "bgcolor": "#0b5394",
-    "images": [
-      ""
-    ],
     "pdf": "./works/02 - Typographic/document.pdf"
   },
   {
@@ -79,9 +73,6 @@ const projects = [
     "ptype": "REBRANDING",
     "tools": "Illustrator | Photoshop | InDesign | After Effect",
     "date": "2nd smst 2y // 2024",
-    "images": [
-      ""
-    ],
     "pdf": "./works/06 - Rolli/document.pdf",
     "video": "https://data.088899.xyz/ROLLI-main.mp4",
     "bgcolor": "#590202"
