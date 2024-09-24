@@ -58,10 +58,15 @@ app.post('/upload', upload.array('files'), (req, res) => {
         return { path: relativePath, type: file.mimetype };
     });
 
-    // Update the images array for the specific project
-    projects[projectIndex].images = uploadedFiles
-        .filter(file => file.type.startsWith('image/'))
-        .map(file => '/' + file.path);
+    // Append new images to the existing array
+    if (!projects[projectIndex].images) {
+        projects[projectIndex].images = [];
+    }
+    projects[projectIndex].images = projects[projectIndex].images.concat(
+        uploadedFiles
+            .filter(file => file.type.startsWith('image/'))
+            .map(file => '/' + file.path)
+    );
 
     // Update the pdf field if a PDF was uploaded
     const pdfFile = uploadedFiles.find(file => file.type === 'application/pdf');

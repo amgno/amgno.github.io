@@ -88,6 +88,7 @@ function loadProjects() {
                     }).join('')}
                     <div class="project-actions">
                         <button onclick="deleteProject(${index})">Delete Project</button>
+                        <button onclick="showImageManagement(${index})">Manage Images</button>
                     </div>
                 </div>
             </div>
@@ -200,3 +201,102 @@ function toggleProject(index) {
     const content = document.getElementById(`project-content-${index}`);
     content.classList.toggle('active');
 }
+
+let currentProjectIndex = -1;
+
+function showImageManagement(index) {
+    currentProjectIndex = index;
+    const project = projects[currentProjectIndex];
+    const imagePreview = document.getElementById('image-preview');
+    imagePreview.innerHTML = '';
+
+    project.images.forEach((image, imgIndex) => {
+        const imgElement = document.createElement('div');
+        imgElement.className = 'image-preview-item';
+        imgElement.innerHTML = `
+            <img src="${image}" alt="Project Image">
+            <button onclick="deleteImage(${imgIndex})">Delete</button>
+        `;
+        imagePreview.appendChild(imgElement);
+    });
+
+    document.getElementById('image-management').style.display = 'block';
+}
+
+function deleteImage(imgIndex) {
+    if (confirm('Are you sure you want to delete this image?')) {
+        projects[currentProjectIndex].images.splice(imgIndex, 1);
+        showImageManagement(currentProjectIndex);
+    }
+}
+
+function uploadFiles(files) {
+    const formData = new FormData();
+    formData.append('projectIndex', currentProjectIndex);
+    for (let i = 0; i < files.length; i++) {
+        formData.append('files', files[i]);
+    }
+
+    fetch('/upload', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showNotification('Files uploaded successfully!');
+            projects[currentProjectIndex].images = projects[currentProjectIndex].images.concat(data.files);
+            showImageManagement(currentProjectIndex);
+        } else {
+            showNotification('Error uploading files: ' + (data.message || 'Unknown error'), true);
+        }
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+        showNotification('Error uploading files', true);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const dropArea = document.getElementById('image-upload-area');
+    const fileInput = document.getElementById('file-input');
+
+    dropArea.addEventListener('click', () => fileInput.click());
+
+    fileInput.addEventListener('change', (e) => {
+        uploadFiles(e.target.files);
+    });
+
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        dropArea.addEventListener(eventName, preventDefaults, false);
+    });
+
+    function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+        dropArea.addEventListener(eventName, highlight, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+        dropArea.addEventListener(eventName, unhighlight, false);
+    });
+
+    function highlight(e) {
+        dropArea.classList.add('highlight');
+    }
+
+    function unhighlight(e) {
+        dropArea.classList.remove('highlight');
+    }
+
+    dropArea.addEventListener('drop', handleDrop, false);
+
+    function handleDrop(e) {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        uploadFiles(files);
+    }
+});

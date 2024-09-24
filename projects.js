@@ -74,12 +74,12 @@ const projects = [
     "pdf": "./works/06 - Rolli/document.pdf",
     "video": "https://data.088899.xyz/ROLLI-main.mp4",
     "images": [
-      "/works/06 - Rolli di Genova/images/pass.png",
-      "/works/06 - Rolli di Genova/images/70x100.png",
       "/works/06 - Rolli di Genova/images/6x3.png",
-      "/works/06 - Rolli di Genova/images/tote3.png",
+      "/works/06 - Rolli di Genova/images/70x100.png",
+      "/works/06 - Rolli di Genova/images/IMG_5269.png",
       "/works/06 - Rolli di Genova/images/mappa7.png",
-      "/works/06 - Rolli di Genova/images/IMG_5269.png"
+      "/works/06 - Rolli di Genova/images/pass.png",
+      "/works/06 - Rolli di Genova/images/tote3.png"
     ],
     "bgcolor": "#590202"
   },
