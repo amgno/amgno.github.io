@@ -16,7 +16,7 @@ const projects = [
     "name": "limitazione",
     "description": "Booklet made for Typographic Design at University, a guidebook to check if a coin is fake",
     "ptype": "Booklet",
-    "tools": "AI PS IN",
+    "tools": "Illustrator Photoshop InDesign",
     "date": "1st smst 2y // 2023",
     "bgcolor": "#0b5394",
     "images": [],
@@ -82,17 +82,5 @@ const projects = [
       "/works/06 - Rolli di Genova/images/tote3.png"
     ],
     "bgcolor": "#590202"
-  },
-  {
-    "number": "07",
-    "name": "New Project",
-    "description": "",
-    "ptype": "",
-    "tools": "",
-    "date": "",
-    "images": [],
-    "pdf": "",
-    "video": "",
-    "bgcolor": ""
   }
 ];

@@ -220,7 +220,11 @@ function showImageManagement(index) {
         imagePreview.appendChild(imgElement);
     });
 
-    document.getElementById('image-management').style.display = 'block';
+    document.getElementById('image-management-widget').style.display = 'block';
+}
+
+function closeImageManagement() {
+    document.getElementById('image-management-widget').style.display = 'none';
 }
 
 function deleteImage(imgIndex) {
