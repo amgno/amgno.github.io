@@ -85,5 +85,23 @@ const projects = [
     "pdf": "./works/06 - Rolli/document.pdf",
     "video": "https://data.088899.xyz/ROLLI-main.mp4",
     "bgcolor": "#590202"
+  },
+  {
+    "number": "07",
+    "name": "New Project",
+    "description": "brodosa jdoasndaod bodsbodosabdosabod oabsd ba",
+    "ptype": "TEST TEST TEST",
+    "tools": "vscode",
+    "date": "today baby",
+    "images": [
+      "/works/07 - New Project/images/R0000426.JPG",
+      "/works/07 - New Project/images/glen-carrie-XfA12IEoUkc-unsplash.jpg",
+      "/works/07 - New Project/images/Paolo_Monti_-_Servizio_fotografico_-_BEIC_6361591.jpg",
+      "/works/07 - New Project/images/tumblr_c8469aa0de64ef25f78b0576bcbdda60_719dc6f0_1280.jpg",
+      "/works/07 - New Project/images/16 I cassetti della memoria.jpg"
+    ],
+    "pdf": "/works/07 - New Project/A5 v2.pdf",
+    "video": "",
+    "bgcolor": "#321aaf"
   }
 ];

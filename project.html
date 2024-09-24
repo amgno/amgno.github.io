@@ -11,8 +11,21 @@
     <script src="./projects.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.7.570/pdf.min.js"></script>
     <link rel="icon" type="image/x-icon" href="./favicon.ico">
-</head>
+    <style>
+        #new-img-div {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+            gap: 10px;
+        }
 
+        #new-img-div img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            display: block;
+        }
+    </style>
+</head>
 
 <script>
     async function displayPdfAsImages(pdfUrl) {
@@ -23,12 +36,10 @@
         for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
             const page = await pdf.getPage(pageNumber);
 
-
             const canvas = document.createElement('canvas');
             const viewport = page.getViewport({ scale: 1 });
             canvas.height = viewport.height;
             canvas.width = viewport.width;
-
 
             const renderContext = {
                 canvasContext: canvas.getContext('2d'),
@@ -36,14 +47,11 @@
             };
             await page.render(renderContext).promise;
 
-
             const img = document.createElement('img');
             img.src = canvas.toDataURL();
             container.appendChild(img);
         }
     }
-
-
 
     document.addEventListener('DOMContentLoaded', function () {
         document.body.style.opacity = '0%';
@@ -73,8 +81,7 @@
                 document.body.style.background = project.bgcolor;
             }, 600); // Match the transition duration
 
-
-            var imageContainer = document.getElementById('img-div');
+            var imageContainer = document.getElementById('new-img-div'); // Use new div for images
 
             if (!project.video) {
                 console.log("no video, removing div");
@@ -84,7 +91,7 @@
                 const videoContainer = document.getElementById('video-div');
                 const videoPlayer = document.getElementById('video-player');
                 videoPlayer.setAttribute('data-src', project.video);
-                
+
                 // Load video when it comes into view
                 const observer = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
@@ -110,22 +117,16 @@
             if (project.pdf) {
                 displayPdfAsImages(project.pdf);
             }
-
-
-
-
         } else {
             document.getElementById('project-content').innerHTML = '<p>Project not found.</p>';
         }
     });
 </script>
 
-
 <script src="./transition.js"></script>
 
 <body>
     <div class="main-page">
-
         <div class="main-page-info">
             <nav style="line-height: 0.5rem;">
                 <h1>
@@ -144,54 +145,61 @@
                 </h1>
 
                 <div class="project-main">
-                    <div id="project-info">
+                    <div id="project-info" style="padding-bottom: 0px;">
                         <btitle id="span-name"></btitle>
-
                     </div>
 
+                    <div style="height: 5vh;width: 10vh;"></div>
 
                     <div id="project-info">
                         <div>
-                            <h1 id="span-type" style="text-transform: uppercase;">PHNAME</h1>
-                            <h1 id="span-date" style="">PHDATE</h1>
+                            <h1 id="" style="text-transform: uppercase;">PROJECT TYPE</h1>
+                            <p><span id="span-type"></span></p>
                         </div>
+
                         <div>
-                            <h1>ABOUT</h1>
-                            <p><span id="span-desc"></span></p>
+                            <h1 id="" style="">DATE</h1>
+                            <p><span id="span-date"></span></p>
                         </div>
                         <div>
                             <h1>TOOLS USED</h1>
                             <p><span id="span-tools"></span></p>
                         </div>
-
-
+                        <div>
+                            <h1>ABOUT</h1>
+                            <p><span id="span-desc"></span></p>
+                        </div>
                     </div>
 
 
+                    <div style="height: 5vh;width: 10vh;"></div>
                     <div id="video-div">
                         <h1>VIDEO</h1>
                         <video id="video-player" controls></video>
                     </div>
 
                     <div id="image-gallery">
-                        <h1><span style="display: flex; flex-direction: row;">ASSETS
+                        <h1><span style="display: flex; flex-direction: row;">IMAGES
                             <svg class="asset-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
                                 <path style="fill:#fff" d="m17.5 5.999-.707.707 5.293 5.293H1v1h21.086l-5.294 5.295.707.707L24 12.499l-6.5-6.5z" data-name="Right" />
                             </svg>
                         </span>
                         </h1>
-
-                        <div id="img-div"></div>
+                        <div id="new-img-div"></div>
                     </div>
 
+                    <div style="height: 5vh;width: 10vh;"></div>
 
 
-
-
-
-
-
-
+                    <div id="image-gallery">
+                        <h1><span style="display: flex; flex-direction: row;">PDF / DOCUMENT
+                            <svg class="asset-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
+                                <path style="fill:#fff" d="m17.5 5.999-.707.707 5.293 5.293H1v1h21.086l-5.294 5.295.707.707L24 12.499l-6.5-6.5z" data-name="Right" />
+                            </svg>
+                        </span>
+                        </h1>
+                        <div id="img-div"></div>
+                    </div>
                 </div>
                 <h1>
                     <a href="./contact.html" class="atag">CONTACT</a>
@@ -202,7 +210,7 @@
                 <h1></h1>
             </nav>
         </div>
-
-
     </div>
 </body>
+
+</html>
