@@ -29,7 +29,7 @@
 
         @media (max-width: 768px) {
             #new-img-div {
-                column-count: 1;
+                column-count: 2;
             }
 
             .lazy-image {
@@ -41,12 +41,98 @@
                 opacity: 1;
             }
         }
+
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
+        }
+
+        .lightbox-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+
+        .caption {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            text-align: center;
+            color: #fff;
+            padding: 10px 0;
+            height: 50px;
+            font-family: 'Sequel Sans VF', sans-serif;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            font-family: 'Sequel Sans VF', sans-serif;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .prev,
+        .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -50px;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+            -webkit-user-select: none;
+            font-family: 'Sequel Sans VF', sans-serif;
+        }
+
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .prev:hover,
+        .next:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        @media only screen and (max-width: 700px) {
+            .lightbox-content {
+                width: 100%;
+            }
+        }
     </style>
     <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
     <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
 </head>
 
 <script>
+    let project;
+
     async function displayPdfAsImages(pdfUrl) {
         const loadingTask = pdfjsLib.getDocument(pdfUrl);
         const pdf = await loadingTask.promise;
@@ -85,7 +171,7 @@
         const projectId = getQueryParam('p');
 
         // Find the project data based on the ID
-        const project = projects.find(p => p.number == projectId);
+        project = projects.find(p => p.number == projectId);
 
         // Display the project content
         if (project) {
@@ -128,10 +214,11 @@
             }
 
             if (project.images && project.images.length > 0) {
-                project.images.forEach((imageUrl) => {
+                project.images.forEach((imageUrl, index) => {
                     const img = document.createElement('img');
                     img.dataset.src = imageUrl; // Use data-src instead of src
                     img.className = 'lazy-image'; // Add a class for lazy loading
+                    img.onclick = function() { openLightbox(index); };
                     imageContainer.appendChild(img);
                 });
                 lazyLoadImages(); // Call a function to handle lazy loading
@@ -165,6 +252,46 @@
         });
 
         lazyImages.forEach(img => imageObserver.observe(img));
+    }
+
+    let currentImageIndex = 0;
+
+    function openLightbox(index) {
+        document.getElementById('lightbox').style.display = 'block';
+        showImage(index);
+    }
+
+    function closeLightbox() {
+        document.getElementById('lightbox').style.display = 'none';
+    }
+
+    function showImage(index) {
+        if (!project || !project.images) {
+            console.error('Project or project images not available');
+            return;
+        }
+        currentImageIndex = index;
+        const images = project.images;
+        const img = document.getElementById('lightbox-img');
+        img.src = images[index];
+        document.querySelector('.caption').innerHTML = `Image ${index + 1} of ${images.length}`;
+    }
+
+    function changeImage(step) {
+        if (!project || !project.images) {
+            console.error('Project or project images not available');
+            return;
+        }
+        let newIndex = (currentImageIndex + step + project.images.length) % project.images.length;
+        showImage(newIndex);
+    }
+
+    // Close the lightbox when clicking outside the image
+    window.onclick = function(event) {
+        const lightbox = document.getElementById('lightbox');
+        if (event.target == lightbox) {
+            closeLightbox();
+        }
     }
 </script>
 
@@ -259,6 +386,13 @@
                 <h1></h1>
             </nav>
         </div>
+    </div>
+    <div id="lightbox" class="lightbox">
+        <span class="close-button" onclick="closeLightbox()">&times;</span>
+        <img id="lightbox-img" class="lightbox-content">
+        <div class="caption"></div>
+        <a class="prev" onclick="changeImage(-1)">&#10094;</a>
+        <a class="next" onclick="changeImage(1)">&#10095;</a>
     </div>
 </body>
 
