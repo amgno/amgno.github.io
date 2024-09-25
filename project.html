@@ -31,6 +31,15 @@
             #new-img-div {
                 column-count: 1;
             }
+
+            .lazy-image {
+                opacity: 0;
+                transition: opacity 0.3s;
+            }
+
+            .lazy-image[src] {
+                opacity: 1;
+            }
         }
     </style>
     <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
@@ -121,9 +130,11 @@
             if (project.images && project.images.length > 0) {
                 project.images.forEach((imageUrl) => {
                     const img = document.createElement('img');
-                    img.src = imageUrl;
+                    img.dataset.src = imageUrl; // Use data-src instead of src
+                    img.className = 'lazy-image'; // Add a class for lazy loading
                     imageContainer.appendChild(img);
                 });
+                lazyLoadImages(); // Call a function to handle lazy loading
             } else {
                 console.log("no images, removing div");
                 document.getElementById('image-gallery').style.display = 'none';
@@ -139,6 +150,22 @@
             document.getElementById('project-content').innerHTML = '<p>Project not found.</p>';
         }
     });
+
+    function lazyLoadImages() {
+        const lazyImages = document.querySelectorAll('img.lazy-image');
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src;
+                    img.classList.remove('lazy-image');
+                    imageObserver.unobserve(img);
+                }
+            });
+        });
+
+        lazyImages.forEach(img => imageObserver.observe(img));
+    }
 </script>
 
 <script src="./transition.js"></script>
