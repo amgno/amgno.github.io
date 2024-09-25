@@ -20,10 +20,10 @@ jobs:
           fi &&
           cd /home/deployer/amgno.github.io &&
           echo ✅ Pulling from GitHub &&
-          sudo git fetch origin &&
-          sudo git reset --hard origin/main &&
-          sudo git clean -fd &&
-          sudo git pull &&
+          echo ${{ secrets.PASSWORD }} | sudo -S git fetch origin &&
+          echo ${{ secrets.PASSWORD }} | sudo -S git reset --hard origin/main &&
+          echo ${{ secrets.PASSWORD }} | sudo -S git clean -fd &&
+          echo ${{ secrets.PASSWORD }} | sudo -S git pull &&
           echo ✅ Starting docker &&
           echo ${{ secrets.PASSWORD }} | sudo -S docker-compose down &&
           echo ${{ secrets.PASSWORD }} | sudo -S docker-compose up -d &&

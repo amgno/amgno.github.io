@@ -75,16 +75,5 @@ const projects = [
     "video": "https://data.088899.xyz/ROLLI-main.mp4",
     "images": [],
     "bgcolor": "#590202"
-  },
-  {
-    "number": "07",
-    "name": "PROVA",
-    "description": "Hyouka\n\nDurarara!!\n\nErgo Proxy\n\nParasyte\n\nPsycho-Pass\n\nAttack on Titan\n\nBungo Stray Dogs\n\nHigurashi: When They Cry\n\nMade in Abyss\n\nWelcome to the N.H.K.\n\nOddtaxi\n\nPuella Magi Madoka Magica\nMostra meno\nFeedback\n\nWhat are some good mystery animes to watch?\n\nReddit\nhttps://www.reddit.com › anime › comments › what_ar...\n15 set 2023 — Animes like Hyouka, Erased, Death Parade, Steins:Gate, Zetsuen no Tempest, etc, are all great mystery anime but they're all kinda slow. Reply ...\n103 risposte\n \n·\n \nMiglior risposta: \nOdd Taxi 100%.\nComplex Mystery anime recommendation\n28 mag 2023\nWhat are some good \"mystery\" animes?\n9 feb 2024\nMurder mystery anime suggestions\n6 dic 2023\nWhat are your top Mystery/Thriller anime?\n24 mar 2023\nAltri risultati in www.reddit.com\n",
-    "ptype": "",
-    "tools": "idk",
-    "date": "who know",
-    "images": [],
-    "pdf": "",
-    "bgcolor": "#002e7a"
   }
 ];
