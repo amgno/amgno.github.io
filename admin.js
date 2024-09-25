@@ -160,41 +160,55 @@ function saveProjects() {
     });
 }
 
-function uploadFiles(index, type) {
-    const fileInput = document.getElementById(`${index}-${type}-upload`);
-    const files = fileInput.files;
-    if (files.length === 0) return;
-
+function uploadFiles(files) {
     const formData = new FormData();
-    formData.append('projectIndex', index);
-    formData.append('type', type);
+    formData.append('projectIndex', currentProjectIndex);
     for (let i = 0; i < files.length; i++) {
         formData.append('files', files[i]);
     }
 
-    fetch('/upload', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            showNotification('Files uploaded successfully!');
-            // Update the project data
-            if (type === 'images') {
-                projects[index].images = data.files;
-            } else if (type === 'pdf') {
-                projects[index].pdf = data.files[0];
-            }
-            loadProjects(); // Reload the projects to reflect the changes
-        } else {
-            showNotification('Error uploading files: ' + (data.message || 'Unknown error'), true);
+    const progressBar = document.getElementById('upload-progress');
+    const progressText = document.getElementById('upload-progress-text');
+    const progressContainer = document.getElementById('upload-progress-container');
+
+    progressContainer.style.display = 'block';
+    progressBar.value = 0;
+    progressText.textContent = '0%';
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/upload', true);
+
+    xhr.upload.onprogress = function(e) {
+        if (e.lengthComputable) {
+            const percentComplete = (e.loaded / e.total) * 100;
+            progressBar.value = percentComplete;
+            progressText.textContent = percentComplete.toFixed(2) + '%';
         }
-    })
-    .catch((error) => {
-        console.error('Error:', error);
+    };
+
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            const response = JSON.parse(xhr.responseText);
+            if (response.success) {
+                showNotification('Files uploaded successfully!');
+                projects[currentProjectIndex].images = projects[currentProjectIndex].images.concat(response.files);
+                showImageManagement(currentProjectIndex);
+            } else {
+                showNotification('Error uploading files: ' + (response.message || 'Unknown error'), true);
+            }
+        } else {
+            showNotification('Error uploading files', true);
+        }
+        progressContainer.style.display = 'none';
+    };
+
+    xhr.onerror = function() {
+        console.error('Error:', xhr.status);
         showNotification('Error uploading files', true);
-    });
+        progressContainer.style.display = 'none';
+    };
+
+    xhr.send(formData);
 }
 
 function toggleProject(index) {
@@ -229,36 +243,39 @@ function closeImageManagement() {
 
 function deleteImage(imgIndex) {
     if (confirm('Are you sure you want to delete this image?')) {
-        projects[currentProjectIndex].images.splice(imgIndex, 1);
-        showImageManagement(currentProjectIndex);
-    }
-}
+        const project = projects[currentProjectIndex];
+        const imageToDelete = project.images[imgIndex];
 
-function uploadFiles(files) {
-    const formData = new FormData();
-    formData.append('projectIndex', currentProjectIndex);
-    for (let i = 0; i < files.length; i++) {
-        formData.append('files', files[i]);
+        fetch('/delete-image', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ 
+                projectIndex: currentProjectIndex, 
+                imagePath: imageToDelete 
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showNotification('Image deleted successfully!');
+                // Refresh the projects data
+                fetch('/projects')
+                    .then(response => response.json())
+                    .then(updatedProjects => {
+                        projects = updatedProjects;
+                        showImageManagement(currentProjectIndex);
+                    });
+            } else {
+                showNotification('Error deleting image: ' + (data.message || 'Unknown error'), true);
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            showNotification('Error deleting image', true);
+        });
     }
-
-    fetch('/upload', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            showNotification('Files uploaded successfully!');
-            projects[currentProjectIndex].images = projects[currentProjectIndex].images.concat(data.files);
-            showImageManagement(currentProjectIndex);
-        } else {
-            showNotification('Error uploading files: ' + (data.message || 'Unknown error'), true);
-        }
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-        showNotification('Error uploading files', true);
-    });
 }
 
 document.addEventListener('DOMContentLoaded', function() {
