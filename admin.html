@@ -292,6 +292,50 @@
         #image-upload-area.highlight {
             background-color: #f0f0f0;
         }
+
+        .accordion {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .project-box {
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .project-header {
+            background-color: #f1f1f1;
+            padding: 10px 15px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .project-header h3 {
+            margin: 0;
+        }
+
+        .project-content {
+            padding: 15px;
+            display: none;
+        }
+
+        .project-content.active {
+            display: block;
+        }
+
+        .project-actions {
+            margin-top: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .project-actions button {
+            padding: 5px 10px;
+        }
     </style>
 </head>
 
@@ -320,7 +364,7 @@
 
                 <div id="admin-panel" style="display: none;">
                     <h2>Projects Management</h2>
-                    <div id="projects-list"></div>
+                    <div id="projects-list" class="accordion"></div>
                     <div class="project-actions">
                         <button onclick="addProject()">Add New Project</button><br>
                         <button onclick="saveProjects()">Save Changes</button>

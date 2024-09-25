@@ -82,5 +82,17 @@ const projects = [
       "/works/06 - Rolli di Genova/images/IMG_5269.png"
     ],
     "bgcolor": "#590202"
+  },
+  {
+    "number": "07",
+    "name": "New Project",
+    "description": "",
+    "ptype": "",
+    "tools": "",
+    "date": "",
+    "images": [],
+    "pdf": "",
+    "video": "",
+    "bgcolor": "#000000"
   }
 ];

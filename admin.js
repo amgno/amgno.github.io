@@ -28,7 +28,7 @@ function login() {
         if (data.success) {
             document.getElementById('login-form').style.display = 'none';
             document.getElementById('admin-panel').style.display = 'block';
-            loadProjects();
+            displayProjects();
         } else {
             showNotification('Incorrect password', true);
         }
@@ -39,66 +39,85 @@ function login() {
     });
 }
 
-function loadProjects() {
+let currentOpenProject = null;
+
+function displayProjects() {
     const projectsList = document.getElementById('projects-list');
     projectsList.innerHTML = '';
+
     projects.forEach((project, index) => {
-        const projectDiv = document.createElement('div');
-        projectDiv.className = 'project-box';
-        projectDiv.innerHTML = `
-            <div class="project-header" onclick="toggleProject(${index})">
-                <h3>Project ${project.number}: ${project.name}</h3>
+        const projectBox = document.createElement('div');
+        projectBox.className = 'project-box';
+
+        const projectHeader = document.createElement('div');
+        projectHeader.className = 'project-header';
+        projectHeader.innerHTML = `<h3>${project.number} - ${project.name}</h3><span>▼</span>`;
+        projectHeader.addEventListener('click', () => toggleProject(index));
+
+        const projectContent = document.createElement('div');
+        projectContent.className = 'project-content';
+        projectContent.innerHTML = `
+            <div class="project-content-wrapper">
+                <label>
+                    Number:
+                    <input type="text" id="project-${index}-number" value="${project.number}">
+                </label>
+                <label>
+                    Name:
+                    <input type="text" id="project-${index}-name" value="${project.name}">
+                </label>
+                <label>
+                    Type:
+                    <input type="text" id="project-${index}-ptype" value="${project.ptype}">
+                </label>
+                <label>
+                    Tools:
+                    <input type="text" id="project-${index}-tools" value="${project.tools}">
+                </label>
+                <label>
+                    Date:
+                    <input type="text" id="project-${index}-date" value="${project.date}">
+                </label>
+                <label>
+                    Background Color:
+                    <input type="color" id="project-${index}-bgcolor" value="${project.bgcolor}">
+                </label>
+                <label>
+                    Description:
+                    <textarea id="project-${index}-description">${project.description}</textarea>
+                </label>
             </div>
-            <div class="project-content" id="project-content-${index}">
-                <div class="project-content-wrapper">
-                    ${Object.entries(project).map(([key, value]) => {
-                        if (key === 'description') {
-                            return `
-                                <label for="${index}-${key}">
-                                    ${key}: 
-                                    <textarea id="${index}-${key}">${value}</textarea>
-                                </label>
-                            `;
-                        } else if (key === 'images') {
-                            return `
-                                <label>
-                                    ${key}: 
-                                    <input type="text" id="${index}-${key}" value="${value.join(', ')}">
-                                    <input type="file" id="${index}-${key}-upload" multiple accept="image/*">
-                                    <button onclick="uploadFiles(${index}, 'images')">Upload Images</button>
-                                </label>
-                            `;
-                        } else if (key === 'pdf') {
-                            return `
-                                <label>
-                                    ${key}: 
-                                    <input type="text" id="${index}-${key}" value="${value}">
-                                    <input type="file" id="${index}-${key}-upload" accept="application/pdf">
-                                    <button onclick="uploadFiles(${index}, 'pdf')">Upload PDF</button>
-                                </label>
-                            `;
-                        } else {
-                            return `
-                                <label for="${index}-${key}">
-                                    ${key}: 
-                                    <input type="text" id="${index}-${key}" value="${value}">
-                                </label>
-                            `;
-                        }
-                    }).join('')}
-                    <div class="project-actions">
-                        <button onclick="deleteProject(${index})">Delete Project</button>
-                        <button onclick="showImageManagement(${index})">Manage Images</button>
-                    </div>
-                </div>
+            <div class="project-actions">
+                <button onclick="showImageManagement(${index})">Manage Images</button>
+                <button onclick="deleteProject(${index})">Delete Project</button>
             </div>
         `;
-        projectsList.appendChild(projectDiv);
+
+        projectBox.appendChild(projectHeader);
+        projectBox.appendChild(projectContent);
+        projectsList.appendChild(projectBox);
     });
 }
 
+function toggleProject(index) {
+    const projectContent = document.querySelectorAll('.project-content')[index];
+    const projectHeader = document.querySelectorAll('.project-header')[index];
+
+    if (currentOpenProject !== null && currentOpenProject !== index) {
+        const currentOpenContent = document.querySelectorAll('.project-content')[currentOpenProject];
+        const currentOpenHeader = document.querySelectorAll('.project-header')[currentOpenProject];
+        currentOpenContent.classList.remove('active');
+        currentOpenHeader.querySelector('span').textContent = '▼';
+    }
+
+    projectContent.classList.toggle('active');
+    projectHeader.querySelector('span').textContent = projectContent.classList.contains('active') ? '▲' : '▼';
+
+    currentOpenProject = projectContent.classList.contains('active') ? index : null;
+}
+
 function addProject() {
-    projects.push({
+    const newProject = {
         number: String(projects.length + 1).padStart(2, '0'),
         name: 'New Project',
         description: '',
@@ -107,44 +126,39 @@ function addProject() {
         date: '',
         images: [],
         pdf: '',
-        video: '',
-        bgcolor: ''
-    });
-    loadProjects();
-    saveProjects(); // Automatically save the new project
+        bgcolor: '#ffffff'
+    };
+
+    projects.push(newProject);
+    displayProjects();
+    toggleProject(projects.length - 1);
 }
 
 function deleteProject(index) {
     if (confirm('Are you sure you want to delete this project?')) {
         projects.splice(index, 1);
-        loadProjects();
+        displayProjects();
+        saveProjects();
     }
 }
 
 function saveProjects() {
     projects.forEach((project, index) => {
-        Object.keys(project).forEach(key => {
-            const input = document.getElementById(`${index}-${key}`);
-            if (input) {
-                if (key === 'images') {
-                    const images = input.value.split(',').map(img => img.trim()).filter(img => img !== '');
-                    project[key] = images.length > 0 ? images : [];
-                } else {
-                    project[key] = input.value;
-                }
-            }
-        });
+        project.number = document.getElementById(`project-${index}-number`).value;
+        project.name = document.getElementById(`project-${index}-name`).value;
+        project.ptype = document.getElementById(`project-${index}-ptype`).value;
+        project.tools = document.getElementById(`project-${index}-tools`).value;
+        project.date = document.getElementById(`project-${index}-date`).value;
+        project.bgcolor = document.getElementById(`project-${index}-bgcolor`).value;
+        project.description = document.getElementById(`project-${index}-description`).value;
     });
 
-    const projectsString = `const projects = ${JSON.stringify(projects, null, 2)};`;
-    const password = document.getElementById('password').value;
-    
     fetch('/save-projects', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ password, projects: projectsString }),
+        body: JSON.stringify(projects),
     })
     .then(response => response.json())
     .then(data => {
@@ -209,11 +223,6 @@ function uploadFiles(files) {
     };
 
     xhr.send(formData);
-}
-
-function toggleProject(index) {
-    const content = document.getElementById(`project-content-${index}`);
-    content.classList.toggle('active');
 }
 
 let currentProjectIndex = -1;
@@ -320,4 +329,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const files = dt.files;
         uploadFiles(files);
     }
+
+    displayProjects();
 });

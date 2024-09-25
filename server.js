@@ -70,18 +70,15 @@ app.post('/upload', upload.array('files'), (req, res) => {
 });
 
 app.post('/save-projects', (req, res) => {
-    const { password, projects } = req.body;
-    if (password !== ADMIN_PASSWORD) {
-        return res.status(401).json({ success: false, message: 'Unauthorized' });
-    }
-
-    fs.writeFile(path.join(__dirname, 'projects.js'), projects, (err) => {
-        if (err) {
-            console.error(err);
-            res.json({ success: false });
-        } else {
-            res.json({ success: true });
+    const updatedProjects = req.body;
+    const updatedData = `const projects = ${JSON.stringify(updatedProjects, null, 2)};`;
+    
+    fs.writeFile(path.join(__dirname, 'projects.js'), updatedData, (writeErr) => {
+        if (writeErr) {
+            console.error(writeErr);
+            return res.status(500).json({ success: false, message: 'Error updating projects file' });
         }
+        res.json({ success: true });
     });
 });
 
