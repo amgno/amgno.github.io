@@ -27,7 +27,7 @@ const projects = [
     "name": "Geppo's website",
     "description": "Website made for a Pizza restaurant in Milan",
     "ptype": "Website",
-    "tools": "vscode",
+    "tools": "javascript html5 css3",
     "date": "2nd smst 1y // 2023",
     "images": [
       "./works/03 - Geppo Website/images/img1.png",
