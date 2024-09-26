@@ -324,3 +324,43 @@ body {
         width: auto;
     }
 }
+
+.animate-text {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.animate-text.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+body.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+body.fade-out {
+    animation: fadeOut 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+/* Reset any existing transition or animation styles */
+body, h1, h2, h3, h4, h5, h6, p, a, span, li {
+    transition: none;
+    animation: none;
+}
+
+/* Ensure text doesn't jump during animation */
+h1, h2, h3, h4, h5, h6, p, a, span, li {
+    will-change: transform, opacity;
+}
