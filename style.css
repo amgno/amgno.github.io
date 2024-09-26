@@ -245,14 +245,22 @@ h1 {
     flex-direction: row;
     flex-wrap: wrap;
     gap: 100px;
-    
 }
 
 #project-info > div {
     border-top: 1px solid rgba(255, 255, 255, 0.50);
-    width: calc(50% - 100px);
+    width: calc(50% - 50px);
     padding: 0 !important;
     margin: 0 !important;
+}
+
+#project-info > div:last-child {
+    width: 100%;
+}
+
+/* New styles */
+#project-info > div:last-child {
+    width: 100%;
 }
 
 btitle {
@@ -322,6 +330,15 @@ body {
     #img-div > img {
         height: 40vh;
         width: auto;
+    }
+
+    #project-info {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    #project-info > div {
+        width: 100%;
     }
 }
 
