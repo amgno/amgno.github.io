@@ -3,78 +3,35 @@ function createStars() {
   container.className = 'star-container';
   document.body.appendChild(container);
   
-  const numberOfStars = 1000; // Keep the same number of stars
+  const numberOfStars = 1000;
 
   for (let i = 0; i < numberOfStars; i++) {
     const star = document.createElement('div');
     star.className = 'star';
     
-    // Reduce the size range of the stars
-    const size = Math.random() * 1 + 0.25; // Stars between 0.5-1.5px
+    const size = Math.random() * 1 + 0.25;
     star.style.width = `${size}px`;
     star.style.height = `${size}px`;
     
-    // Generate random coordinates in a cube (keep this part the same)
-    const x = (Math.random() - 0.5) * 2000;
-    const y = (Math.random() - 0.5) * 2000;
-    const z = Math.random() * 2000 - 1000;
-
-    star.dataset.x = x;
-    star.dataset.y = y;
-    star.dataset.z = z;
-    
-    const duration = 3 + Math.random() * 4;
-    star.style.setProperty('--twinkle-duration', `${duration}s`);
-    
-    const opacity = 0.5 + Math.random() * 0.5;
-    star.style.setProperty('--twinkle-opacity', opacity);
+    // Store 3D coordinates
+    star.dataset.x = Math.random() * 2000 - 1000;
+    star.dataset.y = Math.random() * 2000 - 1000;
+    star.dataset.z = Math.random() * 2000 - 1000;
     
     container.appendChild(star);
   }
 }
 
-function addMouseEffect() {
+function animateStars() {
   const stars = document.querySelectorAll('.star');
   let rotationX = 0, rotationY = 0;
-  let centerX = window.innerWidth / 2;
-  let centerY = window.innerHeight / 2;
+  const centerX = window.innerWidth / 2;
+  const centerY = window.innerHeight / 2;
 
-  // Throttle mousemove event
-  let lastMouseMoveTime = 0;
-  const throttleDelay = 16; // Approximately 60 FPS
-
-  document.addEventListener('mousemove', (e) => {
-    const currentTime = performance.now();
-    if (currentTime - lastMouseMoveTime >= throttleDelay) {
-      rotationY = (e.clientX - centerX) * 0.0001; // Further reduced sensitivity
-      rotationX = (e.clientY - centerY) * 0.0001; // Further reduced sensitivity
-      lastMouseMoveTime = currentTime;
-    }
-  });
-
-  // Add FPS counter
-  const fpsCounter = document.createElement('div');
-  fpsCounter.style.position = 'fixed';
-  fpsCounter.style.display = 'none';
-  fpsCounter.style.top = '10px';
-  fpsCounter.style.left = '10px';
-  fpsCounter.style.color = 'white';
-  fpsCounter.style.fontSize = '14px';
-  document.body.appendChild(fpsCounter);
-
-  let lastFrameTime = performance.now();
-  let frameCount = 0;
-  let fps = 0;
-
-  function updateStarPositions() {
-    const currentTime = performance.now();
-    frameCount++;
-    if (currentTime - lastFrameTime >= 1000) {
-      fps = frameCount;
-      frameCount = 0;
-      lastFrameTime = currentTime;
-      fpsCounter.textContent = `FPS: ${fps}`;
-    }
+  function update(timestamp) {
+    // Update rotation angles based on time
+    rotationY = Math.sin(timestamp * 0.0001) * 0.5;
+    rotationX = Math.cos(timestamp * 0.00015) * 0.5;
 
     stars.forEach(star => {
       let x = parseFloat(star.dataset.x);
@@ -90,21 +47,21 @@ function addMouseEffect() {
       newZ = newZ * Math.cos(rotationX) + y * Math.sin(rotationX);
 
       // Project 3D coordinates to 2D screen
-      const scale = 1000 / (1000 + newZ); // Adjusted scale factor
+      const scale = 1000 / (1000 + newZ);
       const screenX = newX * scale + centerX;
       const screenY = newY * scale + centerY;
 
-      star.style.transform = `translate3d(${screenX}px, ${screenY}px, ${newZ}px)`;
-      star.style.opacity = Math.min((newZ + 1000) / 1000, 1); // Adjusted opacity calculation
+      star.style.transform = `translate(${screenX}px, ${screenY}px)`;
+      star.style.opacity = Math.min((newZ + 1000) / 1000, 1);
     });
 
-    requestAnimationFrame(updateStarPositions);
+    requestAnimationFrame(update);
   }
 
-  updateStarPositions();
+  requestAnimationFrame(update);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   createStars();
-  addMouseEffect();
+  animateStars();
 });
