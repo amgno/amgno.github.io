@@ -8,6 +8,7 @@ You can view the current build on https://pf.dev.magno.me
 • After deleting a project, and trying to open a existing one it gives an error <br>
 • Some lag on different browsers for the star background animation <br>
 • Fix spacing the gap between the divs on the project page <br>
+• Animate text when loading page, like appearing from below <br>
 
 
 ## Done
