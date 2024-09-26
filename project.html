@@ -125,6 +125,13 @@
                 width: 100%;
             }
         }
+
+        .tool-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
     </style>
     <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
     <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
@@ -180,7 +187,8 @@
             document.getElementById('span-date').innerHTML = project.date;
             document.getElementById('span-name').innerHTML = project.name;
             document.getElementById('span-desc').innerHTML = project.description;
-            document.getElementById('span-tools').innerHTML = project.tools;
+            // Remove this line:
+            // document.getElementById('span-tools').innerHTML = project.tools;
             document.getElementById('span-type').innerHTML = project.ptype;
             setTimeout(function () {
                 document.body.style.background = project.bgcolor;
@@ -233,6 +241,18 @@
                 console.log("no pdf, removing div");
                 document.getElementById('image-gallery-pdf').style.display = 'none';
             }
+
+            // Add this new section to handle tool icons
+            const toolsContainer = document.getElementById('tools-container');
+            const tools = project.tools.split(' ');
+            
+            tools.forEach(tool => {
+                const toolIcon = document.createElement('img');
+                toolIcon.className = 'tool-icon';
+                toolIcon.alt = getFullToolName(tool);
+                toolIcon.src = getToolIconPath(tool);
+                toolsContainer.appendChild(toolIcon);
+            });
         } else {
             document.getElementById('project-content').innerHTML = '<p>Project not found.</p>';
         }
@@ -293,6 +313,40 @@
             closeLightbox();
         }
     }
+
+    function getToolIconPath(tool) {
+        const iconMap = {
+            'Illustrator': './icons/illustrator.svg',
+            'InDesign': './icons/indesign.svg',
+            'Photoshop': './icons/photoshop.svg',
+            'PremierPro': './icons/premiere-pro.svg',
+            'AfterEffect': './icons/after-effects.svg',
+            'github': './icons/github.svg',
+            'nodejs': './icons/nodejs.svg',
+            'lightroom': './icons/adobe-lightroom.svg',
+            'html5': './icons/html5.svg',
+            'css3': './icons/css3.svg',
+            'javascript': './icons/javascript.svg'
+        };
+        return iconMap[tool] || '';
+    }
+
+    function getFullToolName(tool) {
+        const nameMap = {
+            'Illustrator': 'Adobe Illustrator',
+            'InDesign': 'Adobe InDesign',
+            'Photoshop': 'Adobe Photoshop',
+            'PremierPro': 'Adobe Premiere Pro',
+            'AfterEffect': 'Adobe After Effects',
+            'github': 'GitHub',
+            'nodejs': 'Node.js',
+            'lightroom': 'Adobe Lightroom',
+            'html5': 'HTML5',
+            'css3': 'CSS3',
+            'javascript': 'JavaScript'
+        };
+        return nameMap[tool] || tool;
+    }
 </script>
 
 <script src="./transition.js"></script>
@@ -333,7 +387,7 @@
                             <p><span id="span-date"></span></p>
                             <br>
                             <h1>TOOLS USED</h1>
-                            <p><span id="span-tools"></span></p>
+                            <div id="tools-container"></div>
                         </div>
 
                         
