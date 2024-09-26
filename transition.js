@@ -33,9 +33,11 @@ function initializePageTransition() {
 
 function animateTextElements() {
     const textElements = document.querySelectorAll('h1, h2, h3, h4, h5, h6, p, a, span, li');
-    console.log('Text Elements Found:', textElements.length);
+    const toolIcons = document.querySelectorAll('.tool-icon');
+    const allElements = [...textElements, ...toolIcons];
+    console.log('Elements Found:', allElements.length);
     
-    textElements.forEach((element, index) => {
+    allElements.forEach((element, index) => {
         element.style.opacity = '0';
         element.style.transform = 'translateY(20px)';
         element.style.transition = 'none';

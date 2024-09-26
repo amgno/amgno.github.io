@@ -7,7 +7,6 @@ You can view the current build on https://pf.dev.magno.me
 • Fix the size of buttons on works for mobile view <br>
 • After deleting a project, and trying to open a existing one it gives an error <br>
 • Some lag on different browsers for the star background animation <br>
-• Animate text when loading page, like appearing from below <br>
 • Fix the color of the page when loading it <br>
 
 ## Done
@@ -18,3 +17,5 @@ You can view the current build on https://pf.dev.magno.me
 ✅ Lazy load images <br> 
 ✅ Added a way to fullscreen images on project pages <br>
 ✅ Fix spacing the gap between the divs on the project page <br>
+✅ Made new icons for tools used <br>
+✅ Animate text when loading page, like appearing from below <br>
