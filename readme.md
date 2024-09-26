@@ -8,6 +8,7 @@ You can view the current build on https://pf.dev.magno.me
 • After deleting a project, and trying to open a existing one it gives an error <br>
 • Some lag on different browsers for the star background animation <br>
 • Fix the color of the page when loading it <br>
+• Smart way to dispaly date on project info <br>
 
 ## Done
 
