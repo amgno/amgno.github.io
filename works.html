@@ -16,6 +16,7 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
+            transition: background-color 0.3s ease;
         }
 
         .work-list {
@@ -41,7 +42,8 @@
             margin-bottom: -60px;
             z-index: 1;
             transform: translateY(0);
-            transition: transform 0.3s ease !important;
+            transition: transform 0.3s ease, background-color 0.3s ease !important;
+            --label-bgcolor: #000; /* Default label background color */
         }
 
         .work-list a:hover {
@@ -61,12 +63,13 @@
             position: absolute;
             top: -32px;
             height: 30px;
-            background-color: #000;
+            background-color: var(--label-bgcolor);
             border: 2px solid #fff;
             border-bottom: none;
             border-radius: 10px 10px 0 0;
             z-index: 2;
             width: var(--label-width, auto);
+            transition: background-color 0.3s ease !important;
         }
 
         .work-list a:nth-child(3n)::before {
@@ -158,6 +161,37 @@
 </script>
 
 <script src="./transition.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const workLinks = document.querySelectorAll('.work-list a');
+        let hoverTimer;
+
+        workLinks.forEach(link => {
+            link.addEventListener('mouseenter', function() {
+                clearTimeout(hoverTimer);
+                hoverTimer = setTimeout(() => {
+                    const projectNumber = this.href.split('p=')[1];
+                    const project = projects.find(p => p.number === projectNumber);
+                    if (project && project.bgcolor) {
+                        requestAnimationFrame(() => {
+                            this.style.setProperty('background-color', project.bgcolor, 'important');
+                            this.style.setProperty('--label-bgcolor', project.bgcolor, 'important');
+                        });
+                    }
+                }, 500);
+            });
+
+            link.addEventListener('mouseleave', function() {
+                clearTimeout(hoverTimer);
+                requestAnimationFrame(() => {
+                    this.style.removeProperty('background-color');
+                    this.style.setProperty('--label-bgcolor', '', 'important');
+                });
+            });
+        });
+    });
+</script>
 
 <body>
     <div class="main-page">
