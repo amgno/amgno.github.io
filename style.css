@@ -109,7 +109,7 @@ h1 {
 
 .work-list {
     display: block;
-    width: 400px;
+    width: 500px;
     margin-top: 32px;
     margin-bottom: 32px;
     font-size: 16px;
@@ -165,7 +165,7 @@ h1 {
 
 
 .work-list > a:hover {
-    background-color: rgb(21, 21, 21);
+    
 }
 
 

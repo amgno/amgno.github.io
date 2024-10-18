@@ -32,9 +32,10 @@ function initializePageTransition() {
 }
 
 function animateTextElements() {
-    const textElements = document.querySelectorAll('h1, h2, h3, h4, h5, h6, p, a, span, li');
+    const textElements = document.querySelectorAll('h1, h2, h3, h4, h5, h6, p, a, li');
     const toolIcons = document.querySelectorAll('.tool-icon');
-    const allElements = [...textElements, ...toolIcons];
+    const spans = document.querySelectorAll('span:not(.work-list span)');
+    const allElements = [...textElements, ...toolIcons, ...spans];
     console.log('Elements Found:', allElements.length);
     
     allElements.forEach((element, index) => {

@@ -21,26 +21,35 @@
         .work-list {
             display: flex;
             flex-direction: column;
-            max-width: 400px;
+            max-width: 600px;
             margin: 40px 0;
         }
 
         .work-list a {
             text-decoration: none;
             color: #fff;
-            width: 100%;
-            height: 80px;
+            width: 92%;
+            height: 75px;
             background-color: #000;
             border: 2px solid #fff;
-            border-radius: 0 0 10px 10px;
+            border-radius: 5px 5px 10px 10px;
             position: relative;
             overflow: visible;
-            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             padding: 0 15px;
             margin-bottom: -60px;
             z-index: 1;
+            transform: translateY(0);
+            transition: transform 0.3s ease !important;
+        }
+
+        .work-list a:hover {
+            transform: translateY(-10px) !important;
+        }
+
+        .work-list a:hover span {
+            
         }
 
         .work-list a:last-child {
@@ -82,35 +91,37 @@
             z-index: 3;
             padding: 0 10px;
             white-space: nowrap;
+            display: flex;
+            align-items: center;
+            height: 30px;
+            transition: transform 0.3s ease;
         }
 
         .work-list a:nth-child(3n) span {
             left: 22px;
+            justify-content: flex-start;
         }
 
         .work-list a:nth-child(3n+1) span {
             left: 50%;
             transform: translateX(-50%);
+            justify-content: center;
         }
 
         .work-list a:nth-child(3n+2) span {
             right: 22px;
-        }
-
-        .work-list a:hover {
-            transform: translateX(10px);
-            z-index: 10;
+            justify-content: flex-end;
         }
 
         .selected-works-arrow {
             width: 20px;
             height: 20px;
-            transition: transform 0.3s ease;
             margin-left: auto;
+            transition: transform 0.3s ease; /* Add transition for smooth movement */
         }
 
         .work-list a:hover .selected-works-arrow {
-            transform: translateX(5px);
+            transform: translateX(5px); /* Move arrow right 5px on hover */
         }
     </style>
 </head>
@@ -118,7 +129,7 @@
 <script src="./projects.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        // Define the SVG content
+        // Define the SVG conten
         const svgContent = `
             <svg class="selected-works-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
                 <path style="fill:#fff" d="m17.5 5.999-.707.707 5.293 5.293H1v1h21.086l-5.294 5.295.707.707L24 12.499l-6.5-6.5z" data-name="Right" />
