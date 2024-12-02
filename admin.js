@@ -173,79 +173,167 @@ function saveProjects() {
 }
 
 function uploadFiles(files) {
-    const formData = new FormData();
-    formData.append('projectIndex', currentProjectIndex);
-    for (let i = 0; i < files.length; i++) {
-        formData.append('files', files[i]);
+    if (!files || files.length === 0) {
+        showNotification('No files selected', true);
+        return;
     }
 
+    const formData = new FormData();
+    formData.append('projectIndex', currentProjectIndex);
+    
+    Array.from(files).forEach(file => {
+        formData.append('files', file);
+    });
+
+    const progressContainer = document.getElementById('upload-progress-container');
     const progressBar = document.getElementById('upload-progress');
     const progressText = document.getElementById('upload-progress-text');
-    const progressContainer = document.getElementById('upload-progress-container');
 
     progressContainer.style.display = 'block';
     progressBar.value = 0;
     progressText.textContent = '0%';
 
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', '/upload', true);
-
-    xhr.upload.onprogress = function(e) {
-        if (e.lengthComputable) {
-            const percentComplete = (e.loaded / e.total) * 100;
-            progressBar.value = percentComplete;
-            progressText.textContent = percentComplete.toFixed(2) + '%';
+    fetch('/upload', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(data => {
+                throw new Error(data.message || 'Upload failed');
+            });
         }
-    };
-
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            const response = JSON.parse(xhr.responseText);
-            if (response.success) {
-                showNotification('Files uploaded successfully!');
-                projects[currentProjectIndex].images = projects[currentProjectIndex].images.concat(response.files);
-                showImageManagement(currentProjectIndex);
-            } else {
-                showNotification('Error uploading files: ' + (response.message || 'Unknown error'), true);
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            showNotification('Files uploaded successfully!');
+            if (!projects[currentProjectIndex].images) {
+                projects[currentProjectIndex].images = [];
             }
+            projects[currentProjectIndex].images = projects[currentProjectIndex].images.concat(data.files);
+            showImageManagement(currentProjectIndex);
         } else {
-            showNotification('Error uploading files', true);
+            throw new Error(data.message || 'Upload failed');
         }
+    })
+    .catch(error => {
+        console.error('Upload error:', error);
+        showNotification(error.message || 'Error uploading files', true);
+    })
+    .finally(() => {
         progressContainer.style.display = 'none';
-    };
-
-    xhr.onerror = function() {
-        console.error('Error:', xhr.status);
-        showNotification('Error uploading files', true);
-        progressContainer.style.display = 'none';
-    };
-
-    xhr.send(formData);
+    });
 }
 
 let currentProjectIndex = -1;
 
-function showImageManagement(index) {
-    currentProjectIndex = index;
-    const project = projects[currentProjectIndex];
+function showImageManagement(projectIndex) {
+    currentProjectIndex = projectIndex;
+    
+    // Clean up any existing overlay
+    const existingOverlay = document.querySelector('.widget-overlay');
+    if (existingOverlay) {
+        existingOverlay.remove();
+    }
+    
+    // Create and add overlay
+    const overlay = document.createElement('div');
+    overlay.className = 'widget-overlay';
+    document.body.appendChild(overlay);
+    
+    // Show widget
+    const widget = document.getElementById('image-management-widget');
+    widget.style.display = 'block';
+    
+    // Load project images
+    const project = projects[projectIndex];
     const imagePreview = document.getElementById('image-preview');
     imagePreview.innerHTML = '';
 
-    project.images.forEach((image, imgIndex) => {
-        const imgElement = document.createElement('div');
-        imgElement.className = 'image-preview-item';
-        imgElement.innerHTML = `
-            <img src="${image}" alt="Project Image">
-            <button onclick="deleteImage(${imgIndex})">Delete</button>
-        `;
-        imagePreview.appendChild(imgElement);
-    });
+    if (project.images && project.images.length > 0) {
+        project.images.forEach((image, imgIndex) => {
+            const imgElement = document.createElement('div');
+            imgElement.className = 'image-preview-item';
+            imgElement.innerHTML = `
+                <img src="${image}" alt="Project Image">
+                <button onclick="deleteImage(${imgIndex})">&times;</button>
+            `;
+            imagePreview.appendChild(imgElement);
+        });
+    } else {
+        imagePreview.innerHTML = '<p style="text-align: center; color: #666;">No images uploaded yet</p>';
+    }
 
-    document.getElementById('image-management-widget').style.display = 'block';
+    // Initialize drag and drop with clean event listeners
+    initializeDragAndDrop();
+
+    // Add click handler to overlay for closing
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+            closeImageManagement();
+        }
+    }, { once: true });
 }
 
 function closeImageManagement() {
-    document.getElementById('image-management-widget').style.display = 'none';
+    const widget = document.getElementById('image-management-widget');
+    widget.style.display = 'none';
+    
+    // Remove overlay
+    const overlay = document.querySelector('.widget-overlay');
+    if (overlay) {
+        overlay.remove();
+    }
+}
+
+function initializeDragAndDrop() {
+    const dropArea = document.getElementById('image-upload-area');
+    const fileInput = document.getElementById('file-input');
+
+    // Remove any existing event listeners
+    const newFileInput = fileInput.cloneNode(true);
+    fileInput.parentNode.replaceChild(newFileInput, fileInput);
+    fileInput = newFileInput;
+
+    // Make sure the click-to-upload works
+    dropArea.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        fileInput.click();
+    });
+
+    // Handle file selection through the input
+    fileInput.addEventListener('change', function(e) {
+        e.preventDefault();
+        const files = this.files;
+        if (files.length > 0) {
+            uploadFiles(files);
+            // Reset the input
+            this.value = '';
+        }
+    }, { once: true });
+
+    // Prevent default drag behaviors
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        dropArea.addEventListener(eventName, function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        });
+    });
+
+    // Handle drag and drop
+    dropArea.addEventListener('drop', function(e) {
+        e.preventDefault();
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            uploadFiles(files);
+        }
+    }, { once: true });
+
+    // Visual feedback
+    dropArea.addEventListener('dragenter', () => dropArea.classList.add('highlight'));
+    dropArea.addEventListener('dragleave', () => dropArea.classList.remove('highlight'));
 }
 
 function deleteImage(imgIndex) {
@@ -400,18 +488,6 @@ function toggleProject(index) {
     if (!isActive) {
         projectContent.classList.add('active');
     }
-}
-
-function showImageManagement(projectIndex) {
-    currentProjectIndex = projectIndex;
-    const widget = document.getElementById('image-management-widget');
-    widget.style.display = 'block';
-    loadProjectImages(projectIndex);
-}
-
-function closeImageManagement() {
-    const widget = document.getElementById('image-management-widget');
-    widget.style.display = 'none';
 }
 
 function initializePhotoManagement() {

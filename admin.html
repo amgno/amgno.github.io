@@ -156,6 +156,7 @@
         }
 
         .photo-item-admin {
+            height: 300px;
             position: relative;
             border-radius: 8px;
             overflow: hidden;
@@ -387,6 +388,171 @@
         .project-content-wrapper label[for$="-description"] {
             grid-column: 1 / -1;
         }
+
+        .widget {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            z-index: 1000;
+        }
+
+        .widget-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .widget-header h3 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .widget-header button {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0 8px;
+            color: #666;
+        }
+
+        .widget-content {
+            padding: 20px;
+            max-height: calc(80vh - 80px);
+            overflow-y: auto;
+        }
+
+        #image-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+            min-height: 100px;
+        }
+
+        .image-preview-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            aspect-ratio: 1;
+            background-color: #f5f5f5;
+            border: 1px solid var(--border-color);
+        }
+
+        .image-preview-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .image-preview-item button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(255, 0, 0, 0.8);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        #image-upload-area {
+            border: 2px dashed var(--border-color);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #image-upload-area:hover {
+            background-color: #f5f5f5;
+        }
+
+        #image-upload-area.highlight {
+            background-color: #f0f7ff;
+            border-color: var(--primary-color);
+        }
+
+        #upload-progress-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        #upload-progress {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+        }
+
+        .widget-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        #image-preview p {
+            grid-column: 1 / -1;
+            margin: 20px 0;
+        }
+
+        /* Add these to your existing styles */
+        .loading-placeholder,
+        .error-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f5f5f5;
+            color: #666;
+        }
+
+        .error-placeholder {
+            background-color: #fee;
+            color: #c00;
+        }
+
+        #file-input {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+
+        #image-upload-area {
+            position: relative;
+            min-height: 100px;
+            cursor: pointer;
+        }
+
+        #image-upload-area:hover {
+            background-color: #f8f8f8;
+        }
     </style>
 </head>
 
@@ -484,6 +650,25 @@
             document.getElementById('password').value = '';
         }
     </script>
+
+    <!-- Add this right before the closing body tag -->
+    <div id="image-management-widget" class="widget" style="display: none;">
+        <div class="widget-header">
+            <h3>Image Management</h3>
+            <button onclick="closeImageManagement()">&times;</button>
+        </div>
+        <div class="widget-content">
+            <div id="image-preview"></div>
+            <div id="image-upload-area">
+                <p>Drag and drop images here or click to select files</p>
+                <input type="file" id="file-input" multiple accept="image/*" style="display: none;">
+            </div>
+            <div id="upload-progress-container" style="display: none;">
+                <progress id="upload-progress" value="0" max="100"></progress>
+                <span id="upload-progress-text">0%</span>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

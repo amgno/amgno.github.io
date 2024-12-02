@@ -1,6 +1,6 @@
 const express = require('express');
-const fs = require('fs').promises;
-const fsSync = require('fs');  // For synchronous operations
+const fs = require('fs');  // Regular fs
+const fsPromises = require('fs').promises;  // Promise-based fs
 const path = require('path');
 const multer = require('multer');
 const app = express();
@@ -13,37 +13,59 @@ app.use(express.json());
 app.use(express.static(__dirname));
 
 function getProjects() {
-    const projectsFile = fsSync.readFileSync(path.join(__dirname, 'projects.js'), 'utf8');
+    const projectsFile = fs.readFileSync(path.join(__dirname, 'projects.js'), 'utf8');
     return JSON.parse(projectsFile.replace('const projects = ', '').replace(';', ''));
 }
 
 // Configure multer for file uploads
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        const projectIndex = req.body.projectIndex;
-        const project = getProjects()[projectIndex];
-        const uploadPath = path.join(__dirname, `works/${project.number} - ${project.name}/images`);
-        fsSync.mkdirSync(uploadPath, { recursive: true });
-        cb(null, uploadPath);
+        try {
+            const projectIndex = req.body.projectIndex;
+            const projects = getProjects();
+            const project = projects[projectIndex];
+            
+            if (!project) {
+                return cb(new Error('Project not found'));
+            }
+
+            const uploadPath = path.join(__dirname, `works/${project.number} - ${project.name}/images`);
+            fs.mkdirSync(uploadPath, { recursive: true });
+            cb(null, uploadPath);
+        } catch (error) {
+            cb(error);
+        }
     },
     filename: function (req, file, cb) {
-        cb(null, file.originalname);
-    },
-    limits: {
-        fileSize: 10 * 1024 * 2024, // 10 MB limit
+        // Generate a unique filename to prevent overwrites
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, uniqueSuffix + '-' + file.originalname);
     }
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({ 
+    storage: storage,
+    limits: {
+        fileSize: 10 * 1024 * 1024, // 10 MB limit
+        files: 10 // Maximum 10 files per upload
+    },
+    fileFilter: function (req, file, cb) {
+        // Accept images only
+        if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/i)) {
+            return cb(new Error('Only image files are allowed!'), false);
+        }
+        cb(null, true);
+    }
+}).array('files');
 
 // Configure multer for photo uploads
 const photoStorage = multer.diskStorage({
     destination: async function (req, file, cb) {
         const uploadPath = './photos';
         try {
-            await fs.access(uploadPath);
+            await fsPromises.access(uploadPath);
         } catch {
-            await fs.mkdir(uploadPath, { recursive: true });
+            await fsPromises.mkdir(uploadPath, { recursive: true });
         }
         cb(null, uploadPath);
     },
@@ -60,9 +82,9 @@ const PHOTOS_FILE = path.join(__dirname, 'photos', 'metadata.json');
 // Initialize photos metadata if it doesn't exist
 async function initializePhotosMetadata() {
     try {
-        await fs.access(PHOTOS_FILE);
+        await fsPromises.access(PHOTOS_FILE);
     } catch {
-        await fs.writeFile(PHOTOS_FILE, JSON.stringify([]));
+        await fsPromises.writeFile(PHOTOS_FILE, JSON.stringify([]));
     }
 }
 
@@ -71,7 +93,7 @@ initializePhotosMetadata();
 // Read photos metadata
 async function getPhotosMetadata() {
     try {
-        const data = await fs.readFile(PHOTOS_FILE, 'utf8');
+        const data = await fsPromises.readFile(PHOTOS_FILE, 'utf8');
         return JSON.parse(data);
     } catch {
         return [];
@@ -80,7 +102,7 @@ async function getPhotosMetadata() {
 
 // Save photos metadata
 async function savePhotosMetadata(metadata) {
-    await fs.writeFile(PHOTOS_FILE, JSON.stringify(metadata, null, 2));
+    await fsPromises.writeFile(PHOTOS_FILE, JSON.stringify(metadata, null, 2));
 }
 
 app.post('/login', (req, res) => {
@@ -92,28 +114,84 @@ app.post('/login', (req, res) => {
     }
 });
 
-app.post('/upload', upload.array('files'), (req, res) => {
-    const projectIndex = req.body.projectIndex;
-    const projects = getProjects();
-    const project = projects[projectIndex];
-    const uploadedFiles = req.files.map(file => {
-        return `/works/${project.number} - ${project.name}/images/${file.filename}`;
-    });
-
-    // Append new images to the existing array
-    if (!projects[projectIndex].images) {
-        projects[projectIndex].images = [];
-    }
-    projects[projectIndex].images = projects[projectIndex].images.concat(uploadedFiles);
-
-    // Write the updated projects array back to the file
-    const updatedData = `const projects = ${JSON.stringify(projects, null, 2)};`;
-    fsSync.writeFile(path.join(__dirname, 'projects.js'), updatedData, (writeErr) => {
-        if (writeErr) {
-            console.error(writeErr);
-            return res.status(500).json({ success: false, message: 'Error updating projects file' });
+app.post('/upload', (req, res) => {
+    upload(req, res, function(err) {
+        if (err) {
+            console.error('Multer error:', err);
+            return res.status(500).json({
+                success: false,
+                message: err.message
+            });
         }
-        res.json({ success: true, files: uploadedFiles });
+
+        try {
+            console.log('Files received:', req.files);
+            console.log('Project index:', req.body.projectIndex);
+
+            if (!req.files || req.files.length === 0) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'No files were uploaded.'
+                });
+            }
+
+            const projectIndex = req.body.projectIndex;
+            if (projectIndex === undefined) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Project index is required.'
+                });
+            }
+
+            const projects = getProjects();
+            console.log('Project found:', projects[projectIndex]);
+
+            if (!projects[projectIndex]) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'Project not found.'
+                });
+            }
+
+            const project = projects[projectIndex];
+            const uploadPath = path.join(__dirname, `works/${project.number} - ${project.name}/images`);
+            
+            // Ensure upload directory exists
+            fs.mkdirSync(uploadPath, { recursive: true });
+
+            const uploadedFiles = req.files.map(file => {
+                const filePath = `/works/${project.number} - ${project.name}/images/${file.filename}`;
+                console.log('File path created:', filePath);
+                return filePath;
+            });
+
+            if (!projects[projectIndex].images) {
+                projects[projectIndex].images = [];
+            }
+
+            projects[projectIndex].images = projects[projectIndex].images.concat(uploadedFiles);
+
+            const updatedData = `const projects = ${JSON.stringify(projects, null, 2)};`;
+            fs.writeFileSync(path.join(__dirname, 'projects.js'), updatedData);
+
+            console.log('Upload successful:', uploadedFiles);
+            res.json({
+                success: true,
+                files: uploadedFiles,
+                message: 'Files uploaded successfully'
+            });
+        } catch (error) {
+            console.error('Upload error details:', {
+                error: error.message,
+                stack: error.stack,
+                projectIndex: req.body.projectIndex,
+                files: req.files
+            });
+            res.status(500).json({
+                success: false,
+                message: `Upload failed: ${error.message}`
+            });
+        }
     });
 });
 
@@ -121,7 +199,7 @@ app.post('/save-projects', (req, res) => {
     const updatedProjects = req.body;
     const updatedData = `const projects = ${JSON.stringify(updatedProjects, null, 2)};`;
     
-    fsSync.writeFile(path.join(__dirname, 'projects.js'), updatedData, (writeErr) => {
+    fs.writeFile(path.join(__dirname, 'projects.js'), updatedData, (writeErr) => {
         if (writeErr) {
             console.error(writeErr);
             return res.status(500).json({ success: false, message: 'Error updating projects file' });
@@ -159,7 +237,7 @@ app.post('/delete-image', (req, res) => {
             projects[projectIndex].images.splice(imageIndex, 1);
 
             // Delete the actual file
-            fsSync.unlink(path.join(__dirname, imagePath), (err) => {
+            fs.unlink(path.join(__dirname, imagePath), (err) => {
                 if (err) {
                     console.error('Error deleting file:', err);
                     return res.status(500).json({ success: false, message: 'Error deleting file' });
@@ -167,7 +245,7 @@ app.post('/delete-image', (req, res) => {
 
                 // Update the projects file
                 const updatedData = `const projects = ${JSON.stringify(projects, null, 2)};`;
-                fsSync.writeFile(path.join(__dirname, 'projects.js'), updatedData, (writeErr) => {
+                fs.writeFile(path.join(__dirname, 'projects.js'), updatedData, (writeErr) => {
                     if (writeErr) {
                         console.error(writeErr);
                         return res.status(500).json({ success: false, message: 'Error updating projects file' });
@@ -230,7 +308,7 @@ app.delete('/delete-photo/:id', async (req, res) => {
         }
 
         const photo = metadata[photoIndex];
-        await fsSync.unlink(path.join(__dirname, 'photos', photo.filename));
+        await fs.unlink(path.join(__dirname, 'photos', photo.filename));
         
         metadata.splice(photoIndex, 1);
         await savePhotosMetadata(metadata);
@@ -244,18 +322,18 @@ app.delete('/delete-photo/:id', async (req, res) => {
 // Add this after your other initialization code
 async function ensurePhotosDirectory() {
     try {
-        await fs.access('./photos');
+        await fsPromises.access('./photos');
     } catch {
         // Directory doesn't exist, create it
-        await fs.mkdir('./photos', { recursive: true });
+        await fsPromises.mkdir('./photos', { recursive: true });
     }
 
     const metadataPath = path.join(__dirname, 'photos', 'metadata.json');
     try {
-        await fs.access(metadataPath);
+        await fsPromises.access(metadataPath);
     } catch {
         // Create empty metadata file if it doesn't exist
-        await fs.writeFile(metadataPath, JSON.stringify([]));
+        await fsPromises.writeFile(metadataPath, JSON.stringify([]));
     }
 }
 
@@ -264,5 +342,41 @@ ensurePhotosDirectory().catch(console.error);
 
 // Add this after your other static middleware
 app.use('/photos', express.static(path.join(__dirname, 'photos')));
+
+// Add error handling middleware for multer
+app.use((error, req, res, next) => {
+    if (error instanceof multer.MulterError) {
+        // A Multer error occurred when uploading.
+        return res.status(500).json({
+            success: false,
+            message: `Upload error: ${error.message}`
+        });
+    } else if (error) {
+        // An unknown error occurred.
+        return res.status(500).json({
+            success: false,
+            message: `Unknown error: ${error.message}`
+        });
+    }
+    next();
+});
+
+// Add this near the top of your server.js
+function ensureDirectories() {
+    const dirs = [
+        path.join(__dirname, 'works'),
+        path.join(__dirname, 'photos')
+    ];
+
+    dirs.forEach(dir => {
+        if (!fs.existsSync(dir)) {
+            fs.mkdirSync(dir, { recursive: true });
+            console.log(`Created directory: ${dir}`);
+        }
+    });
+}
+
+// Call it when server starts
+ensureDirectories();
 
 
