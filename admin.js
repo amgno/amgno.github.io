@@ -26,9 +26,7 @@ function login() {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            document.getElementById('login-form').style.display = 'none';
-            document.getElementById('admin-panel').style.display = 'block';
-            displayProjects();
+            handleLoginSuccess();
         } else {
             showNotification('Incorrect password', true);
         }
@@ -332,3 +330,162 @@ document.addEventListener('DOMContentLoaded', function() {
 
     displayProjects();
 });
+
+function loadProjects() {
+    fetch('/projects')
+        .then(response => response.json())
+        .then(projects => {
+            const projectsList = document.getElementById('projects-list');
+            projectsList.innerHTML = projects.map((project, index) => `
+                <div class="project-box">
+                    <div class="project-header" onclick="toggleProject(${index})">
+                        <h3>${project.number} - ${project.name}</h3>
+                        <span>▼</span>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-content-wrapper">
+                            <label>
+                                Number:
+                                <input type="text" id="project-${index}-number" value="${project.number}">
+                            </label>
+                            <label>
+                                Name:
+                                <input type="text" id="project-${index}-name" value="${project.name}">
+                            </label>
+                            <label>
+                                Type:
+                                <input type="text" id="project-${index}-ptype" value="${project.ptype}">
+                            </label>
+                            <label>
+                                Tools:
+                                <input type="text" id="project-${index}-tools" value="${project.tools}">
+                            </label>
+                            <label>
+                                Date:
+                                <input type="text" id="project-${index}-date" value="${project.date}">
+                            </label>
+                            <label>
+                                Background Color:
+                                <input type="color" id="project-${index}-bgcolor" value="${project.bgcolor}">
+                            </label>
+                            <label>
+                                Description:
+                                <textarea id="project-${index}-description">${project.description}</textarea>
+                            </label>
+                        </div>
+                        <div class="project-actions">
+                            <button onclick="showImageManagement(${index})">Manage Images</button>
+                            <button onclick="deleteProject(${index})">Delete Project</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        })
+        .catch(error => {
+            console.error('Error loading projects:', error);
+            alert('Error loading projects');
+        });
+}
+
+function toggleProject(index) {
+    const projectContent = document.querySelectorAll('.project-content')[index];
+    const isActive = projectContent.classList.contains('active');
+    
+    // Close all project contents
+    document.querySelectorAll('.project-content').forEach(content => {
+        content.classList.remove('active');
+    });
+
+    // Toggle the clicked project
+    if (!isActive) {
+        projectContent.classList.add('active');
+    }
+}
+
+function showImageManagement(projectIndex) {
+    currentProjectIndex = projectIndex;
+    const widget = document.getElementById('image-management-widget');
+    widget.style.display = 'block';
+    loadProjectImages(projectIndex);
+}
+
+function closeImageManagement() {
+    const widget = document.getElementById('image-management-widget');
+    widget.style.display = 'none';
+}
+
+function initializePhotoManagement() {
+    const photoUploadForm = document.getElementById('photo-upload-form');
+    const photosList = document.getElementById('photos-list');
+
+    // Load existing photos
+    function loadPhotos() {
+        fetch('/photos-metadata')
+            .then(response => response.json())
+            .then(photos => {
+                photosList.innerHTML = photos.map(photo => `
+                    <div class="photo-item-admin" data-id="${photo.id}">
+                        <img src="${photo.path}" alt="${photo.label}">
+                        <div class="photo-info">
+                            <p>${photo.label}</p>
+                            <p>Year: ${photo.year}</p>
+                        </div>
+                        <button class="delete-btn" onclick="deletePhoto('${photo.id}')">&times;</button>
+                    </div>
+                `).join('');
+            })
+            .catch(error => {
+                console.error('Error loading photos:', error);
+                showNotification('Error loading photos', true);
+            });
+    }
+
+    // Handle photo upload
+    photoUploadForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(photoUploadForm);
+        
+        try {
+            const response = await fetch('/upload-photo', {
+                method: 'POST',
+                body: formData
+            });
+            
+            const result = await response.json();
+            if (result.success) {
+                showNotification('Photo uploaded successfully');
+                photoUploadForm.reset();
+                loadPhotos();
+            } else {
+                showNotification('Error uploading photo', true);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            showNotification('Error uploading photo', true);
+        }
+    });
+
+    // Initialize photos list
+    loadPhotos();
+}
+
+async function deletePhoto(id) {
+    if (!confirm('Are you sure you want to delete this photo?')) return;
+    
+    try {
+        const response = await fetch(`/delete-photo/${id}`, {
+            method: 'DELETE'
+        });
+        
+        const result = await response.json();
+        if (result.success) {
+            document.querySelector(`[data-id="${id}"]`).remove();
+            showNotification('Photo deleted successfully');
+        } else {
+            showNotification('Error deleting photo', true);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        showNotification('Error deleting photo', true);
+    }
+}
