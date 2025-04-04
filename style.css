@@ -28,6 +28,7 @@ a {
     margin-top: 10px;
     width: 50%;
     /* height: 100%; Remove fixed height */
+    margin-right: 10px;
 }
 
 .left-content {
@@ -88,6 +89,14 @@ a {
     padding-bottom: 10px;
 }
 
+/* Make videos responsive too */
+.item video {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    padding-bottom: 10px;
+}
+
 .full {
     flex-basis: calc(100% - 10px);
 }
@@ -102,3 +111,64 @@ a {
 .desc p {
     flex-basis: 50%;
 }
+
+/* --- Slideshow Styles --- */
+.slideshow-container {
+    position: relative; /* Needed for absolute positioning of buttons */
+    overflow: hidden;   /* Hide parts of non-active slides if needed */
+    width: 100%;        /* Take full width of item */
+    padding-bottom: 10px; /* Match image padding */
+}
+
+.slide {
+    display: none; /* Hide all slides by default */
+    width: 100%;
+}
+
+.slide.active {
+    display: block; /* Show the active slide */
+}
+
+.slide img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Slideshow Buttons */
+.slideshow-prev,
+.slideshow-next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    margin-top: -22px; /* Adjust vertically */
+    padding: 16px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.3s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    border: none;
+    opacity: 0; /* Hide buttons by default */
+}
+
+/* Show buttons when hovering over the slideshow container */
+.slideshow-container:hover .slideshow-prev,
+.slideshow-container:hover .slideshow-next {
+    opacity: 1;
+}
+
+.slideshow-next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+.slideshow-prev:hover,
+.slideshow-next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* --- End Slideshow Styles --- */
