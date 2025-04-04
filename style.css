@@ -1,279 +1,94 @@
+/* Basic CSS styles will go here */
+
 body {
-    padding: 0;
+    height: 100vh;
+    width: 100vw;
     margin: 0;
-    background-color: black;
-    color: white;
-    font-family: 'Sequel Sans VF';
+    padding: 0;
+    font-family: sans-serif; /* Basic default font */
     display: flex;
-    justify-content: center;
+    flex-direction: column; /* Arrange children (header, main-content) vertically */
+
+    font-size: 17.5px;
 }
 
+h1,
+p,
 a {
-    text-decoration:none;
+    margin: 0;
+    padding: 0;
+    font-size: inherit;
+    font-weight: inherit;
+    text-decoration: none;
     color: inherit;
-    transition: 0.2s all ease-in-out;
-}
-
-a:hover {
 }
 
 
-.backbtn {
-    font-family: Tiempos;
-    text-transform: lowercase;
-    font-weight: 100;
-    margin-top: 3px;
-    mix-blend-mode: difference;
+.left {
+    width: 50%;
+    /* height: 100%; Remove fixed height */
 }
 
-.main-page {
-    width: 100vh;
-    height: 99vh;
+.left-content {
+    margin-left: 50%;
+    width: 50%;
+    height: 100%;
+}
+
+
+
+/* New rule for the main content area */
+.main-content {
+    padding-top: 10px;
+    display: flex; /* Arrange left and right side-by-side */
+    flex-grow: 1; /* Allow this div to take up remaining vertical space */
+}
+
+.header {
+    padding: 5px;
     display: flex;
-    justify-content: center;
+    position: sticky;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    width: 100%-10px;
+    background-color: rgba(255, 255, 255, 0);
+    border-bottom: 1px solid black;
 }
 
-h1 {
-    display: flex;
-    font-size: inherit;
-    font-weight: 600;
-    margin-block-start: 0.83em;
-    margin-block-end: 0.83em;
-    align-items: center;
-    justify-content: space-between;
+.header a {
+    flex-basis: 25%;
+    height: inherit;
 }
 
-.main-page-info {
-    display: flex;
-    align-items: center;
-    font-size: 16px;
-    white-space: nowrap;
-    position: relative;
-    width: 350px;
-    justify-content: center;
-}
 
-.main-page-info-star {
-    height: 14px;
-    width: 14px;
-    float: right;
-    display: flex;
-    justify-content: center;
-}
 
-.about-me {
+.right {
+    width: 50%;
     display: flex;
-    width: 350px;
+    flex-direction: row;
     flex-wrap: wrap;
-    white-space: initial;
-    line-height: 20px;
-    text-align: justify;
-    margin-top: 32px;
-    margin-bottom: 32px;
-}
-
-
-
-
-.work-list {
-    display: block;
-    width: 400px;
-    margin-top: 32px;
-    margin-bottom: 32px;
-    font-size: 16px;
-    line-height: 18px;
-}
-
-.selected-works-arrow {
-    height: 22px;
-    width: 22px;
-    float: right;
-    display: flex;
-    justify-content: center;
-}
-
-.asset-arrow {
-    height: 22px;
-    width: 22px;
-    display: flex;
-    justify-content: center;
-    animation: moveArrow 2s infinite;
-    margin-left: 30px;
-}
-@keyframes moveArrow {
-    0% {
-        transform: translateX(0);
-    }
-    50% {
-        transform: translateX(20px);
-    }
-    100% {
-        transform: translateX(0);
-    }
-}
-
-.work-list > a {
-    display: flex;
-    font-size: inherit;
-    font-weight: 600;
-    margin-block-start: 0.83em;
-    margin-block-end: 0.83em;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.work-list > a {
-    margin: 0;
-    margin-top: 4px;
-    padding-bottom: 2px;
-    transition: all 0.2s ease-in-out;
-    cursor: pointer;
-}
-
-
-
-.work-list > a:hover {
-    background-color: rgb(21, 21, 21);
-}
-
-
-.project-main {
-    display: flex;
-    min-width: 80vw;
-    width: 80vw;
-    height: 80vh;
-    flex-wrap: wrap;
-    white-space: initial;
-    line-height: 20px;
-    text-align: justify;
-    margin-top: 32px;
-    margin-bottom: 32px;
+    gap: 10px;
     overflow: scroll;
-    flex-direction: row;
-    flex-wrap: wrap;
+    height: 95vh;
 }
 
-
-
-#video-div {
-    min-width: 100%;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-}
-
-#video-div > video {
-    width: 100%;
-    height: 80%;
-    margin: 0;
-    padding: 0;
-    background-color: black;
-}
-
-#image-gallery {
-    min-width: 100%;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-}
-
-#img-div {
+.item {
     display: flex;
-    flex-direction: row;
-    gap: 20px;
-    width: 100%;
-    overflow: scroll;
-    overflow-y: hidden;
+    flex-direction: column;
+    flex-basis: calc(50% - 10px);
+    height: auto;
+    padding-bottom: 30px;
 }
 
-#img-div > img {
-    height: 80%;
-    width: auto;
+.item img {
+    max-width: 100%; /* Ensure image doesn't exceed container width */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Optional: removes extra space below image */
+    padding-bottom: 10px;
 }
 
-
-#project-info {
-    min-width: 100%;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    min-height: 15%;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+.full {
+    flex-basis: calc(100% - 10px);
 }
 
-#project-info > div {
-    width: 40%;
-    padding-right: 32px;
-}
-
-btitle {
-    font-size: 120px;
-    font-family: Tiempos;
-    line-height: normal;
-}
-
-
-
-/*SCROLLBAR*/
-
-.project-main::-webkit-scrollbar {
-    display: none;
-}
-
-
-::-webkit-scrollbar {
-    width: 10px;
-    height: 7px;
-}
- 
-::-webkit-scrollbar-track {
-    background-color: #4343437d;
-    -webkit-border-radius: 10px;
-    border-radius: 6px;
-}
-
-::-webkit-scrollbar-thumb {
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
-    background: #424242; 
-}
-
-
-/*TEST TRANSITIONS*/
-body {
-    opacity: 0;
-    transition: all 0.5s ease-in-out;
-}
-
-
-
-@media only screen and (max-width: 767px) {
-    body {
-      transform: scale(0.8);
-      overflow: hidden;
-      height: 35vh;
-
-    }
-    * {
-        font-size: 14px;
-    }
-
-    btitle {
-        font-size: 50px;
-    }
-
-    #project-info > div {
-        padding-right: 30px;
-    }
-
-    .project-main {
-        width: 100vw;
-    }
-
-    #img-div > img {
-        height: 40vh;
-        width: auto;
-    }
-}
