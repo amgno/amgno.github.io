@@ -8,7 +8,7 @@
       "type": "item",
       "mediaSrc": [
         "https://picsum.photos/seed/slide1a/400/300",
-        "https://picsum.photos/seed/slide1b/1000/300",
+        "https://picsum.photos/seed/slide1b/400/300",
         "https://picsum.photos/seed/slide1c/400/300"
       ],
       "altText": "Placeholder image slideshow",

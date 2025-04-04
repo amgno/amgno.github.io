@@ -71,6 +71,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     descriptionElement.textContent = itemData.description;
 
                     if (mediaElement) {
+                        // Add click listener to open lightbox
+                        mediaElement.addEventListener('click', () => openLightbox(itemData));
                         itemElement.appendChild(mediaElement);
                     }
                     itemElement.appendChild(descriptionElement);
@@ -86,6 +88,89 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 }); 
+
+// --- Lightbox Functions --- //
+let lightboxOverlay = null; // Keep track of the overlay element
+
+function openLightbox(itemData) {
+    // Create overlay div
+    lightboxOverlay = document.createElement('div');
+    lightboxOverlay.id = 'lightbox-overlay';
+
+    // Create content container
+    const lightboxContent = document.createElement('div');
+    lightboxContent.id = 'lightbox-content';
+
+    // Create close button
+    const closeButton = document.createElement('span');
+    closeButton.id = 'lightbox-close';
+    closeButton.innerHTML = '&times;';
+    closeButton.onclick = closeLightbox;
+
+    // Populate content
+    let contentElement;
+    const mediaSrc = itemData.mediaSrc;
+
+    if (Array.isArray(mediaSrc)) {
+        // It's a slideshow
+        contentElement = createSlideshow(mediaSrc, itemData.altText || 'Portfolio slideshow');
+        contentElement.classList.add('lightbox-slideshow'); // Add class for specific styling
+    } else if (mediaSrc) {
+        // Single media item
+        if (mediaSrc.toLowerCase().endsWith('.mp4') || 
+            mediaSrc.toLowerCase().endsWith('.webm') || 
+            mediaSrc.toLowerCase().endsWith('.ogg')) {
+            // Video
+            contentElement = document.createElement('video');
+            contentElement.src = mediaSrc;
+            contentElement.controls = true;
+            contentElement.autoplay = true; // Optional: autoplay in lightbox
+            contentElement.textContent = itemData.altText || 'Your browser does not support the video tag.';
+        } else {
+            // Image
+            contentElement = document.createElement('img');
+            contentElement.src = mediaSrc;
+            contentElement.alt = itemData.altText || 'Portfolio image';
+        }
+    }
+
+    if (contentElement) {
+        lightboxContent.appendChild(contentElement);
+    }
+
+    lightboxOverlay.appendChild(closeButton);
+    lightboxOverlay.appendChild(lightboxContent);
+
+    // Close lightbox if clicking on the background overlay
+    lightboxOverlay.addEventListener('click', (e) => {
+        if (e.target === lightboxOverlay) { // Check if the click is on the overlay itself
+            closeLightbox();
+        }
+    });
+
+    document.body.appendChild(lightboxOverlay);
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+}
+
+function closeLightbox() {
+    if (lightboxOverlay) {
+         // Stop any slideshow interval within the lightbox before removing
+        const slideshow = lightboxOverlay.querySelector('.lightbox-slideshow');
+        if (slideshow && typeof slideshow.stopAutoSlide === 'function') { // Check if stop function exists (added later)
+            slideshow.stopAutoSlide();
+        }
+        
+        // Stop any video playing
+        const video = lightboxOverlay.querySelector('video');
+        if (video) {
+            video.pause();
+        }
+
+        document.body.removeChild(lightboxOverlay);
+        lightboxOverlay = null;
+        document.body.style.overflow = ''; // Restore background scrolling
+    }
+}
 
 // --- Helper function to create slideshow --- //
 function createSlideshow(imageUrls, altText) {
@@ -135,6 +220,9 @@ function createSlideshow(imageUrls, altText) {
         clearInterval(autoSlideInterval);
         autoSlideInterval = null;
     }
+
+    // Expose the stop function on the container element
+    slideshowContainer.stopAutoSlide = stopAutoSlide;
 
     // Create navigation buttons if more than one image
     if (imageUrls.length > 1) {
