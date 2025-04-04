@@ -25,6 +25,7 @@ a {
 
 
 .left {
+    margin-top: 10px;
     width: 50%;
     /* height: 100%; Remove fixed height */
 }
@@ -39,7 +40,6 @@ a {
 
 /* New rule for the main content area */
 .main-content {
-    padding-top: 10px;
     display: flex; /* Arrange left and right side-by-side */
     flex-grow: 1; /* Allow this div to take up remaining vertical space */
 }
@@ -78,7 +78,7 @@ a {
     flex-direction: column;
     flex-basis: calc(50% - 10px);
     height: auto;
-    padding-bottom: 30px;
+    padding-bottom: 80px;
 }
 
 .item img {
@@ -92,3 +92,13 @@ a {
     flex-basis: calc(100% - 10px);
 }
 
+.desc {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    flex-basis: calc(100% - 10px);
+}
+
+.desc p {
+    flex-basis: 50%;
+}
