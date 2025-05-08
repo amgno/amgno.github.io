@@ -1,0 +1,51 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 10px;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: white;
+    color: black;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.centered {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+}
+
+
+div {}
+
+#first {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+#second {
+    display: flex;
+    width: 20rem;
+    text-align: left;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+#third {
+    display: flex;
+    justify-content: flex-start;
+    gap: 0.5rem;
+}
+
+a {
+    text-decoration: underline;
+    color: black;
+}
