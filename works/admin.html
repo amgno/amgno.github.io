@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects Admin - A.M.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="admin-styles.css">
+</head>
+<body>
+    <div class="admin-container">
+        <header class="admin-header">
+            <h1>Projects Manager</h1>
+            <p>Gestisci i tuoi progetti facilmente</p>
+        </header>
+
+        <div class="admin-content">
+            <!-- Projects List -->
+            <section class="projects-section">
+                <div class="section-header">
+                    <h2>Progetti Esistenti</h2>
+                    <button id="add-project-btn" class="btn btn-primary">+ Nuovo Progetto</button>
+                </div>
+                <div id="projects-list" class="projects-list">
+                    <!-- Projects will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Project Form -->
+            <section class="form-section" id="form-section" style="display: none;">
+                <h2 id="form-title">Nuovo Progetto</h2>
+                <form id="project-form" class="project-form">
+                    <div class="form-group">
+                        <label for="project-id">ID Progetto (URL)</label>
+                        <input type="text" id="project-id" required placeholder="brand-identity-esempio">
+                        <small>Solo lettere minuscole, numeri e trattini</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="project-title">Titolo</label>
+                        <input type="text" id="project-title" required placeholder="Nome del Progetto">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="project-subtitle">Sottotitolo</label>
+                        <input type="text" id="project-subtitle" required placeholder="Brand Identity & Web Design">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="project-thumbnail">URL Thumbnail</label>
+                        <input type="url" id="project-thumbnail" required placeholder="https://...">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="project-year">Anno</label>
+                            <input type="text" id="project-year" required placeholder="2024">
+                        </div>
+                        <div class="form-group">
+                            <label for="project-client">Cliente</label>
+                            <input type="text" id="project-client" required placeholder="Nome Cliente">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="project-role">Ruolo</label>
+                        <input type="text" id="project-role" required placeholder="Art Director, UI/UX Designer">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="project-description">Descrizione</label>
+                        <textarea id="project-description" rows="4" required placeholder="Inserisci la descrizione del progetto. Usa &#10; per separare i paragrafi."></textarea>
+                        <small>Separa i paragrafi con una riga vuota</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Media Gallery</label>
+                        <div id="media-container" class="media-container">
+                            <!-- Media items will be added here -->
+                        </div>
+                        <button type="button" id="add-media-btn" class="btn btn-secondary">+ Aggiungi Media</button>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" id="cancel-btn" class="btn btn-secondary">Annulla</button>
+                        <button type="submit" class="btn btn-primary">Salva Progetto</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- JSON Output -->
+            <section class="output-section">
+                <div class="section-header">
+                    <h2>JSON Generato</h2>
+                    <button id="copy-json-btn" class="btn btn-secondary">Copia JSON</button>
+                </div>
+                <textarea id="json-output" class="json-output" readonly placeholder="Il JSON verrà generato qui..."></textarea>
+                <p class="output-instructions">
+                    Copia questo JSON e sostituisci il contenuto di <code>projects-data.json</code>
+                </p>
+            </section>
+        </div>
+    </div>
+
+    <script src="admin-script.js"></script>
+</body>
+</html> 
