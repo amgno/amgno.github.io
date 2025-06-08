@@ -36,10 +36,8 @@ function populateProject(project) {
         descriptionContent.appendChild(p);
     });
     
-    // Update details
-    document.getElementById('project-year').textContent = project.year;
-    document.getElementById('project-client').textContent = project.client;
-    document.getElementById('project-role').textContent = project.role;
+    // Update details (horizontal layout without labels)
+    document.getElementById('project-details-content').innerHTML = `${project.year}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${project.client}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${project.role}`;
 }
 
 // Create gallery items
@@ -53,7 +51,7 @@ function createGallery(media) {
         
         if (item.type === 'image') {
             mediaItem.innerHTML = `
-                <img src="${item.url}" alt="${item.caption || ''}" loading="lazy">
+                <img src="${item.url}" alt="${item.caption || ''}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.innerHTML='<span style=&quot;color:#999; font-style:italic;&quot;>Immagine non disponibile</span>'">
                 <p class="media-caption">${item.caption || ''}</p>
             `;
         } else if (item.type === 'video') {
@@ -104,8 +102,14 @@ async function initPDFSlideshow(pdfUrl, containerId, duration) {
         // Configure PDF.js worker
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
         
-        // Load PDF
-        const loadingTask = pdfjsLib.getDocument(pdfUrl);
+        // Load PDF with CORS handling
+        const loadingTask = pdfjsLib.getDocument({
+            url: pdfUrl,
+            cMapUrl: 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/cmaps/',
+            cMapPacked: true,
+            disableAutoFetch: true,
+            disableStream: true
+        });
         const pdf = await loadingTask.promise;
         
         const totalPages = pdf.numPages;
@@ -156,7 +160,25 @@ async function initPDFSlideshow(pdfUrl, containerId, duration) {
         
     } catch (error) {
         console.error('Error loading PDF:', error);
-        container.innerHTML = '<div class="pdf-loading">Errore nel caricamento del PDF</div>';
+        
+        // Provide more specific error messages
+        let errorMessage = 'Errore nel caricamento del PDF';
+        if (error.message && error.message.includes('CORS')) {
+            errorMessage = 'PDF non accessibile (CORS). Usa un servizio che supporta il cross-origin.';
+        } else if (error.message && error.message.includes('404')) {
+            errorMessage = 'PDF non trovato (404)';
+        } else if (error.message && error.message.includes('Load failed')) {
+            errorMessage = 'PDF non accessibile. Verifica URL o permessi CORS.';
+        }
+        
+        container.innerHTML = `
+            <div class="pdf-loading">
+                <p>${errorMessage}</p>
+                <small style="display: block; margin-top: 0.5rem; color: #999;">
+                    Per risolvere: usa servizi come GitHub Pages, Google Drive (link diretto), o altri servizi con CORS abilitato
+                </small>
+            </div>
+        `;
     }
 }
 

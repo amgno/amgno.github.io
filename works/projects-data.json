@@ -90,7 +90,7 @@
       "id": "olin-ski",
       "title": "Olin Ski",
       "subtitle": "Rebranding",
-      "thumbnail": "https://i.imgur.com/KjiNtlS.png",
+      "thumbnail": "https://picsum.photos/400/300?random=10",
       "year": "2023",
       "client": "Politecnico di Milano",
       "role": "Designer",
@@ -100,19 +100,19 @@
       "media": [
         {
           "type": "pdf",
-          "url": "https://data.ophelia.red/olin.pdf",
+          "url": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
           "caption": "Brand Book",
           "size": "large",
           "duration": 10
         },
         {
           "type": "image",
-          "url": "https://i.imgur.com/OrdOFI0.png",
+          "url": "https://picsum.photos/600/400?random=11",
           "caption": ""
         },
         {
           "type": "image",
-          "url": "https://i.imgur.com/2nA7aeD.jpeg",
+          "url": "https://picsum.photos/400/600?random=12",
           "caption": ""
         }
       ]
