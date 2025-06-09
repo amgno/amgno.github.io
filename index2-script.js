@@ -84,8 +84,15 @@ function closeProjectModal() {
     document.body.style.overflow = '';
 }
 
+// Global variables for media gallery
+let currentProject = null;
+let currentMediaIndex = 0;
+
 // Populate modal with project data
 function populateModal(project) {
+    currentProject = project;
+    currentMediaIndex = 0;
+    
     // Title and subtitle
     document.getElementById('modal-title').textContent = project.title;
     document.getElementById('modal-subtitle').textContent = project.subtitle;
@@ -109,13 +116,181 @@ function populateModal(project) {
     
     detailsContainer.innerHTML = details.join('<br>');
     
-    // Media
-    const mediaContainer = document.getElementById('modal-media');
+    // Media Gallery
+    setupMediaGallery(project);
+}
+
+// Setup media gallery
+function setupMediaGallery(project) {
+    const mediaArray = [];
+    
+    // Add thumbnail as first media
     if (project.thumbnail) {
-        mediaContainer.innerHTML = `<img src="${project.thumbnail}" alt="${project.title}" />`;
-    } else {
-        mediaContainer.innerHTML = '<div class="media-placeholder">Nessuna media disponibile</div>';
+        mediaArray.push({
+            type: 'image',
+            url: project.thumbnail,
+            caption: 'Anteprima progetto'
+        });
     }
+    
+    // Add project media
+    if (project.media && Array.isArray(project.media)) {
+        mediaArray.push(...project.media);
+    }
+    
+    if (mediaArray.length === 0) {
+        document.getElementById('media-content').innerHTML = '<div class="media-placeholder">Nessuna media disponibile</div>';
+        document.getElementById('media-thumbnails').innerHTML = '';
+        return;
+    }
+    
+    // Render thumbnails
+    renderMediaThumbnails(mediaArray);
+    
+    // Show first media
+    showMedia(0, mediaArray);
+    
+    // Setup navigation
+    setupMediaNavigation(mediaArray);
+}
+
+// Render media thumbnails
+function renderMediaThumbnails(mediaArray) {
+    const thumbnailsContainer = document.getElementById('media-thumbnails');
+    
+    thumbnailsContainer.innerHTML = mediaArray.map((media, index) => {
+        const isActive = index === currentMediaIndex ? 'active' : '';
+        
+        if (media.type === 'image') {
+            return `
+                <div class="media-thumbnail ${isActive}" data-index="${index}">
+                    <img src="${media.url}" alt="Media ${index + 1}" />
+                </div>
+            `;
+        } else if (media.type === 'video') {
+            return `
+                <div class="media-thumbnail ${isActive}" data-index="${index}">
+                    <div class="thumb-icon">▶</div>
+                </div>
+            `;
+        } else if (media.type === 'pdf') {
+            return `
+                <div class="media-thumbnail ${isActive}" data-index="${index}">
+                    <div class="thumb-icon">📄</div>
+                </div>
+            `;
+        }
+        return '';
+    }).join('');
+    
+    // Add click listeners to thumbnails
+    thumbnailsContainer.querySelectorAll('.media-thumbnail').forEach((thumb, index) => {
+        thumb.addEventListener('click', () => {
+            currentMediaIndex = index;
+            showMedia(index, mediaArray);
+            updateThumbnailsActive();
+        });
+    });
+}
+
+// Show specific media
+function showMedia(index, mediaArray) {
+    const media = mediaArray[index];
+    const mediaContent = document.getElementById('media-content');
+    const captionOverlay = document.getElementById('media-caption-overlay');
+    
+    // Remove all previous event listeners by cloning the element
+    const newMediaContent = mediaContent.cloneNode(false);
+    mediaContent.parentNode.replaceChild(newMediaContent, mediaContent);
+    
+    // Update caption overlay
+    if (media.caption || media.type) {
+        const captionText = media.caption || (() => {
+            switch(media.type) {
+                case 'image': return `Immagine ${index + 1}`;
+                case 'video': return `Video ${index + 1}`;
+                case 'pdf': return 'Documento PDF';
+                default: return 'Media';
+            }
+        })();
+        
+        captionOverlay.textContent = captionText;
+        captionOverlay.classList.add('visible');
+    } else {
+        captionOverlay.classList.remove('visible');
+    }
+    
+    if (media.type === 'image') {
+        newMediaContent.innerHTML = `<img src="${media.url}" alt="${media.caption || 'Project image'}" />`;
+    } else if (media.type === 'video') {
+        newMediaContent.innerHTML = `
+            <video controls>
+                <source src="${media.url}" type="video/mp4">
+                Il tuo browser non supporta i video.
+            </video>
+        `;
+    } else if (media.type === 'pdf') {
+        newMediaContent.innerHTML = `
+            <div class="pdf-viewer" data-url="${media.url}">
+                📄 ${media.caption || 'Documento PDF'}
+                <br><small>Clicca per aprire</small>
+            </div>
+        `;
+        
+        // Add click to open PDF only to the PDF viewer element
+        const pdfViewer = newMediaContent.querySelector('.pdf-viewer');
+        pdfViewer.addEventListener('click', (e) => {
+            e.stopPropagation();
+            window.open(media.url, '_blank');
+        });
+    } else {
+        newMediaContent.innerHTML = '<div class="media-placeholder">Formato media non supportato</div>';
+    }
+}
+
+// Update active thumbnail
+function updateThumbnailsActive() {
+    document.querySelectorAll('.media-thumbnail').forEach((thumb, index) => {
+        thumb.classList.toggle('active', index === currentMediaIndex);
+    });
+}
+
+// Setup media navigation
+function setupMediaNavigation(mediaArray) {
+    const prevBtn = document.getElementById('media-prev');
+    const nextBtn = document.getElementById('media-next');
+    
+    // Update navigation buttons
+    function updateNavigation() {
+        prevBtn.disabled = currentMediaIndex === 0;
+        nextBtn.disabled = currentMediaIndex === mediaArray.length - 1;
+        
+        // Hide navigation if only one media
+        const navigation = document.querySelector('.media-navigation');
+        navigation.style.display = mediaArray.length <= 1 ? 'none' : 'flex';
+    }
+    
+    // Previous media
+    prevBtn.onclick = () => {
+        if (currentMediaIndex > 0) {
+            currentMediaIndex--;
+            showMedia(currentMediaIndex, mediaArray);
+            updateThumbnailsActive();
+            updateNavigation();
+        }
+    };
+    
+    // Next media
+    nextBtn.onclick = () => {
+        if (currentMediaIndex < mediaArray.length - 1) {
+            currentMediaIndex++;
+            showMedia(currentMediaIndex, mediaArray);
+            updateThumbnailsActive();
+            updateNavigation();
+        }
+    };
+    
+    updateNavigation();
 }
 
 // Show loading state
