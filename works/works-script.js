@@ -10,51 +10,71 @@ async function loadProjectsData() {
     }
 }
 
-// Create project card HTML
-function createProjectCard(project) {
+// Create minimal project item HTML
+function createProjectItem(project) {
     return `
-        <a href="project.html?id=${project.id}" class="project-card">
-            <img src="${project.thumbnail}" alt="${project.title}" class="project-thumbnail" loading="lazy">
-            <div class="project-info">
-                <h2 class="project-title">${project.title}</h2>
-                <p class="project-subtitle">${project.subtitle}</p>
-                <p class="project-year">${project.year}</p>
-            </div>
-        </a>
+        <div class="project-item">
+            <a href="project.html?id=${project.id}" class="project-link">
+                <div class="project-title">${project.title}</div>
+                <div class="project-meta">
+                    ${project.subtitle}
+                    <span class="project-year">${project.year}</span>
+                </div>
+            </a>
+        </div>
     `;
 }
 
-// Render projects grid
+// Render minimal projects list
 function renderProjects(projects) {
-    const projectsGrid = document.getElementById('projects-grid');
+    const projectsList = document.getElementById('projects-list');
     
     if (projects.length === 0) {
-        projectsGrid.innerHTML = '<p>Nessun progetto disponibile al momento.</p>';
+        projectsList.innerHTML = '<div class="loading">Nessun progetto disponibile al momento.</div>';
         return;
     }
     
-    projectsGrid.innerHTML = projects.map(project => createProjectCard(project)).join('');
+    projectsList.innerHTML = projects.map(project => createProjectItem(project)).join('');
 }
 
-// Show loading state
+// Show minimal loading state
 function showLoading() {
-    const projectsGrid = document.getElementById('projects-grid');
-    projectsGrid.innerHTML = '<div class="loading"><p>Caricamento progetti...</p></div>';
+    const projectsList = document.getElementById('projects-list');
+    projectsList.innerHTML = '<div class="loading">Caricamento progetti...</div>';
 }
 
-// Main initialization
+// Simple initialization
 async function init() {
-    showLoading();
-    
     try {
+        showLoading();
         const projects = await loadProjectsData();
         renderProjects(projects);
+        
+        // Update page title with projects count
+        if (projects.length > 0) {
+            document.title = `Works (${projects.length}) - A.M.`;
+        }
+        
     } catch (error) {
         console.error('Failed to load projects:', error);
-        const projectsGrid = document.getElementById('projects-grid');
-        projectsGrid.innerHTML = '<p>Errore nel caricamento dei progetti.</p>';
+        const projectsList = document.getElementById('projects-list');
+        projectsList.innerHTML = '<div class="loading">Errore nel caricamento dei progetti.</div>';
     }
 }
 
 // Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', init); 
+document.addEventListener('DOMContentLoaded', init);
+
+// Add smooth scrolling for navigation
+document.addEventListener('click', (e) => {
+    if (e.target.matches('a[href^="#"]')) {
+        e.preventDefault();
+        const target = document.querySelector(e.target.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    }
+}); 
