@@ -506,6 +506,120 @@ function initModalListeners() {
             closeProjectModal();
         }
     });
+    
+    // Initialize modal resizing and dragging
+    initModalInteractions();
+}
+
+// Initialize modal dragging and custom resizing
+function initModalInteractions() {
+    const modalContent = document.querySelector('.modal-content');
+    const modalHeader = document.querySelector('.modal-header');
+    
+    let isDragging = false;
+    let isResizing = false;
+    let startX, startY, startWidth, startHeight, startLeft, startTop;
+    
+    // Make modal draggable by header
+    if (modalHeader) {
+        modalHeader.style.cursor = 'move';
+        
+        modalHeader.addEventListener('mousedown', (e) => {
+            if (e.target.closest('.modal-close')) return;
+            
+            isDragging = true;
+            const rect = modalContent.getBoundingClientRect();
+            startX = e.clientX - rect.left;
+            startY = e.clientY - rect.top;
+            
+            modalContent.style.position = 'fixed';
+            modalContent.style.left = rect.left + 'px';
+            modalContent.style.top = rect.top + 'px';
+            modalContent.style.margin = '0';
+            modalContent.style.transform = 'none';
+            
+            e.preventDefault();
+            e.stopPropagation();
+        });
+        
+        // Prevent modal close when clicking on header
+        modalHeader.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+    }
+    
+    // Add custom resize handle
+    const resizeHandle = document.createElement('div');
+    resizeHandle.className = 'modal-resize-handle';
+    modalContent.appendChild(resizeHandle);
+    
+    // Resize functionality
+    resizeHandle.addEventListener('mousedown', (e) => {
+        isResizing = true;
+        const rect = modalContent.getBoundingClientRect();
+        startX = e.clientX;
+        startY = e.clientY;
+        startWidth = rect.width;
+        startHeight = rect.height;
+        
+        e.preventDefault();
+        e.stopPropagation();
+    });
+    
+    // Prevent modal close when clicking on resize handle
+    resizeHandle.addEventListener('click', (e) => {
+        e.stopPropagation();
+    });
+    
+    // Mouse move handler for dragging and resizing
+    document.addEventListener('mousemove', (e) => {
+        if (isDragging) {
+            modalContent.classList.add('dragging');
+            // Keep modal within viewport bounds
+            const newLeft = Math.max(0, Math.min(window.innerWidth - modalContent.offsetWidth, e.clientX - startX));
+            const newTop = Math.max(0, Math.min(window.innerHeight - modalContent.offsetHeight, e.clientY - startY));
+            
+            modalContent.style.left = newLeft + 'px';
+            modalContent.style.top = newTop + 'px';
+        }
+        
+        if (isResizing) {
+            modalContent.classList.add('resizing');
+            // Allow resizing beyond viewport if needed, user can scroll
+            const newWidth = Math.max(600, startWidth + (e.clientX - startX));
+            const newHeight = Math.max(400, startHeight + (e.clientY - startY));
+            
+            modalContent.style.width = newWidth + 'px';
+            modalContent.style.height = newHeight + 'px';
+        }
+    });
+    
+    // Mouse up handler
+    document.addEventListener('mouseup', () => {
+        if (isDragging || isResizing) {
+            modalContent.classList.remove('dragging', 'resizing');
+        }
+        isDragging = false;
+        isResizing = false;
+    });
+    
+    // Store original close function and override it
+    const originalCloseModal = closeProjectModal;
+    
+    // Override global close function
+    window.closeProjectModal = function() {
+        // Reset modal styles
+        modalContent.style.position = '';
+        modalContent.style.left = '';
+        modalContent.style.top = '';
+        modalContent.style.margin = '';
+        modalContent.style.transform = '';
+        modalContent.style.width = '';
+        modalContent.style.height = '';
+        
+        // Call original close function
+        originalCloseModal();
+    };
 }
 
 // Initialize everything
