@@ -101,6 +101,10 @@ function closeProjectModal() {
 let currentProject = null;
 let currentMediaIndex = 0;
 
+// Global variables for modal interactions
+let isDragging = false;
+let isResizing = false;
+
 // Configuration for PDF pages display
 const PDF_CONFIG = {
     maxPages: 10, // Default number of pages to show, can be overridden per project
@@ -493,8 +497,15 @@ function initModalListeners() {
     // Close button
     closeBtn.addEventListener('click', closeProjectModal);
     
-    // Click outside to close
+    // Click outside to close - but not during interactions
     modal.addEventListener('click', (e) => {
+        // Don't close if we're dragging or resizing
+        if (isDragging || isResizing) return;
+        
+        // Don't close if clicking on modal content or its children
+        if (e.target.closest('.modal-content')) return;
+        
+        // Only close if clicking on the overlay itself
         if (e.target === modal) {
             closeProjectModal();
         }
@@ -516,8 +527,6 @@ function initModalInteractions() {
     const modalContent = document.querySelector('.modal-content');
     const modalHeader = document.querySelector('.modal-header');
     
-    let isDragging = false;
-    let isResizing = false;
     let startX, startY, startWidth, startHeight, startLeft, startTop;
     
     // Make modal draggable by header
@@ -598,9 +607,16 @@ function initModalInteractions() {
     document.addEventListener('mouseup', () => {
         if (isDragging || isResizing) {
             modalContent.classList.remove('dragging', 'resizing');
+            
+            // Small delay to prevent accidental clicks from closing modal
+            setTimeout(() => {
+                isDragging = false;
+                isResizing = false;
+            }, 100);
+        } else {
+            isDragging = false;
+            isResizing = false;
         }
-        isDragging = false;
-        isResizing = false;
     });
     
     // Store original close function and override it
