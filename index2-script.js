@@ -10,41 +10,54 @@ async function loadProjectsData() {
     }
 }
 
-// Create minimal project item HTML
-function createProjectItem(project) {
+// Create project card HTML
+function createProjectCard(project) {
+    const imageStyle = project.thumbnail 
+        ? `style="background-image: url('${project.thumbnail}')"`
+        : '';
+    
+    const imageClass = project.thumbnail ? '' : 'no-image';
+    const imageContent = project.thumbnail ? '' : '📸';
+    
     return `
-        <div class="project-item">
-            <div class="project-link" data-project-id="${project.id}">
-                <div class="project-title">${project.title}</div>
+        <div class="project-card" data-project-id="${project.id}">
+            <div class="project-image ${imageClass}" ${imageStyle}>
+                ${imageContent}
+            </div>
+            <div class="project-content">
+                <div class="project-info">
+                    <div class="project-title">${project.title}</div>
+                    ${project.subtitle ? `<div class="project-subtitle">${project.subtitle}</div>` : ''}
+                </div>
                 <div class="project-meta">
-                    ${project.subtitle}
                     <span class="project-year">${project.year}</span>
+                    ${project.category ? `<span class="project-type">${project.category}</span>` : ''}
                 </div>
             </div>
         </div>
     `;
 }
 
-// Render projects list
+// Render projects grid
 function renderProjects(projects) {
-    const projectsList = document.getElementById('projects-list');
+    const projectsGrid = document.getElementById('projects-grid');
     
     if (projects.length === 0) {
-        projectsList.innerHTML = '<div class="loading">Nessun progetto disponibile al momento.</div>';
+        projectsGrid.innerHTML = '<div class="loading">Nessun progetto disponibile al momento.</div>';
         return;
     }
     
-    projectsList.innerHTML = projects.map(project => createProjectItem(project)).join('');
+    projectsGrid.innerHTML = projects.map(project => createProjectCard(project)).join('');
     
     // Add click listeners for modal
     addProjectClickListeners();
 }
 
-// Add click listeners to project items
+// Add click listeners to project cards
 function addProjectClickListeners() {
-    const projectLinks = document.querySelectorAll('.project-link[data-project-id]');
-    projectLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
+    const projectCards = document.querySelectorAll('.project-card[data-project-id]');
+    projectCards.forEach(card => {
+        card.addEventListener('click', (e) => {
             const projectId = e.currentTarget.getAttribute('data-project-id');
             openProjectModal(projectId);
         });
@@ -87,6 +100,119 @@ function closeProjectModal() {
 // Global variables for media gallery
 let currentProject = null;
 let currentMediaIndex = 0;
+
+// Configuration for PDF pages display
+const PDF_CONFIG = {
+    maxPages: 10, // Default number of pages to show, can be overridden per project
+    pageImageQuality: 1.5 // Quality multiplier for PDF page images
+};
+
+// Process PDF media to create individual page objects
+function processPDFPages(pdfMedia) {
+    const pages = [];
+    const maxPages = pdfMedia.maxPages || PDF_CONFIG.maxPages;
+    
+    // Create page objects for PDF
+    for (let i = 1; i <= maxPages; i++) {
+        pages.push({
+            type: 'pdf-page',
+            url: pdfMedia.url,
+            pageNumber: i,
+            caption: `${pdfMedia.caption || 'Documento PDF'} - Pagina ${i}`,
+            originalPdf: pdfMedia,
+            isPdfPage: true
+        });
+    }
+    
+    return pages;
+}
+
+// Render PDF page using PDF.js
+async function renderPDFPage(media, container) {
+    try {
+        // Load PDF.js if not already loaded
+        if (!window.pdfjsLib) {
+            await loadPDFJS();
+        }
+        
+        // Load PDF document
+        const pdf = await window.pdfjsLib.getDocument(media.url).promise;
+        
+        // Get the specific page
+        const page = await pdf.getPage(media.pageNumber);
+        
+        // Create canvas
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        
+        // Calculate scale to fit container
+        const viewport = page.getViewport({ scale: 1 });
+        const containerWidth = container.clientWidth || 600;
+        const scale = (containerWidth / viewport.width) * PDF_CONFIG.pageImageQuality;
+        const scaledViewport = page.getViewport({ scale });
+        
+        // Set canvas dimensions
+        canvas.width = scaledViewport.width;
+        canvas.height = scaledViewport.height;
+        
+        // Render page
+        const renderContext = {
+            canvasContext: context,
+            viewport: scaledViewport
+        };
+        
+        await page.render(renderContext).promise;
+        
+        // Replace loading content with rendered page
+        container.innerHTML = '';
+        canvas.className = 'pdf-page-canvas';
+        container.appendChild(canvas);
+        
+        // Add click handler to open full PDF
+        canvas.addEventListener('click', (e) => {
+            e.stopPropagation();
+            window.open(media.url, '_blank');
+        });
+        
+    } catch (error) {
+        console.error('Error rendering PDF page:', error);
+        container.innerHTML = `
+            <div class="pdf-error">
+                <div class="thumb-icon">📄</div>
+                <div>Errore nel caricamento della pagina ${media.pageNumber}</div>
+                <small>Clicca per aprire il PDF completo</small>
+            </div>
+        `;
+        
+        // Add click handler to open full PDF on error
+        container.addEventListener('click', (e) => {
+            e.stopPropagation();
+            window.open(media.url, '_blank');
+        });
+    }
+}
+
+// Load PDF.js library
+async function loadPDFJS() {
+    return new Promise((resolve, reject) => {
+        // Check if already loaded
+        if (window.pdfjsLib) {
+            resolve();
+            return;
+        }
+        
+        // Load PDF.js from CDN
+        const script = document.createElement('script');
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+        script.onload = () => {
+            // Configure PDF.js worker
+            window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+            resolve();
+        };
+        script.onerror = reject;
+        document.head.appendChild(script);
+    });
+}
 
 // Populate modal with project data
 function populateModal(project) {
@@ -133,9 +259,26 @@ function setupMediaGallery(project) {
         });
     }
     
-    // Add project media
+    // Organize media by type: videos first, then images, then PDFs
     if (project.media && Array.isArray(project.media)) {
-        mediaArray.push(...project.media);
+        const videos = [];
+        const images = [];
+        const pdfs = [];
+        
+        project.media.forEach(media => {
+            if (media.type === 'video') {
+                videos.push(media);
+            } else if (media.type === 'pdf') {
+                // Process PDF to create pages array
+                const pdfPages = processPDFPages(media);
+                pdfs.push(...pdfPages);
+            } else {
+                images.push(media);
+            }
+        });
+        
+        // Add in order: videos (second position), images, then PDF pages
+        mediaArray.push(...videos, ...images, ...pdfs);
     }
     
     if (mediaArray.length === 0) {
@@ -186,6 +329,13 @@ function renderMediaThumbnails(mediaArray) {
                     <div class="thumb-icon">📄</div>
                 </div>
             `;
+        } else if (media.type === 'pdf-page') {
+            return `
+                <div class="media-thumbnail pdf-page-thumb ${isActive}" data-index="${index}">
+                    <div class="thumb-icon">📄</div>
+                    <div class="page-number">${media.pageNumber}</div>
+                </div>
+            `;
         }
         return '';
     }).join('');
@@ -217,6 +367,7 @@ function showMedia(index, mediaArray) {
                 case 'image': return `Immagine ${index + 1}`;
                 case 'video': return `Video ${index + 1}`;
                 case 'pdf': return 'Documento PDF';
+                case 'pdf-page': return `Documento PDF - Pagina ${media.pageNumber}`;
                 default: return 'Media';
             }
         })();
@@ -250,6 +401,17 @@ function showMedia(index, mediaArray) {
             e.stopPropagation();
             window.open(media.url, '_blank');
         });
+    } else if (media.type === 'pdf-page') {
+        // Show loading state
+        newMediaContent.innerHTML = `
+            <div class="pdf-page-loading">
+                <div class="loading-spinner"></div>
+                <div>Caricamento pagina ${media.pageNumber}...</div>
+            </div>
+        `;
+        
+        // Render PDF page
+        renderPDFPage(media, newMediaContent);
     } else {
         newMediaContent.innerHTML = '<div class="media-placeholder">Formato media non supportato</div>';
     }
@@ -302,8 +464,8 @@ function setupMediaNavigation(mediaArray) {
 
 // Show loading state
 function showLoading() {
-    const projectsList = document.getElementById('projects-list');
-    projectsList.innerHTML = '<div class="loading">Caricamento progetti...</div>';
+    const projectsGrid = document.getElementById('projects-grid');
+    projectsGrid.innerHTML = '<div class="loading">Caricamento progetti...</div>';
 }
 
 // Handle smooth scrolling for works link
@@ -366,8 +528,8 @@ async function init() {
         
     } catch (error) {
         console.error('Failed to initialize:', error);
-        const projectsList = document.getElementById('projects-list');
-        projectsList.innerHTML = '<div class="loading">Errore nel caricamento dei progetti.</div>';
+        const projectsGrid = document.getElementById('projects-grid');
+        projectsGrid.innerHTML = '<div class="loading">Errore nel caricamento dei progetti.</div>';
     }
 }
 

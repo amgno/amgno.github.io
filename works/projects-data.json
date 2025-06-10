@@ -103,7 +103,8 @@
           "url": "https://data.ophelia.red/olin.pdf",
           "caption": "Brand Book",
           "size": "large",
-          "duration": 10
+          "duration": 10,
+          "maxPages": 8
         },
         {
           "type": "image",
