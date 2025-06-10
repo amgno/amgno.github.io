@@ -158,6 +158,13 @@ function setupMediaGallery(project) {
 function renderMediaThumbnails(mediaArray) {
     const thumbnailsContainer = document.getElementById('media-thumbnails');
     
+    // Add has-more class if more than 5 thumbnails
+    if (mediaArray.length > 5) {
+        thumbnailsContainer.classList.add('has-more');
+    } else {
+        thumbnailsContainer.classList.remove('has-more');
+    }
+    
     thumbnailsContainer.innerHTML = mediaArray.map((media, index) => {
         const isActive = index === currentMediaIndex ? 'active' : '';
         
