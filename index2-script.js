@@ -10,25 +10,14 @@ async function loadProjectsData() {
     }
 }
 
-// Create project card HTML
-function createProjectCard(project) {
-    const imageStyle = project.thumbnail 
-        ? `style="background-image: url('${project.thumbnail}')"`
-        : '';
-    
-    const imageClass = project.thumbnail ? '' : 'no-image';
-    const imageContent = project.thumbnail ? '' : '📸';
-    
+// Create project item HTML - minimal style
+function createProjectCard(project, index) {
     return `
-        <div class="project-card" data-project-id="${project.id}">
-            <div class="project-image ${imageClass}" ${imageStyle}>
-                ${imageContent}
-            </div>
+        <div class="project-item" data-project-id="${project.id}">
+            <div class="project-number">${String(index + 1).padStart(2, '0')}</div>
             <div class="project-content">
-                <div class="project-info">
-                    <div class="project-title">${project.title}</div>
-                    ${project.subtitle ? `<div class="project-subtitle">${project.subtitle}</div>` : ''}
-                </div>
+                <div class="project-title">${project.title}</div>
+                ${project.subtitle ? `<div class="project-subtitle">${project.subtitle}</div>` : ''}
                 <div class="project-meta">
                     <span class="project-year">${project.year}</span>
                     ${project.category ? `<span class="project-type">${project.category}</span>` : ''}
@@ -47,17 +36,17 @@ function renderProjects(projects) {
         return;
     }
     
-    projectsGrid.innerHTML = projects.map(project => createProjectCard(project)).join('');
+    projectsGrid.innerHTML = projects.map((project, index) => createProjectCard(project, index)).join('');
     
     // Add click listeners for modal
     addProjectClickListeners();
 }
 
-// Add click listeners to project cards
+// Add click listeners to project items
 function addProjectClickListeners() {
-    const projectCards = document.querySelectorAll('.project-card[data-project-id]');
-    projectCards.forEach(card => {
-        card.addEventListener('click', (e) => {
+    const projectItems = document.querySelectorAll('.project-item[data-project-id]');
+    projectItems.forEach(item => {
+        item.addEventListener('click', (e) => {
             const projectId = e.currentTarget.getAttribute('data-project-id');
             openProjectModal(projectId);
         });
