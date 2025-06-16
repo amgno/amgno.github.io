@@ -155,7 +155,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--warm-beige);
+    background-color: var(--cream);
 }
 
 .works-container {
@@ -185,13 +185,20 @@ body {
     font-weight: 400;
 }
 
-/* Projects List - Simple like links in hero */
+/* Projects List - Two columns */
 .projects-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    max-width: 400px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem 3rem;
+    max-width: 800px;
     margin: 0 auto;
+}
+
+@media (max-width: 767px) {
+    .projects-grid {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+    }
 }
 
 .project-item {
