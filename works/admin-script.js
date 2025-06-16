@@ -16,6 +16,106 @@ async function loadExistingProjects() {
     }
 }
 
+// Update preview in real-time
+function updatePreview() {
+    const title = document.getElementById('project-title').value || 'Titolo Progetto';
+    const subtitle = document.getElementById('project-subtitle').value || 'Sottotitolo';
+    const description = document.getElementById('project-description').value || 'La descrizione apparirà qui...';
+    const year = document.getElementById('project-year').value || '2024';
+    const client = document.getElementById('project-client').value || 'Cliente';
+    const role = document.getElementById('project-role').value || 'Ruolo';
+    
+    // Update preview text
+    document.getElementById('preview-title').textContent = title;
+    document.getElementById('preview-subtitle').textContent = subtitle;
+    document.getElementById('preview-year').textContent = year;
+    document.getElementById('preview-client').textContent = client;
+    document.getElementById('preview-role').textContent = role;
+    
+    // Update description with paragraphs
+    const previewText = document.getElementById('preview-text');
+    const paragraphs = description.split('\n\n').filter(p => p.trim());
+    previewText.innerHTML = paragraphs.map(p => `<p>${p.trim()}</p>`).join('');
+    
+    // Update media preview
+    updateMediaPreview();
+}
+
+// Update media preview
+function updateMediaPreview() {
+    const mediaItems = Array.from(document.querySelectorAll('.media-item'));
+    const previewMainImage = document.getElementById('preview-main-image');
+    const previewPlaceholder = document.getElementById('preview-placeholder');
+    const previewThumbnails = document.getElementById('preview-thumbnails');
+    
+    // Clear thumbnails
+    previewThumbnails.innerHTML = '';
+    
+    if (mediaItems.length === 0) {
+        previewMainImage.style.display = 'none';
+        previewPlaceholder.style.display = 'block';
+        return;
+    }
+    
+    // Show first media item
+    const firstMediaUrl = mediaItems[0].querySelector('.media-url').value;
+    const firstMediaType = mediaItems[0].querySelector('.media-type').value;
+    
+    if (firstMediaUrl && firstMediaType === 'image') {
+        previewMainImage.src = firstMediaUrl;
+        previewMainImage.style.display = 'block';
+        previewPlaceholder.style.display = 'none';
+    } else {
+        previewMainImage.style.display = 'none';
+        previewPlaceholder.style.display = 'block';
+        previewPlaceholder.innerHTML = firstMediaUrl ? 
+            `<p>Preview ${firstMediaType.toUpperCase()}</p><small>${firstMediaUrl}</small>` :
+            `<p>Anteprima Media</p><small>Aggiungi media per vedere l'anteprima</small>`;
+    }
+    
+    // Create thumbnails
+    mediaItems.forEach((item, index) => {
+        const url = item.querySelector('.media-url').value;
+        if (url) {
+            const thumbnail = document.createElement('div');
+            thumbnail.className = `preview-thumbnail ${index === 0 ? 'active' : ''}`;
+            thumbnail.onclick = () => switchPreviewMedia(index);
+            previewThumbnails.appendChild(thumbnail);
+        }
+    });
+}
+
+// Switch preview media
+function switchPreviewMedia(index) {
+    const mediaItems = Array.from(document.querySelectorAll('.media-item'));
+    const mediaItem = mediaItems[index];
+    
+    if (!mediaItem) return;
+    
+    const mediaUrl = mediaItem.querySelector('.media-url').value;
+    const mediaType = mediaItem.querySelector('.media-type').value;
+    const previewMainImage = document.getElementById('preview-main-image');
+    const previewPlaceholder = document.getElementById('preview-placeholder');
+    
+    // Update active thumbnail
+    document.querySelectorAll('.preview-thumbnail').forEach((thumb, i) => {
+        thumb.classList.toggle('active', i === index);
+    });
+    
+    // Update main preview
+    if (mediaUrl && mediaType === 'image') {
+        previewMainImage.src = mediaUrl;
+        previewMainImage.style.display = 'block';
+        previewPlaceholder.style.display = 'none';
+    } else {
+        previewMainImage.style.display = 'none';
+        previewPlaceholder.style.display = 'block';
+        previewPlaceholder.innerHTML = mediaUrl ? 
+            `<p>Preview ${mediaType.toUpperCase()}</p><small>${mediaUrl}</small>` :
+            `<p>Anteprima Media</p><small>Nessun media disponibile</small>`;
+    }
+}
+
 // Render projects list
 function renderProjectsList() {
     const projectsList = document.getElementById('projects-list');
@@ -46,6 +146,7 @@ function showNewProjectForm() {
     document.getElementById('form-section').style.display = 'block';
     document.getElementById('project-form').reset();
     document.getElementById('media-container').innerHTML = '';
+    updatePreview(); // Initialize preview
     document.getElementById('project-form').scrollIntoView({ behavior: 'smooth' });
 }
 
@@ -74,6 +175,7 @@ function editProject(index) {
         project.media.forEach(media => addMediaItem(media));
     }
     
+    updatePreview(); // Update preview with existing data
     document.getElementById('form-section').scrollIntoView({ behavior: 'smooth' });
 }
 
@@ -94,19 +196,19 @@ function addMediaItem(mediaData = {}) {
     const mediaItem = document.createElement('div');
     mediaItem.className = 'media-item';
     mediaItem.innerHTML = `
-        <select class="media-type" onchange="updateMediaType(this)">
+        <select class="media-type" onchange="updateMediaType(this); updatePreview();">
             <option value="image" ${mediaData.type === 'image' ? 'selected' : ''}>Immagine</option>
             <option value="video" ${mediaData.type === 'video' ? 'selected' : ''}>Video</option>
             <option value="pdf" ${mediaData.type === 'pdf' ? 'selected' : ''}>PDF Slideshow</option>
         </select>
-        <input type="url" class="media-url" placeholder="URL del media" value="${mediaData.url || ''}" required>
-        <input type="text" class="media-caption" placeholder="Didascalia" value="${mediaData.caption || ''}">
-        <select class="media-size">
+        <input type="url" class="media-url" placeholder="URL del media" value="${mediaData.url || ''}" required oninput="updatePreview()">
+        <input type="text" class="media-caption" placeholder="Didascalia" value="${mediaData.caption || ''}" oninput="updatePreview()">
+        <select class="media-size" onchange="updatePreview()">
             <option value="" ${!mediaData.size ? 'selected' : ''}>Normale</option>
             <option value="large" ${mediaData.size === 'large' ? 'selected' : ''}>Grande</option>
             <option value="wide" ${mediaData.size === 'wide' ? 'selected' : ''}>Largo</option>
         </select>
-        <button type="button" class="btn btn-danger btn-small" onclick="removeMediaItem(this)">Rimuovi</button>
+        <button type="button" class="btn btn-danger btn-small" onclick="removeMediaItem(this); updatePreview();">Rimuovi</button>
     `;
     
     // Add extra inputs based on media type
@@ -147,6 +249,7 @@ function updateMediaType(select) {
         posterInput.type = 'url';
         posterInput.className = 'media-poster';
         posterInput.placeholder = 'URL poster (opzionale)';
+        posterInput.oninput = updatePreview;
         mediaItem.insertBefore(posterInput, mediaItem.children[2]);
     } else if (mediaType === 'pdf') {
         const durationInput = document.createElement('input');
@@ -156,6 +259,7 @@ function updateMediaType(select) {
         durationInput.value = '3';
         durationInput.min = '1';
         durationInput.max = '10';
+        durationInput.oninput = updatePreview;
         mediaItem.insertBefore(durationInput, mediaItem.children[2]);
         
         // Update URL placeholder
@@ -177,6 +281,24 @@ function removeMediaItem(button) {
 function hideForm() {
     document.getElementById('form-section').style.display = 'none';
     editingIndex = -1;
+}
+
+// Toggle preview visibility
+function togglePreview() {
+    const previewColumn = document.getElementById('preview-column');
+    const toggleBtn = document.getElementById('toggle-preview-btn');
+    const container = document.querySelector('.form-preview-container');
+    
+    if (previewColumn.style.display === 'none') {
+        previewColumn.style.display = 'block';
+        toggleBtn.textContent = 'Nascondi Preview';
+        container.classList.remove('preview-hidden');
+        updatePreview(); // Update preview when showing
+    } else {
+        previewColumn.style.display = 'none';
+        toggleBtn.textContent = 'Mostra Preview';
+        container.classList.add('preview-hidden');
+    }
 }
 
 // Collect form data
@@ -297,6 +419,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('add-media-btn').addEventListener('click', () => addMediaItem());
     document.getElementById('cancel-btn').addEventListener('click', hideForm);
     document.getElementById('copy-json-btn').addEventListener('click', copyJSON);
+    document.getElementById('toggle-preview-btn').addEventListener('click', togglePreview);
     
     // Form submission
     document.getElementById('project-form').addEventListener('submit', function(e) {
@@ -306,4 +429,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Auto-generate ID when title changes
     document.getElementById('project-title').addEventListener('input', autoGenerateId);
+    
+    // Preview update listeners
+    document.getElementById('project-title').addEventListener('input', updatePreview);
+    document.getElementById('project-subtitle').addEventListener('input', updatePreview);
+    document.getElementById('project-description').addEventListener('input', updatePreview);
+    document.getElementById('project-year').addEventListener('input', updatePreview);
+    document.getElementById('project-client').addEventListener('input', updatePreview);
+    document.getElementById('project-role').addEventListener('input', updatePreview);
 }); 
