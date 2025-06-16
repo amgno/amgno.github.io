@@ -646,7 +646,7 @@ body {
     }
     
     .modal-preview {
-        transform: scale(0.85);
+        transform: scale(0.7);
     }
     
     .modal-preview-content {
