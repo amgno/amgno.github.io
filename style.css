@@ -1,0 +1,134 @@
+/* Reset */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --bg-color: #f0f0f0;
+    /* Subtle off-white/grey */
+    --text-color: #111111;
+    /* Almost black */
+    --accent-color: #555555;
+    /* Dark grey for secondary elements */
+    --container-width: 600px;
+    --container-height: 600px;
+    --font-main: 'Space Grotesk', sans-serif;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    /* Prevent scrolling for the fixed layout feel */
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.main-container {
+    width: var(--container-width);
+    height: var(--container-height);
+    position: relative;
+    /* border: 1px solid var(--text-color); Removed for minimal look */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    background-color: transparent;
+    /* Matches body */
+}
+
+.corner {
+    position: absolute;
+    font-size: 0.7rem;
+    /* Smaller text */
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.top-left {
+    top: 1.5rem;
+    left: 1.5rem;
+}
+
+.top-right {
+    top: 1.5rem;
+    right: 1.5rem;
+    text-align: right;
+}
+
+.bottom-left {
+    bottom: 1.5rem;
+    left: 1.5rem;
+}
+
+.bottom-right {
+    bottom: 1.5rem;
+    right: 1.5rem;
+    text-align: right;
+}
+
+.center-content {
+    max-width: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+}
+
+.text-section {
+    flex: 1;
+    text-align: justify;
+    font-size: 0.8rem;
+    line-height: 1.6;
+}
+
+.ascii-section {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: monospace;
+    font-size: 0.6rem;
+    /* Small monospace for ASCII */
+    line-height: 1;
+    overflow: hidden;
+    color: var(--accent-color);
+}
+
+#ascii-art {
+    white-space: pre;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    :root {
+        --container-width: 90vw;
+        --container-height: 80vh;
+    }
+
+    .main-container {
+        padding: 1rem;
+    }
+
+    .center-content {
+        flex-direction: column;
+    }
+}
