@@ -49,7 +49,7 @@ function init() {
 
 function updateExclusionZones() {
     // Select elements that should block the ASCII art
-    const elements = document.querySelectorAll('.corner, .text-section, .ascii-section, a');
+    const elements = document.querySelectorAll('.corner, .text-section, .quote-section, .ascii-section, a');
     exclusionZones = [];
     
     elements.forEach(el => {
